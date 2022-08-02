@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 router.get('/', function (req, res) {
-    res.send({
+    res.json({
         status: "OK",
         type: "data"
     });
