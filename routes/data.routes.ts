@@ -1,8 +1,18 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
+
+const router = express.Router();
 
 router.get('/', function (req, res) {
-    res.send({ status: "OK", type: "data" });
+    res.send({
+        status: "OK",
+        type: "data"
+    });
 });
 
-module.exports = router;
+router.post('/', function (req, res) {
+    res.send({
+        response: req.body
+    });
+})
+
+export default router;
