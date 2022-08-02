@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./routes/index"));
 require("dotenv/config");
-console.log(process.env.PORT);
-console.log(process.env.HOST);
 const app = (0, express_1.default)();
 const port = parseInt(process.env.PORT);
 const host = process.env.HOST;

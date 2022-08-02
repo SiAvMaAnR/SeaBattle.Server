@@ -2,12 +2,9 @@ import express from 'express';
 import indexRouter from "./routes/index";
 import "dotenv/config";
 
-console.log(process.env.PORT);
-console.log(process.env.HOST);
-
 const app: any = express();
-const port: number = parseInt(process.env.PORT);
-const host: string = process.env.HOST;
+const port: number = parseInt(process.env.PORT) || 3000;
+const host: string = process.env.HOST || "127.0.0.1";
 
 app.use(express.static(`${__dirname}/assets`));
 app.use(express.urlencoded({ extended: false }));

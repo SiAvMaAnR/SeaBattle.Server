@@ -1,11 +1,9 @@
-const express = require('express');
+import UserController from "../controllers/users.constroller";
+import express from 'express';
+
 const router = express.Router();
 
-router.get('/', function (req, res) {
-    res.send({
-        status: "OK",
-        type: "users"
-    });
-});
+router.get('/', UserController.getUsers);
+router.post('/', UserController.setUsers);
 
 export default router;
