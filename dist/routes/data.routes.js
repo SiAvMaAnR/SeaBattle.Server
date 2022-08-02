@@ -6,10 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 router.get('/', function (req, res) {
-    res.send({ status: "OK", type: "data" });
+    res.send({
+        status: "OK",
+        type: "data"
+    });
 });
 router.post('/', function (req, res) {
-    res.send({ response: req.body });
+    res.send({
+        response: req.body
+    });
 });
 exports.default = router;
 //# sourceMappingURL=data.routes.js.map

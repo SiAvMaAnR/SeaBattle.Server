@@ -5,9 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./routes/index"));
+require("dotenv/config");
+console.log(process.env.PORT);
+console.log(process.env.HOST);
 const app = (0, express_1.default)();
-const port = 3000;
-const host = "127.0.0.1";
+const port = parseInt(process.env.PORT);
+const host = process.env.HOST;
 app.use(express_1.default.static(`${__dirname}/assets`));
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
