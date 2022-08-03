@@ -1,9 +1,10 @@
 import express from 'express';
 import indexRouter from "./routes/index";
 import cors from "cors";
-// import sequelize from './sequelize/sequelize';
+import sequelize from './sequelize/sequelize';
 import "reflect-metadata";
 import "dotenv/config";
+import User from './models/User';
 
 const app = express();
 const port: number = parseInt(process.env.PORT) || 3000;
@@ -12,7 +13,21 @@ const corsOptions = {
 
 }
 
-// sequelize.authenticate().then(res => console.log(res));
+sequelize.authenticate()
+  .then(() => {
+    const user: User = User.build({
+      id: 1,
+      name: "User1",
+      age: 10
+    });
+    console.log(user);
+    
+    console.log("DB connect!")
+  }
+  )
+  .catch(err => console.error(err));
+
+
 
 app.use(cors(corsOptions));
 app.use(express.static(`${__dirname}/assets`));

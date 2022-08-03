@@ -9,26 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 let User = class User extends sequelize_typescript_1.Model {
 };
 __decorate([
     sequelize_typescript_1.AutoIncrement,
     sequelize_typescript_1.PrimaryKey,
-    sequelize_typescript_1.Column,
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.NUMBER),
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
 __decorate([
-    sequelize_typescript_1.Column,
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     __metadata("design:type", String)
 ], User.prototype, "name", void 0);
 __decorate([
-    sequelize_typescript_1.Column,
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.NUMBER),
     __metadata("design:type", Number)
 ], User.prototype, "age", void 0);
 User = __decorate([
     sequelize_typescript_1.Table
 ], User);
-exports.User = User;
-//# sourceMappingURL=user.js.map
+exports.default = User;
+//# sourceMappingURL=User.js.map
