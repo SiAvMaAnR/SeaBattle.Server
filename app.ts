@@ -7,7 +7,6 @@ import "dotenv/config";
 
 const app = express();
 const port: number = parseInt(process.env.PORT) || 3000;
-const host: string = process.env.HOST || "127.0.0.1";
 
 const corsOptions = {
 
@@ -22,7 +21,7 @@ app.use(express.json());
 
 app.use('/api', indexRouter);
 
-app.listen(host, () => {
-  console.log(`Server is listening on ${port}`);
+app.listen(port, () => {
+  console.log(`Server is listening port ${port}`);
 });
 
