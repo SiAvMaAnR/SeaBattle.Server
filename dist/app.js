@@ -17,6 +17,6 @@ app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
 app.use('/api', index_1.default);
 app.listen(port, host, () => {
-    console.log(`Success! Server is listening on ${port}`);
+    console.log(`Server is listening on ${port}`);
 });
 //# sourceMappingURL=app.js.map

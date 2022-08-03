@@ -1,6 +1,7 @@
 import express from 'express';
 import indexRouter from "./routes/index";
 import cors from "cors";
+import "reflect-metadata";
 import "dotenv/config";
 
 const app: any = express();
@@ -19,6 +20,6 @@ app.use(express.json());
 app.use('/api', indexRouter);
 
 app.listen(port, host, () => {
-  console.log(`Success! Server is listening on ${port}`);
+  console.log(`Server is listening on ${port}`);
 });
 
