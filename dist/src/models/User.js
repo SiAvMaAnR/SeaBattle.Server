@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
+const index_1 = require("./index");
 let User = class User extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -28,6 +29,15 @@ __decorate([
     sequelize_typescript_1.Column,
     __metadata("design:type", Number)
 ], User.prototype, "age", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => index_1.Statistic),
+    sequelize_typescript_1.Column,
+    __metadata("design:type", Number)
+], User.prototype, "statisticId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => index_1.Statistic),
+    __metadata("design:type", index_1.Statistic)
+], User.prototype, "statistic", void 0);
 User = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "users",

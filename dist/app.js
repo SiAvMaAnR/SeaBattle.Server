@@ -27,12 +27,11 @@ app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
 sequelize_1.default.authenticate().then(() => __awaiter(void 0, void 0, void 0, function* () {
     console.log("DB connect!");
-    const repo = yield sequelize_1.default.getRepository(models_1.User);
-    const createUser = yield repo.create({
-        name: "1234",
-        age: 100
-    });
-    // await createUser.save();
+    const userRepository = yield sequelize_1.default.getRepository(models_1.User);
+    // const createUser = await userRepository.create({
+    //   name: "444",
+    //   age: 100
+    // });
     // statistics.create();
 })).catch(err => console.error(err));
 app.use('/api', index_1.default);

@@ -4,11 +4,7 @@ import User from "../models/User";
 
 class UserController {
     public getUsers = async (req, res) => {
-        const user: User = User.build({
-            name: "User1",
-            age: 10
-        });
-        return res.status(200).send({ data: "getUsers", data1: user });
+        return res.status(200).send({ data: "getUsers" });
     };
 
     public getUser = async (req, res) => {

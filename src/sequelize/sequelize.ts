@@ -28,7 +28,8 @@ const sequelize = new Sequelize({
     repositoryMode: true
 })
 
-sequelize.addModels([User]);
+sequelize.addModels([User,Statistic]);
+
 
 sync(sequelize).catch(err => {
     console.error(<Error>err.message)

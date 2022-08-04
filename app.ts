@@ -21,15 +21,17 @@ app.use(express.json());
 sequelize.authenticate().then(async () => {
   console.log("DB connect!");
 
-  const repository = await sequelize.getRepository(User)
+  const userRepository = await sequelize.getRepository(User)
 
-  const createUser = await repository.create({
-    name: "1234",
-    age: 100
-  });
+  // const createUser = await userRepository.create({
+  //   name: "444",
+  //   age: 100
+  // });
 
 
-  // await createUser.save();
+  
+
+
 
   // statistics.create();
 

@@ -22,12 +22,12 @@ class User extends Model<User> implements IUser {
     @Column
     age: number
 
-    // @ForeignKey(() => Statistic)
-    // @Column
-    // public statisticId: number
+    @ForeignKey(() => Statistic)
+    @Column
+    statisticId: number
 
-    // @BelongsTo(() => Statistic)
-    // public statistic: Statistic
+    @BelongsTo(() => Statistic)
+    statistic: Statistic
 }
 
 export default User;

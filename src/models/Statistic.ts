@@ -4,23 +4,23 @@ import User from "./User";
 
 @Table({
     tableName: "statistics",
-    timestamps: true,
+    timestamps: false,
     freezeTableName: true
 })
 class Statistic extends Model<Statistic> implements IStatistic {
 
-    // @AutoIncrement
-    // @PrimaryKey
-    // @Column
-    // public id: number
+    @AutoIncrement
+    @PrimaryKey
+    @Column
+    id: number
 
-    // @NotEmpty
-    // @Column
-    // public test1: string
+    @NotEmpty
+    @Column
+    test1: string
 
 
-    // @HasOne(() => User)
-    // public user: User;
+    @HasMany(() => User)
+    user: User[];
 }
 
 export default Statistic;

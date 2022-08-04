@@ -30,7 +30,7 @@ const sequelize = new sequelize_typescript_1.Sequelize({
     host: process.env.HOST_DB,
     repositoryMode: true
 });
-sequelize.addModels([index_1.User]);
+sequelize.addModels([index_1.User, index_1.Statistic]);
 sync(sequelize).catch(err => {
     console.error(err.message);
 });
