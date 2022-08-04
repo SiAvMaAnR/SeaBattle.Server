@@ -1,13 +1,5 @@
 import { DataType, Model, Table, Column, AutoIncrement, PrimaryKey, NotEmpty } from "sequelize-typescript";
-import { mapValueFieldNames } from "sequelize/types/utils";
-import sequelize from "../sequelize/sequelize";
-
-interface IUser {
-    id:number,
-    name: string,
-    age: number
-}
-
+import IUser from "../interfaces/models/IUser";
 
 @Table({
     tableName: "users",
@@ -27,7 +19,7 @@ class User extends Model<User> implements IUser {
 
     @NotEmpty
     @Column
-    age: number
+    age: string
 }
 
 export default User;
