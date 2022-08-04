@@ -1,18 +1,31 @@
-import { DataType, Model, Table, Column, AutoIncrement, PrimaryKey } from "sequelize-typescript";
+import { DataType, Model, Table, Column, AutoIncrement, PrimaryKey, NotEmpty } from "sequelize-typescript";
+import sequelize from "../sequelize/sequelize";
+
+interface IUser {
+    id:number,
+    name: string,
+    age: number
+}
 
 
-@Table
-class User extends Model<User> {
+@Table({
+    tableName: "users",
+    timestamps: false,
+    freezeTableName: true
+})
+class User extends Model<User> implements IUser {
+
     @AutoIncrement
     @PrimaryKey
-    @Column(DataType.NUMBER)
+    @Column
     id: number
 
-
-    @Column(DataType.STRING)
+    @NotEmpty
+    @Column
     name: string
 
-    @Column(DataType.NUMBER)
+    @NotEmpty
+    @Column
     age: number
 }
 

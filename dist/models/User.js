@@ -15,19 +15,25 @@ let User = class User extends sequelize_typescript_1.Model {
 __decorate([
     sequelize_typescript_1.AutoIncrement,
     sequelize_typescript_1.PrimaryKey,
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.NUMBER),
+    sequelize_typescript_1.Column,
     __metadata("design:type", Number)
 ], User.prototype, "id", void 0);
 __decorate([
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
+    sequelize_typescript_1.NotEmpty,
+    sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], User.prototype, "name", void 0);
 __decorate([
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.NUMBER),
+    sequelize_typescript_1.NotEmpty,
+    sequelize_typescript_1.Column,
     __metadata("design:type", Number)
 ], User.prototype, "age", void 0);
 User = __decorate([
-    sequelize_typescript_1.Table
+    (0, sequelize_typescript_1.Table)({
+        tableName: "users",
+        timestamps: false,
+        freezeTableName: true
+    })
 ], User);
 exports.default = User;
 //# sourceMappingURL=User.js.map

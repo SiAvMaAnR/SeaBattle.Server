@@ -13,26 +13,28 @@ const corsOptions = {
 
 }
 
-sequelize.authenticate()
-  .then(() => {
-    const user: User = User.build({
-      id: 1,
-      name: "User1",
-      age: 10
-    });
-    console.log(user);
-    
-    console.log("DB connect!")
-  }
-  )
-  .catch(err => console.error(err));
-
-
-
 app.use(cors(corsOptions));
 app.use(express.static(`${__dirname}/assets`));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+sequelize.authenticate()
+  .then(async () => {
+
+
+    const user: User = await User.build({
+      name: "User1",
+      age: 10
+    });
+
+    console.debug(user);
+
+    await user.save();
+
+    console.log("DB connect!");
+
+  }).catch(err => console.error(err));
+
 
 app.use('/api', indexRouter);
 

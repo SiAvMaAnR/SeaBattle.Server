@@ -17,7 +17,6 @@ class UserController {
     constructor() {
         this.getUsers = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const user = User_1.default.build({
-                id: 1,
                 name: "User1",
                 age: 10
             });

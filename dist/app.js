@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -13,21 +22,20 @@ const User_1 = __importDefault(require("./models/User"));
 const app = (0, express_1.default)();
 const port = parseInt(process.env.PORT) || 3000;
 const corsOptions = {};
-sequelize_1.default.authenticate()
-    .then(() => {
-    const user = User_1.default.build({
-        id: 1,
-        name: "User1",
-        age: 10
-    });
-    console.log(user);
-    console.log("DB connect!");
-})
-    .catch(err => console.error(err));
 app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.static(`${__dirname}/assets`));
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
+sequelize_1.default.authenticate()
+    .then(() => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield User_1.default.build({
+        name: "User1",
+        age: 10
+    });
+    console.debug(user);
+    yield user.save();
+    console.log("DB connect!");
+})).catch(err => console.error(err));
 app.use('/api', index_1.default);
 app.listen(port, () => {
     console.log(`Server is listening port ${port}`);

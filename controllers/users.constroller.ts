@@ -5,7 +5,6 @@ import User from "../models/User";
 class UserController {
     public getUsers = async (req, res) => {
         const user: User = User.build({
-            id: 1,
             name: "User1",
             age: 10
         });
