@@ -28,8 +28,8 @@ __decorate([
     __metadata("design:type", String)
 ], Statistic.prototype, "test1", void 0);
 __decorate([
-    (0, sequelize_typescript_1.HasMany)(() => User_1.default),
-    __metadata("design:type", Array)
+    (0, sequelize_typescript_1.HasOne)(() => User_1.default),
+    __metadata("design:type", User_1.default)
 ], Statistic.prototype, "user", void 0);
 Statistic = __decorate([
     (0, sequelize_typescript_1.Table)({

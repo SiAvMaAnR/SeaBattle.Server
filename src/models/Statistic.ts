@@ -19,8 +19,8 @@ class Statistic extends Model<Statistic> implements IStatistic {
     test1: string
 
 
-    @HasMany(() => User)
-    user: User[];
+    @HasOne(() => User)
+    user: User;
 }
 
 export default Statistic;
