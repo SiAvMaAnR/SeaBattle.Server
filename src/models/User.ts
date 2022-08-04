@@ -1,5 +1,6 @@
-import { DataType, Model, Table, Column, AutoIncrement, PrimaryKey, NotEmpty } from "sequelize-typescript";
+import { Model, Table, Column, AutoIncrement, PrimaryKey, NotEmpty, HasOne, ForeignKey, BelongsTo } from "sequelize-typescript";
 import IUser from "../interfaces/models/IUser";
+import { Statistic } from "./index";
 
 @Table({
     tableName: "users",
@@ -19,7 +20,14 @@ class User extends Model<User> implements IUser {
 
     @NotEmpty
     @Column
-    age: string
+    age: number
+
+    // @ForeignKey(() => Statistic)
+    // @Column
+    // public statisticId: number
+
+    // @BelongsTo(() => Statistic)
+    // public statistic: Statistic
 }
 
 export default User;

@@ -1,0 +1,1 @@
+{"version":3,"file":"Statistic.js","sourceRoot":"","sources":["../../../src/models/Statistic.ts"],"names":[],"mappings":";;;;;;;;AAAA,+DAAkH;AASlH,IAAM,SAAS,GAAf,MAAM,SAAU,SAAQ,4BAAgB;CAcvC,CAAA;AAdK,SAAS;IALd,IAAA,4BAAK,EAAC;QACH,SAAS,EAAE,YAAY;QACvB,UAAU,EAAE,IAAI;QAChB,eAAe,EAAE,IAAI;KACxB,CAAC;GACI,SAAS,CAcd;AAED,kBAAe,SAAS,CAAC"}

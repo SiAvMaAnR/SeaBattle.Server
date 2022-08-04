@@ -10,9 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
-require("dotenv/config");
 const index_1 = require("../models/index");
-const syncBase = (sequelize) => __awaiter(void 0, void 0, void 0, function* () {
+require("dotenv/config");
+// const migration = async (sequelize: Sequelize) => {
+//     await generateMigration(sequelize, {
+//         outDir: path.join(__dirname, "../migrations"),
+//         snapshotDir: path.join(__dirname, "../snapshots"),
+//         migrationName: "migration",
+//     });
+// }
+const sync = (sequelize) => __awaiter(void 0, void 0, void 0, function* () {
     yield sequelize.sync({ force: false });
 });
 const sequelize = new sequelize_typescript_1.Sequelize({
@@ -21,9 +28,14 @@ const sequelize = new sequelize_typescript_1.Sequelize({
     username: process.env.NAME,
     password: process.env.PASSWORD,
     host: process.env.HOST_DB,
+    repositoryMode: true
 });
 sequelize.addModels([index_1.User]);
-syncBase(sequelize)
-    .catch(err => console.error(err.message));
+sync(sequelize).catch(err => {
+    console.error(err.message);
+});
+// migration(sequelize).catch(err => {
+//     console.error(<Error>err.message);
+// })
 exports.default = sequelize;
 //# sourceMappingURL=sequelize.js.map

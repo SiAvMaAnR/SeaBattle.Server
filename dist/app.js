@@ -16,8 +16,8 @@ const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./src/routes/index"));
 const cors_1 = __importDefault(require("cors"));
 const sequelize_1 = __importDefault(require("./src/sequelize/sequelize"));
-require("reflect-metadata");
 require("dotenv/config");
+const models_1 = require("./src/models");
 const app = (0, express_1.default)();
 const port = parseInt(process.env.PORT) || 3000;
 const corsOptions = {};
@@ -27,6 +27,13 @@ app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
 sequelize_1.default.authenticate().then(() => __awaiter(void 0, void 0, void 0, function* () {
     console.log("DB connect!");
+    const repo = yield sequelize_1.default.getRepository(models_1.User);
+    const createUser = yield repo.create({
+        name: "1234",
+        age: 100
+    });
+    // await createUser.save();
+    // statistics.create();
 })).catch(err => console.error(err));
 app.use('/api', index_1.default);
 app.listen(port, () => {
