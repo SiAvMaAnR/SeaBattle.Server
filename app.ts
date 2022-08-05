@@ -20,21 +20,6 @@ app.use(express.json());
 
 sequelize.authenticate().then(async () => {
   console.log("DB connect!");
-
-  const userRepository = await sequelize.getRepository(User)
-
-  // const createUser = await userRepository.create({
-  //   name: "444",
-  //   age: 100
-  // });
-
-
-  
-
-
-
-  // statistics.create();
-
 }).catch(err => console.error(err));
 
 app.use('/api', indexRouter);

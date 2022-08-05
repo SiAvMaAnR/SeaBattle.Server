@@ -17,4 +17,4 @@ router.post('/', function (req, res) {
     });
 });
 exports.default = router;
-//# sourceMappingURL=data.routes.js.map
+//# sourceMappingURL=dataRoutes.js.map

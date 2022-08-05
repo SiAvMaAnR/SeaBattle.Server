@@ -46,4 +46,4 @@ User = __decorate([
     })
 ], User);
 exports.default = User;
-//# sourceMappingURL=User.js.map
+//# sourceMappingURL=user.js.map

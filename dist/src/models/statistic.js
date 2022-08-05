@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
-const User_1 = __importDefault(require("./User"));
+const user_1 = __importDefault(require("./user"));
 let Statistic = class Statistic extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -28,8 +28,8 @@ __decorate([
     __metadata("design:type", String)
 ], Statistic.prototype, "test1", void 0);
 __decorate([
-    (0, sequelize_typescript_1.HasOne)(() => User_1.default),
-    __metadata("design:type", User_1.default)
+    (0, sequelize_typescript_1.HasOne)(() => user_1.default),
+    __metadata("design:type", user_1.default)
 ], Statistic.prototype, "user", void 0);
 Statistic = __decorate([
     (0, sequelize_typescript_1.Table)({
@@ -39,4 +39,4 @@ Statistic = __decorate([
     })
 ], Statistic);
 exports.default = Statistic;
-//# sourceMappingURL=Statistic.js.map
+//# sourceMappingURL=statistic.js.map

@@ -28,7 +28,7 @@ const sequelize = new sequelize_typescript_1.Sequelize({
     username: process.env.NAME,
     password: process.env.PASSWORD,
     host: process.env.HOST_DB,
-    repositoryMode: process.env.REPOSYTORY_MODE == "true"
+    repositoryMode: process.env.REPOSITORY_MODE == "true"
 });
 sequelize.addModels([index_1.User, index_1.Statistic]);
 sync(sequelize).catch(err => {

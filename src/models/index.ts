@@ -1,5 +1,5 @@
-import User from "./User";
-import Statistic from "./Statistic";
+import User from "./user";
+import Statistic from "./statistic";
 
 
 export { User, Statistic };

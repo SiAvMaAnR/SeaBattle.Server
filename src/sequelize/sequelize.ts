@@ -25,7 +25,7 @@ const sequelize = new Sequelize({
     username: process.env.NAME,
     password: process.env.PASSWORD,
     host: process.env.HOST_DB,
-    repositoryMode: process.env.REPOSYTORY_MODE == "true"
+    repositoryMode: process.env.REPOSITORY_MODE == "true"
 })
 
 sequelize.addModels([User, Statistic]);

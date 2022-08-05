@@ -12,23 +12,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const index_1 = __importDefault(require("./src/routes/index"));
-const cors_1 = __importDefault(require("cors"));
-const sequelize_1 = __importDefault(require("./src/sequelize/sequelize"));
-require("dotenv/config");
-const app = (0, express_1.default)();
-const port = parseInt(process.env.PORT) || 3000;
-const corsOptions = {};
-app.use((0, cors_1.default)(corsOptions));
-app.use(express_1.default.static(`${__dirname}/assets`));
-app.use(express_1.default.urlencoded({ extended: false }));
-app.use(express_1.default.json());
-sequelize_1.default.authenticate().then(() => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("DB connect!");
-})).catch(err => console.error(err));
-app.use('/api', index_1.default);
-app.listen(port, () => {
-    console.log(`Server is listening port ${port}`);
-});
-//# sourceMappingURL=app.js.map
+const sequelize_1 = __importDefault(require("../sequelize/sequelize"));
+const models_1 = require("../models");
+class BaseRepository {
+    constructor(repository) {
+        this.repository = repository;
+    }
+    add(entity) {
+        throw new Error("Method not implemented.");
+    }
+    getOne(arg) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof arg == 'number') {
+                sequelize_1.default.getRepository(models_1.User);
+                const a = yield this.repository.findAll();
+                return a.find(x => x);
+            }
+        });
+    }
+    getAll(arg) {
+        throw new Error("Method not implemented.");
+    }
+    delete(arg) {
+        throw new Error("Method not implemented.");
+    }
+}
+exports.default = BaseRepository;
+//# sourceMappingURL=baseRepository.js.map

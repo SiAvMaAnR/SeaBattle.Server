@@ -1,6 +1,6 @@
 import { Model, Table, Column, AutoIncrement, PrimaryKey, NotEmpty, HasMany, HasOne } from "sequelize-typescript";
 import IStatistic from "../interfaces/models/IStatistic";
-import User from "./User";
+import User from "./user";
 
 @Table({
     tableName: "statistics",
