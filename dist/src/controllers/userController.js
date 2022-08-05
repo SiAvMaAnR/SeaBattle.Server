@@ -20,7 +20,7 @@ class UserController extends baseConstroller_1.default {
         super();
         this.userRepository = new userRepository_1.default(sequelize_1.default);
         this.getUsers = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const users = yield this.userRepository.getAll(el => el.id > 5);
+            const users = yield this.userRepository.getAll(10);
             return res.status(200).send({ data: "getUsers", users: users });
         });
         this.getUser = (req, res) => __awaiter(this, void 0, void 0, function* () {

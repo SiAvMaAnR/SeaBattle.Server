@@ -1,6 +1,6 @@
-import { Table, Column, AutoIncrement, PrimaryKey, NotEmpty, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Table, Column, AutoIncrement, PrimaryKey, NotEmpty, ForeignKey, BelongsTo, Model } from "sequelize-typescript";
 import IEntity from "../interfaces/models/IEntity";
-import BaseModel from "./base";
+import IUser from "../interfaces/models/IUser";
 import { Statistic } from "./index";
 
 
@@ -9,7 +9,7 @@ import { Statistic } from "./index";
     timestamps: false,
     freezeTableName: true
 })
-class User extends BaseModel implements IEntity {
+class User extends Model<IUser> implements IUser {
 
     @AutoIncrement
     @PrimaryKey

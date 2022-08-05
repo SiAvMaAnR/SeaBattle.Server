@@ -1,9 +1,11 @@
-import { Repository, Sequelize } from "sequelize-typescript";
+import { Model, Repository, Sequelize } from "sequelize-typescript";
 import IWrite from "../interfaces/repositories/IWrite";
 import IRead from "../interfaces/repositories/IRead";
-import BaseModel from "../models/base";
+import IEntity from "../interfaces/models/IEntity";
+import sequelize from "../sequelize/sequelize";
+import { User } from "../models";
 
-abstract class BaseRepository<TEntity extends BaseModel> implements IWrite<TEntity>, IRead<TEntity> {
+abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<TEntity>, IRead<TEntity> {
 
     protected repository: Repository<TEntity>;
 
@@ -11,7 +13,10 @@ abstract class BaseRepository<TEntity extends BaseModel> implements IWrite<TEnti
         this.repository = repository;
     }
 
-    public add(entity: TEntity): Promise<boolean> {
+
+    public async add(entity: TEntity): Promise<boolean> {
+
+        // await this.repository.create(entity);
         throw new Error("Method not implemented.");
     }
 
@@ -30,9 +35,17 @@ abstract class BaseRepository<TEntity extends BaseModel> implements IWrite<TEnti
             : users;
     }
 
-    public delete(id: number): Promise<boolean>;
-    public delete(entity: TEntity): Promise<boolean>;
-    public delete(arg: unknown): Promise<boolean> {
+    public async delete(id: number): Promise<boolean> {
+
+        const repo = sequelize.getRepository(User);
+        repo.destroy({
+            where:{
+                id: 100
+            }
+        })
+        await this.repository.destroy({     });
+      
+
         throw new Error("Method not implemented.");
     }
 }

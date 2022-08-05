@@ -1,6 +1,6 @@
 import { Model, Table, Column, AutoIncrement, PrimaryKey, NotEmpty, HasMany, HasOne } from "sequelize-typescript";
+import IEntity from "../interfaces/models/IEntity";
 import IStatistic from "../interfaces/models/IStatistic";
-import BaseModel from "./base";
 import User from "./user";
 
 @Table({
@@ -8,7 +8,7 @@ import User from "./user";
     timestamps: false,
     freezeTableName: true
 })
-class Statistic extends BaseModel implements IStatistic {
+class Statistic extends Model<IStatistic> implements IStatistic {
 
     @AutoIncrement
     @PrimaryKey

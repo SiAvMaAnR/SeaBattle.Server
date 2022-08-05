@@ -11,9 +11,6 @@ class UserRepository extends BaseRepository<User> {
     public constructor(sequelize: Sequelize) {
         super(sequelize.getRepository(User));
     }
-
-    
-
 }
 
 export default UserRepository;

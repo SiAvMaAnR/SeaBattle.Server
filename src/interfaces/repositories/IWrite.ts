@@ -6,7 +6,6 @@ import IRepository from "./IRepository";
 interface IWrite<TEntity extends Model<any>> extends IRepository<TEntity> {
     add(entity: TEntity): Promise<boolean>;
     delete(id: number): Promise<boolean>;
-    delete(entity: TEntity): Promise<boolean>;
 }
 
 export default IWrite;
