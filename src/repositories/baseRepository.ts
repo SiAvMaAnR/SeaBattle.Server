@@ -18,8 +18,8 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
         try {
             await this.repository.create<TEntity>(entity);
         }
-        catch (err) {
-            console.log(err);
+        catch (err){
+            throw err;
         }
     }
 
@@ -32,7 +32,7 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
             });
         }
         catch (err) {
-            console.error(err);
+            throw err;
         }
     }
 
@@ -47,7 +47,7 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
                 : users;
         }
         catch (err) {
-            console.error(err);
+            throw err;
         }
     }
 
@@ -65,7 +65,7 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
             }
         }
         catch (err) {
-            console.error(err);
+            throw err;
         }
     }
 }
