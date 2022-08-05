@@ -22,12 +22,14 @@ abstract class BaseRepository<TEntity extends Model> implements IWrite<TEntity>,
     public async getOne(fn: Function): Promise<TEntity>;
     public async getOne(arg: unknown): Promise<TEntity> {
         if (typeof arg == 'number') {
-
-
-            sequelize.getRepository(User)
-
             const a = await this.repository.findAll();
-            return a.find(x=>x);
+            return a.find(x => x);
+        }
+        else if (arg instanceof Function) {
+
+        }
+        else {
+            return null;
         }
     }
 

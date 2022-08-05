@@ -1,6 +1,6 @@
 import IEntity from "../models/IEntity";
 
-interface IController<TEntity extends IEntity>{
+interface IController{
 
     
 }

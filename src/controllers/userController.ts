@@ -1,15 +1,12 @@
-import UserService from "../services/userService";
 import sequelize from "../sequelize/sequelize";
-import IRepository from "../interfaces/repositories/IRepository";
-import User from "../models/user";
 import UserRepository from "../repositories/userRepository";
-import IController from "../interfaces/controllers/IController";
+import BaseController from "./baseConstroller";
 
-class UserController implements IController<User> {
+class UserController extends BaseController {
     private userRepository: UserRepository = new UserRepository(sequelize);
 
     constructor() {
-
+        super();
     }
 
     public getUsers = async (req, res) => {
