@@ -13,8 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
+const base_1 = __importDefault(require("./base"));
 const user_1 = __importDefault(require("./user"));
-let Statistic = class Statistic extends sequelize_typescript_1.Model {
+let Statistic = class Statistic extends base_1.default {
 };
 __decorate([
     sequelize_typescript_1.AutoIncrement,

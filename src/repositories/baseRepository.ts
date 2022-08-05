@@ -1,12 +1,9 @@
-import IEntity from "../interfaces/models/IEntity";
 import { Repository, Sequelize } from "sequelize-typescript";
 import IWrite from "../interfaces/repositories/IWrite";
 import IRead from "../interfaces/repositories/IRead";
-import sequelize from "../sequelize/sequelize";
-import { User } from "../models";
-import { Model } from "sequelize/types";
+import BaseModel from "../models/base";
 
-abstract class BaseRepository<TEntity extends Model> implements IWrite<TEntity>, IRead<TEntity> {
+abstract class BaseRepository<TEntity extends BaseModel> implements IWrite<TEntity>, IRead<TEntity> {
 
     protected repository: Repository<TEntity>;
 
@@ -23,7 +20,7 @@ abstract class BaseRepository<TEntity extends Model> implements IWrite<TEntity>,
     public async getOne(arg: unknown): Promise<TEntity> {
         if (typeof arg == 'number') {
             const a = await this.repository.findAll();
-            return a.find(x => x);
+            return a.find(x => x.id == arg);
         }
         else if (arg instanceof Function) {
 
