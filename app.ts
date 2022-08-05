@@ -20,12 +20,7 @@ app.use(express.json());
 
 sequelize.authenticate().then(async () => {
 
-  const repo = sequelize.getRepository(User);
-  repo.destroy({
-    where: {
-      id: 10
-    }
-  })
+  
 
   console.log("DB connect!");
 }).catch(err => console.error(err));

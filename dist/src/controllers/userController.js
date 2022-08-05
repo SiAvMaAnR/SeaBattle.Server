@@ -20,20 +20,26 @@ class UserController extends baseConstroller_1.default {
         super();
         this.userRepository = new userRepository_1.default(sequelize_1.default);
         this.getUsers = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const users = yield this.userRepository.getAll(10);
+            const users = yield this.userRepository.getAll(x => x.statisticId > 8);
             return res.status(200).send({ data: "getUsers", users: users });
         });
         this.getUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userRepository.getOne(4);
+            const user = yield this.userRepository.getOne(11);
             return res.status(200).send({ data: "getUser", user: user });
         });
         this.addUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield this.userRepository.create({
+                name: "helllox",
+                age: 1000,
+                statisticId: 11
+            });
             return res.status(200).send({ data: "addUser" });
         });
         this.updateUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
             return res.status(200).send({ data: "updateUser" });
         });
         this.deleteUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const result = this.userRepository.delete(4);
             return res.status(200).send({ data: "deleteUser" });
         });
     }

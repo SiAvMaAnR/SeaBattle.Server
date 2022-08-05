@@ -4,6 +4,7 @@ import IRead from "../interfaces/repositories/IRead";
 import IEntity from "../interfaces/models/IEntity";
 import sequelize from "../sequelize/sequelize";
 import { User } from "../models";
+import { MakeNullishOptional } from "sequelize/types/utils";
 
 abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<TEntity>, IRead<TEntity> {
 
@@ -13,40 +14,59 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
         this.repository = repository;
     }
 
-
-    public async add(entity: TEntity): Promise<boolean> {
-
-        // await this.repository.create(entity);
-        throw new Error("Method not implemented.");
+    public async create(entity: any): Promise<void> {
+        try {
+            await this.repository.create<TEntity>(entity);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
-    public async getOne(id: number): Promise<TEntity> {
-        const elements = await this.repository.findAll();
-        return elements.find(el => el.id == id) ?? null;
+    public async getOne(id: any): Promise<TEntity> {
+        try {
+            return await this.repository.findOne({
+                where: {
+                    id: id
+                }
+            });
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
 
     public async getAll(): Promise<TEntity[]>;
-    public async getAll(fn): Promise<TEntity[]>;
+    public async getAll(fn: Function): Promise<TEntity[]>;
     public async getAll(arg?: unknown): Promise<TEntity[]> {
-        const users = await this.repository.findAll();
+        try {
+            const users = await this.repository.findAll();
 
-        return (arg && arg instanceof Function)
-            ? users.filter((el) => arg(el))
-            : users;
+            return (arg && arg instanceof Function)
+                ? users.filter((el) => arg(el))
+                : users;
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
 
-    public async delete(id: number): Promise<boolean> {
 
-        const repo = sequelize.getRepository(User);
-        repo.destroy({
-            where:{
-                id: 100
+    public async delete(entity: TEntity): Promise<void>;
+    public async delete(id: number): Promise<void>;
+    public async delete(arg: unknown): Promise<void> {
+        try {
+            if (arg instanceof Model<IEntity>) {
+                await arg.destroy();
             }
-        })
-        await this.repository.destroy({     });
-      
-
-        throw new Error("Method not implemented.");
+            else if (typeof arg == "number") {
+                const item = await this.getOne(arg);
+                await item.destroy();
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
 }
 
