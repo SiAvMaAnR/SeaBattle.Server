@@ -1,5 +1,4 @@
 import { Table, Column, AutoIncrement, PrimaryKey, NotEmpty, ForeignKey, BelongsTo, Model } from "sequelize-typescript";
-import IEntity from "../interfaces/models/IEntity";
 import IUser from "../interfaces/models/IUser";
 import { Statistic } from "./index";
 

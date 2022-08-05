@@ -1,5 +1,4 @@
 import { Model } from "sequelize/types";
-import IEntity from "../models/IEntity";
 import IRepository from "./IRepository";
 
 

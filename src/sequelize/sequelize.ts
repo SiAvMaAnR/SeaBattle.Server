@@ -1,8 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
 import { Dialect } from "sequelize/types";
 import { Statistic, User } from "../models/index";
-import { generateMigration } from "sequelize-typescript-model-migration";
-import path from "path";
 import "dotenv/config";
 
 // const migration = async (sequelize: Sequelize) => {

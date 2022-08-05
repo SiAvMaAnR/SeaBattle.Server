@@ -2,9 +2,6 @@ import { Model, Repository, Sequelize } from "sequelize-typescript";
 import IWrite from "../interfaces/repositories/IWrite";
 import IRead from "../interfaces/repositories/IRead";
 import IEntity from "../interfaces/models/IEntity";
-import sequelize from "../sequelize/sequelize";
-import { User } from "../models";
-import { MakeNullishOptional } from "sequelize/types/utils";
 
 abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<TEntity>, IRead<TEntity> {
 
