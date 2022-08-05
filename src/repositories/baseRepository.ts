@@ -15,25 +15,19 @@ abstract class BaseRepository<TEntity extends BaseModel> implements IWrite<TEnti
         throw new Error("Method not implemented.");
     }
 
-    public async getOne(id: number): Promise<TEntity>;
-    public async getOne(fn: Function): Promise<TEntity>;
-    public async getOne(arg: unknown): Promise<TEntity> {
-        if (typeof arg == 'number') {
-            const a = await this.repository.findAll();
-            return a.find(x => x.id == arg);
-        }
-        else if (arg instanceof Function) {
-
-        }
-        else {
-            return null;
-        }
+    public async getOne(id: number): Promise<TEntity> {
+        const elements = await this.repository.findAll();
+        return elements.find(el => el.id == id) ?? null;
     }
 
-    public getAll(): Promise<TEntity[]>;
-    public getAll(fn: Function): Promise<TEntity[]>;
-    public getAll(arg?: unknown): Promise<TEntity[]> {
-        throw new Error("Method not implemented.");
+    public async getAll(): Promise<TEntity[]>;
+    public async getAll(fn): Promise<TEntity[]>;
+    public async getAll(arg?: unknown): Promise<TEntity[]> {
+        const users = await this.repository.findAll();
+
+        return (arg && arg instanceof Function)
+            ? users.filter((el) => arg(el))
+            : users;
     }
 
     public delete(id: number): Promise<boolean>;

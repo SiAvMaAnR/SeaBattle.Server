@@ -11,12 +11,16 @@ class UserController extends BaseController {
 
     public getUsers = async (req, res) => {
 
-        const user = await this.userRepository.getOne(5);
-        return res.status(200).send({ data: "getUsers", user: user });
+        const users = await this.userRepository.getAll(el=> el.id > 5);
+
+
+        return res.status(200).send({ data: "getUsers", users: users });
     };
 
     public getUser = async (req, res) => {
-        return res.status(200).send({ data: "getUser" });
+        const user = await this.userRepository.getOne(4);
+
+        return res.status(200).send({ data: "getUser", user: user });
     };
 
     public addUser = async (req, res) => {

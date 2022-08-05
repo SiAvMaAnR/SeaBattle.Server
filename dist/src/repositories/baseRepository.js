@@ -16,21 +16,23 @@ class BaseRepository {
     add(entity) {
         throw new Error("Method not implemented.");
     }
-    getOne(arg) {
+    getOne(id) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            if (typeof arg == 'number') {
-                const a = yield this.repository.findAll();
-                return a.find(x => x.id == arg);
-            }
-            else if (arg instanceof Function) {
-            }
-            else {
-                return null;
-            }
+            const elements = yield this.repository.findAll();
+            return (_a = elements.find(el => el.id == id)) !== null && _a !== void 0 ? _a : null;
         });
     }
     getAll(arg) {
-        throw new Error("Method not implemented.");
+        return __awaiter(this, void 0, void 0, function* () {
+            const users = yield this.repository.findAll();
+            if (arg && arg instanceof Function) {
+                return users.filter((el) => arg(el));
+            }
+            else {
+                return users;
+            }
+        });
     }
     delete(arg) {
         throw new Error("Method not implemented.");
