@@ -1,9 +1,11 @@
 import sequelize from "../sequelize/sequelize";
 import UserRepository from "../repositories/userRepository";
 import BaseController from "./baseController";
+import StatisticRepository from "../repositories/statisticRepository";
 
 class UserController extends BaseController {
     private userRepository: UserRepository = new UserRepository(sequelize);
+    private statisticRepository: StatisticRepository = new StatisticRepository(sequelize);
 
     constructor() {
         super();
@@ -24,10 +26,15 @@ class UserController extends BaseController {
     };
 
     public addUser = async (req, res) => {
+
+        const statistic = await this.statisticRepository.create({
+            test1: "help"
+        });
+
         await this.userRepository.create({
             name: "helllox",
             age: 1000,
-            statisticId: 11
+            statisticId: statistic.id
         });
 
         return res.status(200).send({ data: "addUser" });

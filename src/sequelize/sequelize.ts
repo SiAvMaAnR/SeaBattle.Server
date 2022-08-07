@@ -11,9 +11,7 @@ import "dotenv/config";
 //     });
 // }
 
-const sync = async (sequelize: Sequelize): Promise<void> => {
-    await sequelize.sync({ force: false });
-}
+
 
 const sequelize = new Sequelize({
     database: process.env.DATABASE,
@@ -26,21 +24,16 @@ const sequelize = new Sequelize({
 
 sequelize.addModels([User, Statistic]);
 
-sync(sequelize).catch(err => {
-    console.error(<Error>err.message)
-});
+export const sync = async (sequelize: Sequelize): Promise<Sequelize> => {
+    return await sequelize.sync({ force: false });
+}
 
-export const openConnection = async () => {
+export const openConnection = async (): Promise<void> => {
     return await sequelize.authenticate();
 }
 
-export const closeConnection = async () => {
+export const closeConnection = async (): Promise<void> => {
     return await sequelize.close();
 }
-
-// migration(sequelize).catch(err => {
-//     console.error(<Error>err.message);
-// })
-
 
 export default sequelize;

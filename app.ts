@@ -1,10 +1,11 @@
 import express from 'express';
 import indexRouter from "./src/routes/index";
 import cors from "cors";
-import sequelize, { openConnection, closeConnection } from './src/sequelize/sequelize';
+import sequelize, { openConnection, closeConnection, sync } from './src/sequelize/sequelize';
 import "dotenv/config";
 import path from 'path';
 import { Statistic, User } from './src/models';
+import { Sequelize } from 'sequelize-typescript';
 
 const app = express();
 const port: number = parseInt(process.env.PORT) || 3000;
@@ -20,15 +21,21 @@ app.use(express.json());
 
 openConnection().then(async () => {
   console.log("open connection!");
-}).catch(err => console.error(err));
+}).catch((err: Error) => {
+  console.error(err.message);
+});
 
 app.use('/api', indexRouter);
 
-app.listen(port, () => {
-  console.log(`Server is listening port ${port}`);
+
+sync(sequelize).then((sequelize: Sequelize) => {
+  app.listen(port, () => {
+    console.log(`Server is listening port ${port}`);
+  });
+}).catch((err: Error) => {
+  console.error(err.message);
 });
 
-// closeConnection().then(async () => {
-//   console.log("close connection!");
-// }).catch(err => console.error(err));
+
+
 

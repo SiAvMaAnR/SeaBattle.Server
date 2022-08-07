@@ -15,10 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importDefault(require("../sequelize/sequelize"));
 const userRepository_1 = __importDefault(require("../repositories/userRepository"));
 const baseController_1 = __importDefault(require("./baseController"));
+const statisticRepository_1 = __importDefault(require("../repositories/statisticRepository"));
 class UserController extends baseController_1.default {
     constructor() {
         super();
         this.userRepository = new userRepository_1.default(sequelize_1.default);
+        this.statisticRepository = new statisticRepository_1.default(sequelize_1.default);
         this.getUsers = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const users = yield this.userRepository.getAll();
             return res.status(200).send({ data: "getUsers", users: users });
@@ -28,10 +30,13 @@ class UserController extends baseController_1.default {
             return res.status(200).send({ data: "getUser", user: user });
         });
         this.addUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const statistic = yield this.statisticRepository.create({
+                test1: "help"
+            });
             yield this.userRepository.create({
                 name: "helllox",
                 age: 1000,
-                statisticId: 11
+                statisticId: statistic.id
             });
             return res.status(200).send({ data: "addUser" });
         });

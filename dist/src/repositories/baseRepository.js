@@ -17,7 +17,7 @@ class BaseRepository {
     create(entity) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield this.repository.create(entity);
+                return yield this.repository.create(entity);
             }
             catch (err) {
                 throw err;
