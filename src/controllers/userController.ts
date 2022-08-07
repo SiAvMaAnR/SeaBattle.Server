@@ -1,6 +1,6 @@
 import sequelize from "../sequelize/sequelize";
 import UserRepository from "../repositories/userRepository";
-import BaseController from "./baseConstroller";
+import BaseController from "./baseController";
 
 class UserController extends BaseController {
     private userRepository: UserRepository = new UserRepository(sequelize);

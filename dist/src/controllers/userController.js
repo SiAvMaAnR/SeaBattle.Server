@@ -14,13 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importDefault(require("../sequelize/sequelize"));
 const userRepository_1 = __importDefault(require("../repositories/userRepository"));
-const baseConstroller_1 = __importDefault(require("./baseConstroller"));
-class UserController extends baseConstroller_1.default {
+const baseController_1 = __importDefault(require("./baseController"));
+class UserController extends baseController_1.default {
     constructor() {
         super();
         this.userRepository = new userRepository_1.default(sequelize_1.default);
         this.getUsers = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const users = yield this.userRepository.getAll(x => x.statisticId > 8);
+            const users = yield this.userRepository.getAll();
             return res.status(200).send({ data: "getUsers", users: users });
         });
         this.getUser = (req, res) => __awaiter(this, void 0, void 0, function* () {

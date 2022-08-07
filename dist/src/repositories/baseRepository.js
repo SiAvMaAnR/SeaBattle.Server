@@ -20,7 +20,7 @@ class BaseRepository {
                 yield this.repository.create(entity);
             }
             catch (err) {
-                console.log(err);
+                throw err;
             }
         });
     }
@@ -34,7 +34,7 @@ class BaseRepository {
                 });
             }
             catch (err) {
-                console.error(err);
+                throw err;
             }
         });
     }
@@ -47,7 +47,7 @@ class BaseRepository {
                     : users;
             }
             catch (err) {
-                console.error(err);
+                throw err;
             }
         });
     }
@@ -63,7 +63,7 @@ class BaseRepository {
                 }
             }
             catch (err) {
-                console.error(err);
+                throw err;
             }
         });
     }

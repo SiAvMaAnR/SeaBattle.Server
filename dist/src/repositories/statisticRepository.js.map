@@ -1,0 +1,1 @@
+{"version":3,"file":"statisticRepository.js","sourceRoot":"","sources":["../../../src/repositories/statisticRepository.ts"],"names":[],"mappings":";;;;;AAAA,sEAA8C;AAC9C,sCAAsC;AAItC,MAAM,mBAAoB,SAAQ,wBAAyB;IAEvD,YAAmB,SAAoB;QACnC,KAAK,CAAC,SAAS,CAAC,aAAa,CAAC,kBAAS,CAAC,CAAC,CAAC;IAC9C,CAAC;CACJ;AAED,kBAAe,mBAAmB,CAAC"}

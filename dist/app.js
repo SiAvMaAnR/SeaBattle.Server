@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./src/routes/index"));
 const cors_1 = __importDefault(require("cors"));
-const sequelize_1 = __importDefault(require("./src/sequelize/sequelize"));
+const sequelize_1 = require("./src/sequelize/sequelize");
 require("dotenv/config");
 const app = (0, express_1.default)();
 const port = parseInt(process.env.PORT) || 3000;
@@ -24,11 +24,14 @@ app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.static(`${__dirname}/assets`));
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
-sequelize_1.default.authenticate().then(() => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("DB connect!");
+(0, sequelize_1.openConnection)().then(() => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("open connection!");
 })).catch(err => console.error(err));
 app.use('/api', index_1.default);
 app.listen(port, () => {
     console.log(`Server is listening port ${port}`);
 });
+// closeConnection().then(async () => {
+//   console.log("close connection!");
+// }).catch(err => console.error(err));
 //# sourceMappingURL=app.js.map

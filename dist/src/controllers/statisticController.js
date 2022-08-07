@@ -12,14 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const statisticController_1 = __importDefault(require("../controllers/statisticController"));
-const router = express_1.default.Router();
-router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield statisticController_1.default.getStatistics(req, res); }));
-router.post('/', function (req, res) {
-    res.send({
-        response: req.body
-    });
-});
-exports.default = router;
-//# sourceMappingURL=dataRoutes.js.map
+const sequelize_1 = __importDefault(require("../sequelize/sequelize"));
+const baseController_1 = __importDefault(require("./baseController"));
+const statisticRepository_1 = __importDefault(require("../repositories/statisticRepository"));
+class StatisticController extends baseController_1.default {
+    constructor() {
+        super();
+        this.statisticRepository = new statisticRepository_1.default(sequelize_1.default);
+        this.getStatistics = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const statistics = yield this.statisticRepository.getAll();
+            return res.status(200).send({ data: "getStatistics", statistics: statistics });
+        });
+    }
+}
+exports.default = new StatisticController();
+//# sourceMappingURL=statisticController.js.map

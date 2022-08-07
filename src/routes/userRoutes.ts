@@ -3,10 +3,10 @@ import express from 'express';
 
 const router = express.Router();
 
-router.get('/', (req, res) => UserController.getUsers(req, res));
-router.get('/:id', (req, res) => UserController.getUser(req, res));
-router.post('/', (req, res) => UserController.addUser(req, res));
-router.put('/', (req, res) => UserController.updateUser(req, res));
-router.delete('/:id', (req, res) => UserController.deleteUser(req, res));
+router.get('/', async (req, res) => await UserController.getUsers(req, res));
+router.get('/:id', async (req, res) => await UserController.getUser(req, res));
+router.post('/', async (req, res) => await UserController.addUser(req, res));
+router.put('/', async (req, res) => await UserController.updateUser(req, res));
+router.delete('/:id', async (req, res) => await UserController.deleteUser(req, res));
 
 export default router;

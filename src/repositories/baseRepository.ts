@@ -2,6 +2,7 @@ import { Model, Repository, Sequelize } from "sequelize-typescript";
 import IWrite from "../interfaces/repositories/IWrite";
 import IRead from "../interfaces/repositories/IRead";
 import IEntity from "../interfaces/models/IEntity";
+import sequelize from "../sequelize/sequelize";
 
 abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<TEntity>, IRead<TEntity> {
 
@@ -15,7 +16,7 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
         try {
             await this.repository.create<TEntity>(entity);
         }
-        catch (err){
+        catch (err) {
             throw err;
         }
     }

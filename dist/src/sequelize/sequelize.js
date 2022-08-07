@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.closeConnection = exports.openConnection = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const index_1 = require("../models/index");
 require("dotenv/config");
@@ -34,6 +35,14 @@ sequelize.addModels([index_1.User, index_1.Statistic]);
 sync(sequelize).catch(err => {
     console.error(err.message);
 });
+const openConnection = () => __awaiter(void 0, void 0, void 0, function* () {
+    return yield sequelize.authenticate();
+});
+exports.openConnection = openConnection;
+const closeConnection = () => __awaiter(void 0, void 0, void 0, function* () {
+    return yield sequelize.close();
+});
+exports.closeConnection = closeConnection;
 // migration(sequelize).catch(err => {
 //     console.error(<Error>err.message);
 // })
