@@ -23,12 +23,12 @@ __decorate([
     sequelize_typescript_1.NotEmpty,
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
-], User.prototype, "name", void 0);
+], User.prototype, "login", void 0);
 __decorate([
     sequelize_typescript_1.NotEmpty,
     sequelize_typescript_1.Column,
-    __metadata("design:type", Number)
-], User.prototype, "age", void 0);
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
 __decorate([
     (0, sequelize_typescript_1.ForeignKey)(() => index_1.Statistic),
     sequelize_typescript_1.Column,

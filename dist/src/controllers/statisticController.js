@@ -25,5 +25,5 @@ class StatisticController extends baseController_1.default {
         });
     }
 }
-exports.default = new StatisticController();
+exports.default = StatisticController;
 //# sourceMappingURL=statisticController.js.map

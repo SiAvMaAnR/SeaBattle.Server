@@ -52,4 +52,4 @@ class UserController extends BaseController {
     };
 }
 
-export default new UserController();
+export default UserController;

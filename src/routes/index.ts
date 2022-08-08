@@ -1,10 +1,11 @@
 import express from 'express';
 import usersRoutes from "./userRoutes";
-import dataRoutes from "./dataRoutes";
+import statisticRoutes from "./statisticRoutes";
+import { Statistic } from '../models';
 
 const router = express.Router();
 
 router.use('/users', usersRoutes);
-router.use('/data', dataRoutes);
+router.use('/statistic', statisticRoutes);
 
 export default router;

@@ -18,8 +18,6 @@ class StatisticController extends BaseController {
         return res.status(200).send({ data: "getStatistics", statistics: statistics });
     };
 
-
-
 }
 
-export default new StatisticController();
+export default StatisticController;

@@ -49,5 +49,5 @@ class UserController extends baseController_1.default {
         });
     }
 }
-exports.default = new UserController();
+exports.default = UserController;
 //# sourceMappingURL=userController.js.map

@@ -1,8 +1,9 @@
 import IEntity from "./IEntity";
 
 interface IUser extends IEntity {
-    name: string,
-    age: number
+    login: string,
+    password: string,
+    statisticId: number
 }
 
 export default IUser;

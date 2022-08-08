@@ -15,10 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const userController_1 = __importDefault(require("../controllers/userController"));
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController_1.default.getUsers(req, res); }));
-router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController_1.default.getUser(req, res); }));
-router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController_1.default.addUser(req, res); }));
-router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController_1.default.updateUser(req, res); }));
-router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController_1.default.deleteUser(req, res); }));
+const userController = new userController_1.default();
+router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.getUsers(req, res); }));
+router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.getUser(req, res); }));
+router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.addUser(req, res); }));
+router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.updateUser(req, res); }));
+router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.deleteUser(req, res); }));
 exports.default = router;
 //# sourceMappingURL=userRoutes.js.map

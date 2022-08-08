@@ -15,11 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const statisticController_1 = __importDefault(require("../controllers/statisticController"));
 const router = express_1.default.Router();
-router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield statisticController_1.default.getStatistics(req, res); }));
-router.post('/', function (req, res) {
-    res.send({
-        response: req.body
-    });
-});
+const statisticController = new statisticController_1.default();
+router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield statisticController.getStatistics(req, res); }));
+router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield statisticController.getStatistics(req, res); }));
 exports.default = router;
-//# sourceMappingURL=dataRoutes.js.map
+//# sourceMappingURL=statisticRoutes.js.map

@@ -1,4 +1,4 @@
-import { Table, Column, AutoIncrement, PrimaryKey, NotEmpty, ForeignKey, BelongsTo, Model } from "sequelize-typescript";
+import { Table, Column, AutoIncrement, PrimaryKey, NotEmpty, ForeignKey, BelongsTo, Model, NotNull } from "sequelize-typescript";
 import IUser from "../interfaces/models/IUser";
 import { Statistic } from "./index";
 
@@ -17,11 +17,11 @@ class User extends Model<IUser> implements IUser {
 
     @NotEmpty
     @Column
-    name: string
+    login: string
 
     @NotEmpty
     @Column
-    age: number
+    password: string
 
     @ForeignKey(() => Statistic)
     @Column

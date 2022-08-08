@@ -1,8 +1,7 @@
-import { Model, Repository, Sequelize } from "sequelize-typescript";
+import { Model, Repository } from "sequelize-typescript";
 import IWrite from "../interfaces/repositories/IWrite";
 import IRead from "../interfaces/repositories/IRead";
 import IEntity from "../interfaces/models/IEntity";
-import sequelize from "../sequelize/sequelize";
 
 abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<TEntity>, IRead<TEntity> {
 
@@ -11,7 +10,7 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
     constructor(repository: Repository<TEntity>) {
         this.repository = repository;
     }
-
+    
     public async create(entity: any): Promise<TEntity> {
         try {
             return await this.repository.create<TEntity>(entity);
@@ -66,6 +65,7 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
             throw err;
         }
     }
+
 }
 
 export default BaseRepository;

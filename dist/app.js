@@ -37,24 +37,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./src/routes/index"));
-const cors_1 = __importDefault(require("cors"));
 const sequelize_1 = __importStar(require("./src/sequelize/sequelize"));
+const socket_io_1 = require("socket.io");
+const http_1 = require("http");
 require("dotenv/config");
+const onConnection_1 = __importDefault(require("./src/socket_io/onConnection"));
+const cors_config_1 = __importDefault(require("./src/cors.config"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+const server = (0, http_1.createServer)(app);
 const port = parseInt(process.env.PORT) || 3000;
-const corsOptions = {};
-app.use((0, cors_1.default)(corsOptions));
+const io = new socket_io_1.Server(server, {
+    cors: cors_config_1.default
+});
+app.use((0, cors_1.default)(cors_config_1.default));
 app.use(express_1.default.static(`${__dirname}/assets`));
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
-(0, sequelize_1.openConnection)().then(() => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("open connection!");
-})).catch((err) => {
-    console.error(err.message);
-});
 app.use('/api', index_1.default);
+(0, sequelize_1.openConnection)()
+    .then(() => __awaiter(void 0, void 0, void 0, function* () { return console.log("open connection!"); }))
+    .catch((err) => console.error(err.message));
+io.on("connection", (socket) => (0, onConnection_1.default)(io, socket));
 (0, sequelize_1.sync)(sequelize_1.default).then((sequelize) => {
-    app.listen(port, () => {
+    server.listen(port, () => {
         console.log(`Server is listening port ${port}`);
     });
 }).catch((err) => {
