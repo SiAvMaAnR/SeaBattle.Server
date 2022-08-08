@@ -1,11 +1,10 @@
 import { Server, Socket } from "socket.io";
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import testHandlers from "./handlers/testHandlers";
+import seaBattleHandlers from "./handlers/seaBattleHandlers";
 
 
 const onConnection = (io, socket: Socket) => {
 
-    testHandlers(io, socket);
+    seaBattleHandlers(io, socket);
 }
 
 export default onConnection;
