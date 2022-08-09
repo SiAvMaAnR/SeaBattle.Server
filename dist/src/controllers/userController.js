@@ -12,43 +12,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sequelize_1 = __importDefault(require("../sequelize/sequelize"));
-const userRepository_1 = __importDefault(require("../repositories/userRepository"));
 const baseController_1 = __importDefault(require("./baseController"));
-const gameStatRepository_1 = __importDefault(require("../repositories/gameStatRepository"));
+const userService_1 = __importDefault(require("../services/userService"));
 class UserController extends baseController_1.default {
     constructor() {
         super();
-        this.userRepository = new userRepository_1.default(sequelize_1.default);
-        this.statisticRepository = new gameStatRepository_1.default(sequelize_1.default);
+        this.userService = new userService_1.default();
         this.getUsers = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const users = yield this.userRepository.getAll();
-            return res.status(200).send({ data: "getUsers", users: users });
+            const users = yield this.userService.getUsers();
+            return (users)
+                ? res.status(200).send({ data: users, message: "Success!" })
+                : res.status(404).send({ data: users, message: "Users is not found!" });
         });
         this.getUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userRepository.getOne(11);
-            return res.status(200).send({ data: "getUser", user: user });
+            const id = parseInt(req.params.id);
+            const user = yield this.userService.getUserById(id);
+            return (user)
+                ? res.status(200).send({ data: user, message: "Success!" })
+                : res.status(404).send({ data: user, message: "User is not found!" });
         });
         this.addUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userRepository.create({
-                login: "login",
-                password: "password"
+            const user = yield this.userService.addUser({
+                login: req.body.login,
+                password: req.body.password
             });
-            yield this.statisticRepository.create({
-                moveCount: 10,
-                isWin: true,
-                killed: 10,
-                lost: 8,
-                userId: user.id
-            });
-            return res.status(200).send({ data: "addUser" });
-        });
-        this.updateUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            return res.status(200).send({ data: "updateUser" });
+            return (user)
+                ? res.status(200).send({ data: user, message: "Success!" })
+                : res.status(400).send({ data: user, message: "User not added!" });
         });
         this.deleteUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const result = this.userRepository.delete(4);
-            return res.status(200).send({ data: "deleteUser" });
+            const id = parseInt(req.params.id);
+            const isDeleted = this.userService.deleteUserById(id);
+            return (isDeleted)
+                ? res.status(200).send({ message: "Success!" })
+                : res.status(400).send({ message: "User not deleted!" });
         });
     }
 }

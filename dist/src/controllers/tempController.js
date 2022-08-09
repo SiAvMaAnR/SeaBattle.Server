@@ -15,14 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importDefault(require("../sequelize/sequelize"));
 const baseController_1 = __importDefault(require("./baseController"));
 const gameStatRepository_1 = __importDefault(require("../repositories/gameStatRepository"));
-const seaBattleService_1 = __importDefault(require("../services/seaBattleService"));
+const gameService_1 = __importDefault(require("../services/gameService"));
 class TempController extends baseController_1.default {
     constructor() {
         super();
         this.statisticRepository = new gameStatRepository_1.default(sequelize_1.default);
         this.test1 = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const service = new seaBattleService_1.default();
-            const battleground = service.getBattleground();
+            const service = new gameService_1.default();
+            const battleground = service.getMyField();
             return res.status(200).send({
                 battleground: battleground,
             });

@@ -7,15 +7,13 @@ import "dotenv/config";
 import onConnection from './src/socket_io/onConnection';
 import corsConfig from './src/cors/cors.config';
 import cors from 'cors';
-import socketInit from './src/socket_io/socket';
+import ioInit from './src/socket_io/socket';
 
 const app = express();
 const server = createServer(app);
 const port: number = parseInt(process.env.PORT) || 3000;
 
-
-const io = socketInit(server);
-
+const io = ioInit(server);
 
 app.use(cors(corsConfig));
 app.use(express.static(`${__dirname}/assets`));

@@ -2,56 +2,59 @@ import sequelize from "../sequelize/sequelize";
 import UserRepository from "../repositories/userRepository";
 import BaseController from "./baseController";
 import StatisticRepository from "../repositories/gameStatRepository";
+import UserService from "../services/userService";
+import { User } from "../models";
+import { Request, Response } from 'express';
 
 class UserController extends BaseController {
-    private userRepository: UserRepository = new UserRepository(sequelize);
-    private statisticRepository: StatisticRepository = new StatisticRepository(sequelize);
+    private userService = new UserService();
 
     constructor() {
         super();
     }
 
-    public getUsers = async (req, res) => {
+    public getUsers = async (req: Request, res: Response) => {
 
-        const users = await this.userRepository.getAll();
+        const users = await this.userService.getUsers();
 
-
-        return res.status(200).send({ data: "getUsers", users: users });
+        return (users)
+            ? res.status(200).send({ data: users, message: "Success!" })
+            : res.status(404).send({ data: users, message: "Users is not found!" })
     };
 
-    public getUser = async (req, res) => {
-        const user = await this.userRepository.getOne(11);
+    public getUser = async (req: Request, res: Response) => {
 
-        return res.status(200).send({ data: "getUser", user: user });
+        const id = parseInt(req.params.id);
+
+        const user = await this.userService.getUserById(id);
+
+        return (user)
+            ? res.status(200).send({ data: user, message: "Success!" })
+            : res.status(404).send({ data: user, message: "User is not found!" })
     };
 
-    public addUser = async (req, res) => {
+    public addUser = async (req: Request, res: Response) => {
 
-        const user = await this.userRepository.create({
-            login: "login",
-            password: "password"
+        const user = await this.userService.addUser({
+            login: req.body.login,
+            password: req.body.password
         });
 
-        await this.statisticRepository.create({
-            moveCount: 10,
-            isWin: true,
-            killed: 10,
-            lost: 8,
-            userId: user.id
-        });
-
-        return res.status(200).send({ data: "addUser" });
+        return (user)
+            ? res.status(200).send({ data: user, message: "Success!" })
+            : res.status(400).send({ data: user, message: "User not added!" });
     };
 
 
-    public updateUser = async (req, res) => {
-        return res.status(200).send({ data: "updateUser" });
-    };
 
+    public deleteUser = async (req: Request, res: Response) => {
 
-    public deleteUser = async (req, res) => {
-        const result = this.userRepository.delete(4);
-        return res.status(200).send({ data: "deleteUser" });
+        const id = parseInt(req.params.id);
+        const isDeleted = this.userService.deleteUserById(id);
+
+        return (isDeleted)
+            ? res.status(200).send({ message: "Success!" })
+            : res.status(400).send({ message: "User not deleted!" });
     };
 }
 

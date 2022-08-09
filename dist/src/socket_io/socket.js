@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const socket_io_1 = require("socket.io");
 const cors_config_1 = __importDefault(require("../cors/cors.config"));
-const socketInit = (server) => {
-    const socket = new socket_io_1.Server(server, {
+const ioInit = (server) => {
+    const io = new socket_io_1.Server(server, {
         cors: cors_config_1.default
     });
-    return socket;
+    return io;
 };
-exports.default = socketInit;
+exports.default = ioInit;
 //# sourceMappingURL=socket.js.map

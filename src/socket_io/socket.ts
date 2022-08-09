@@ -1,12 +1,12 @@
 import { Server } from 'socket.io';
 import corsConfig from '../cors/cors.config';
 
-const socketInit = (server) => {
-    const socket = new Server(server, {
+const ioInit = (server) => {
+    const io = new Server(server, {
         cors: corsConfig
     });
 
-    return socket;
+    return io;
 }
 
-export default socketInit;
+export default ioInit;

@@ -2,6 +2,7 @@ import { Model, Repository } from "sequelize-typescript";
 import IWrite from "../interfaces/repositories/IWrite";
 import IRead from "../interfaces/repositories/IRead";
 import IEntity from "../interfaces/models/IEntity";
+import { MakeNullishOptional } from "sequelize/types/utils";
 
 abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<TEntity>, IRead<TEntity> {
 
@@ -10,13 +11,13 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
     constructor(repository: Repository<TEntity>) {
         this.repository = repository;
     }
-    
-    public async create(entity): Promise<TEntity> {
+
+    public async create(entity: MakeNullishOptional<TEntity["_creationAttributes"]>): Promise<TEntity> {
         try {
             return await this.repository.create<TEntity>(entity);
         }
         catch (err) {
-            throw err;
+            return null;
         }
     }
 
@@ -29,29 +30,27 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
             });
         }
         catch (err) {
-            throw err;
+            return null;
         }
     }
 
-    public async getAll(): Promise<TEntity[]>;
-    public async getAll(fn: Function): Promise<TEntity[]>;
-    public async getAll(arg?: unknown): Promise<TEntity[]> {
+    public async getAll(fn?: Function): Promise<TEntity[]> {
         try {
             const users = await this.repository.findAll();
 
-            return (arg && arg instanceof Function)
-                ? users.filter((el) => arg(el))
+            return (fn)
+                ? users.filter((el) => fn(el))
                 : users;
         }
         catch (err) {
-            throw err;
+            return null;
         }
     }
 
 
-    public async delete(entity: TEntity): Promise<void>;
-    public async delete(id: number): Promise<void>;
-    public async delete(arg: unknown): Promise<void> {
+    public async delete(entity: TEntity): Promise<boolean>;
+    public async delete(id: number): Promise<boolean>;
+    public async delete(arg: unknown): Promise<boolean> {
         try {
             if (arg instanceof Model<IEntity>) {
                 await arg.destroy();
@@ -60,9 +59,10 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
                 const item = await this.getOne(arg);
                 await item.destroy();
             }
+            return true;
         }
         catch (err) {
-            throw err;
+            return false;
         }
     }
 

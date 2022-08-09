@@ -19,7 +19,6 @@ const userController = new userController_1.default();
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.getUsers(req, res); }));
 router.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.getUser(req, res); }));
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.addUser(req, res); }));
-router.put('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.updateUser(req, res); }));
 router.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield userController.deleteUser(req, res); }));
 exports.default = router;
 //# sourceMappingURL=userRoutes.js.map

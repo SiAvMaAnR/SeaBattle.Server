@@ -1,6 +1,7 @@
 import sequelize from "../sequelize/sequelize";
 import BaseController from "./baseController";
 import StatisticRepository from "../repositories/gameStatRepository";
+import { Request, Response } from "express";
 
 class StatisticController extends BaseController {
     private statisticRepository: StatisticRepository = new StatisticRepository(sequelize);
@@ -9,7 +10,7 @@ class StatisticController extends BaseController {
         super();
     }
 
-    public getStatistics = async (req, res) => {
+    public getStatistics = async (req: Request, res: Response) => {
 
         const statistics = await this.statisticRepository.getAll();
 

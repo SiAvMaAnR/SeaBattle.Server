@@ -1,1 +1,1 @@
-{"version":3,"file":"onConnection.js","sourceRoot":"","sources":["../../../src/socket_io/onConnection.ts"],"names":[],"mappings":";;;;;AACA,qFAA6D;AAG7D,MAAM,YAAY,GAAG,CAAC,EAAE,EAAE,MAAc,EAAE,EAAE;IACxC,IAAA,2BAAiB,EAAC,EAAE,EAAE,MAAM,CAAC,CAAC;AAClC,CAAC,CAAA;AAED,kBAAe,YAAY,CAAC"}
+{"version":3,"file":"onConnection.js","sourceRoot":"","sources":["../../../src/socket_io/onConnection.ts"],"names":[],"mappings":";;;;;AAEA,2EAAwD;AAGxD,MAAM,YAAY,GAAG,CAAC,EAAqE,EAAE,MAAc,EAAE,EAAE;IAC3G,IAAA,sBAAiB,EAAC,EAAE,EAAE,MAAM,CAAC,CAAC;AAClC,CAAC,CAAA;AAED,kBAAe,YAAY,CAAC"}

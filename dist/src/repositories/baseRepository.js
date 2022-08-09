@@ -20,7 +20,7 @@ class BaseRepository {
                 return yield this.repository.create(entity);
             }
             catch (err) {
-                throw err;
+                return null;
             }
         });
     }
@@ -34,20 +34,20 @@ class BaseRepository {
                 });
             }
             catch (err) {
-                throw err;
+                return null;
             }
         });
     }
-    getAll(arg) {
+    getAll(fn) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const users = yield this.repository.findAll();
-                return (arg && arg instanceof Function)
-                    ? users.filter((el) => arg(el))
+                return (fn)
+                    ? users.filter((el) => fn(el))
                     : users;
             }
             catch (err) {
-                throw err;
+                return null;
             }
         });
     }
@@ -61,9 +61,10 @@ class BaseRepository {
                     const item = yield this.getOne(arg);
                     yield item.destroy();
                 }
+                return true;
             }
             catch (err) {
-                throw err;
+                return false;
             }
         });
     }
