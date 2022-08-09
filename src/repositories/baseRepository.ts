@@ -11,7 +11,7 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
         this.repository = repository;
     }
     
-    public async create(entity: any): Promise<TEntity> {
+    public async create(entity): Promise<TEntity> {
         try {
             return await this.repository.create<TEntity>(entity);
         }

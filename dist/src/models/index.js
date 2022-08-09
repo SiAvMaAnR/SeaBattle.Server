@@ -6,6 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Statistic = exports.User = void 0;
 const user_1 = __importDefault(require("./user"));
 exports.User = user_1.default;
-const statistic_1 = __importDefault(require("./statistic"));
-exports.Statistic = statistic_1.default;
+const gameStat_1 = __importDefault(require("./gameStat"));
+exports.Statistic = gameStat_1.default;
 //# sourceMappingURL=index.js.map

@@ -8,9 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
-const index_1 = require("./index");
+const gameStat_1 = __importDefault(require("./gameStat"));
 let User = class User extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -21,23 +24,20 @@ __decorate([
 ], User.prototype, "id", void 0);
 __decorate([
     sequelize_typescript_1.NotEmpty,
+    (0, sequelize_typescript_1.AllowNull)(false),
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], User.prototype, "login", void 0);
 __decorate([
     sequelize_typescript_1.NotEmpty,
+    (0, sequelize_typescript_1.AllowNull)(false),
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => index_1.Statistic),
-    sequelize_typescript_1.Column,
-    __metadata("design:type", Number)
-], User.prototype, "statisticId", void 0);
-__decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => index_1.Statistic),
-    __metadata("design:type", index_1.Statistic)
-], User.prototype, "statistic", void 0);
+    (0, sequelize_typescript_1.HasMany)(() => gameStat_1.default),
+    __metadata("design:type", Array)
+], User.prototype, "gameStatistics", void 0);
 User = __decorate([
     (0, sequelize_typescript_1.Table)({
         tableName: "users",

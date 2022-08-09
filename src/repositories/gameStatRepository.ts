@@ -3,11 +3,11 @@ import { Statistic } from "../models";
 import { Sequelize } from "sequelize-typescript";
 
 
-class StatisticRepository extends BaseRepository<Statistic> {
+class GameStatRepository extends BaseRepository<Statistic> {
 
     public constructor(sequelize: Sequelize) {
         super(sequelize.getRepository(Statistic));
     }
 }
 
-export default StatisticRepository;
+export default GameStatRepository;

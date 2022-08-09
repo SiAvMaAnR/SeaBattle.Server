@@ -14,11 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importDefault(require("../sequelize/sequelize"));
 const baseController_1 = __importDefault(require("./baseController"));
-const statisticRepository_1 = __importDefault(require("../repositories/statisticRepository"));
+const gameStatRepository_1 = __importDefault(require("../repositories/gameStatRepository"));
 class StatisticController extends baseController_1.default {
     constructor() {
         super();
-        this.statisticRepository = new statisticRepository_1.default(sequelize_1.default);
+        this.statisticRepository = new gameStatRepository_1.default(sequelize_1.default);
         this.getStatistics = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const statistics = yield this.statisticRepository.getAll();
             return res.status(200).send({ data: "getStatistics", statistics: statistics });

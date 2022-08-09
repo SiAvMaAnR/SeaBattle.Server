@@ -38,18 +38,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./src/routes/index"));
 const sequelize_1 = __importStar(require("./src/sequelize/sequelize"));
-const socket_io_1 = require("socket.io");
 const http_1 = require("http");
 require("dotenv/config");
 const onConnection_1 = __importDefault(require("./src/socket_io/onConnection"));
-const cors_config_1 = __importDefault(require("./src/cors.config"));
+const cors_config_1 = __importDefault(require("./src/cors/cors.config"));
 const cors_1 = __importDefault(require("cors"));
+const socket_1 = __importDefault(require("./src/socket_io/socket"));
 const app = (0, express_1.default)();
 const server = (0, http_1.createServer)(app);
 const port = parseInt(process.env.PORT) || 3000;
-const io = new socket_io_1.Server(server, {
-    cors: cors_config_1.default
-});
+const io = (0, socket_1.default)(server);
 app.use((0, cors_1.default)(cors_config_1.default));
 app.use(express_1.default.static(`${__dirname}/assets`));
 app.use(express_1.default.urlencoded({ extended: false }));

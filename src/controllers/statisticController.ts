@@ -1,7 +1,6 @@
 import sequelize from "../sequelize/sequelize";
-import UserRepository from "../repositories/userRepository";
 import BaseController from "./baseController";
-import StatisticRepository from "../repositories/statisticRepository";
+import StatisticRepository from "../repositories/gameStatRepository";
 
 class StatisticController extends BaseController {
     private statisticRepository: StatisticRepository = new StatisticRepository(sequelize);

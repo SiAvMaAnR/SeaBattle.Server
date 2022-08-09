@@ -1,8 +1,8 @@
 import BaseService from "./baseService";
 
 
-class UserService extends BaseService{
+class StatisticService extends BaseService{
     
 }
 
-export default UserService;
+export default StatisticService;

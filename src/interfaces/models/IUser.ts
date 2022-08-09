@@ -1,9 +1,10 @@
+import GameStat from "../../models/gameStat";
 import IEntity from "./IEntity";
 
 interface IUser extends IEntity {
     login: string,
     password: string,
-    statisticId: number
+    gameStatistics: GameStat[]
 }
 
 export default IUser;
