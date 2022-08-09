@@ -5,27 +5,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const gameData_1 = __importDefault(require("./gameData"));
 class Game {
-    constructor() { }
-    init(roomId) {
+    constructor(roomId) {
+        this.getRoom = () => {
+            return this.gameData.getRoomId();
+        };
+        this.start = () => {
+        };
+        this.addShips = (coordinates) => {
+            const field = this.gameData.getMyField();
+            coordinates.forEach(c => field[c.y][c.x] = 1 /* Cell.Added */);
+        };
+        this.getMyField = () => {
+            const field = this.gameData.getMyField();
+            return field.get();
+        };
+        this.getEnemyField = () => {
+            const field = this.gameData.getEnemyField();
+            return field.get();
+        };
         this.gameData = new gameData_1.default(roomId);
-    }
-    // public getData(): GameData {
-    //     return this.gameData;
-    // }
-    getRoom() {
-        return this.gameData.getRoomId();
-    }
-    start() {
-    }
-    setPositionShips() {
-    }
-    getMyField() {
-        const field = this.gameData.getMyField();
-        return field.get();
-    }
-    getEnemyField() {
-        const field = this.gameData.getEnemyField();
-        return field.get();
     }
 }
 exports.default = Game;

@@ -11,9 +11,9 @@ const gameHandlers = (io, socket) => {
         // socket.emit(`${isHit}`);
     });
     socket.on("battle:join", (roomId) => {
-        const room = gameService.createGame()
-            .initGame(roomId)
-            .getRoomId();
+        gameService.newGame(roomId);
+        const room = gameService.getRoomId();
+        console.log(room);
         socket.join(room);
         const countSocketsInRoom = io.sockets.adapter.rooms.get(room).size;
         io.to(room).emit("battle:join", `${countSocketsInRoom}`);

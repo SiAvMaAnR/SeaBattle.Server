@@ -7,21 +7,19 @@ import GameService from "../../services/gameService";
 const gameHandlers = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>, socket: Socket) => {
     const gameService = new GameService();
 
-    socket.on("battle:shot", (y: number, x: number) => {
-        // const isHit = gameService.shot({ y, x });
-        // socket.emit(`${isHit}`);
-    });
+    socket.on("battle:create", (roomId: string) => {
 
-    socket.on("battle:join", (roomId: string) => {
+        const countSocketsInRoom = io.sockets.adapter.rooms.get(roomId).size;
 
+        if(countSocketsInRoom > 1){
+            socket.emit("battle:create", "");
+        }
 
-        const room = gameService.createGame()
-            .initGame(roomId)
-            .getRoomId();
+        const room = gameService.newGame(roomId).getRoomId();
 
         socket.join(room);
 
-        const countSocketsInRoom = io.sockets.adapter.rooms.get(room).size;
+        
         io.to(room).emit("battle:join", `${countSocketsInRoom}`);
         io.to(room).emit("battle:join", room);
     });
@@ -31,13 +29,7 @@ const gameHandlers = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEven
         io.to(room).emit("battle:test", "OK");
     });
 
-    socket.on("battle:turn", (data) => {
 
-    });
-
-    socket.on("battle:end", (data) => {
-
-    });
 }
 
 export default gameHandlers;

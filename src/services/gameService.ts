@@ -5,27 +5,19 @@ import Game from "../seaBattle/game";
 
 class GameService extends BaseService {
 
-    private game: Game = null;
+    private game: Game = new Game("");
 
     constructor() {
         super();
     }
 
-
-    
-
-    public createGame = (): this => {
-        this.game = new Game();
+    public newGame = (roomId: string): this => {
+        this.game = new Game(roomId);
         return this;
     }
 
-    public getRoomId(){
+    public getRoomId = (): string => {
         return this.game.getRoom();
-    }
-
-    public initGame = (roomId: string): this => {
-        this.game.init(roomId);
-        return this;
     }
 
     public startGame = (): this => {
@@ -39,6 +31,11 @@ class GameService extends BaseService {
 
     public getEnemyField = (): number[][] => {
         return this.game.getEnemyField();
+    }
+
+    public addShip = (coordinates: ICoordinate[]): this => {
+        this.game.addShips(coordinates);
+        return this;
     }
 
     public editMyField = (cell: Cell, { y, x }: ICoordinate): this => {

@@ -4,7 +4,7 @@ import MyFieldData from "./myField";
 class GameData {
     private myField: MyFieldData = new MyFieldData();
     private enemyField: EnemyFieldData = new EnemyFieldData();
-    private roomId: string;
+    private roomId: string = "";
 
     constructor(roomId: string) {
         this.roomId = roomId;
