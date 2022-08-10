@@ -28,7 +28,7 @@ const gameHandlers = ({ io, socket, gameService }: {
         gameService.createGame(roomId, "user");
         socket.join(roomId);
         socket.emit("rooms:join", true, "Success!");
-    };
+    }
 
     const leaveRoom = (roomId: string) => {
 
@@ -54,6 +54,8 @@ const gameHandlers = ({ io, socket, gameService }: {
 
         socket.emit("rooms:get:current", room);
     }
+
+
 
     socket.on("rooms:join", joinRoom);
     socket.on("rooms:leave", leaveRoom);

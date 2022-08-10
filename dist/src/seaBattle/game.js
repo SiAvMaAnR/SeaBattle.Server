@@ -14,10 +14,6 @@ class Game {
     getRoom() {
         return this.gameData.getRoomId();
     }
-    start() {
-    }
-    end() {
-    }
     getMyField() {
         return this.gameData.getMyField();
     }

@@ -9,6 +9,10 @@ class GameService extends baseService_1.default {
     constructor() {
         super();
         this.game = null;
+        this.getCell = (y, x) => {
+            var _a;
+            return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().getCell(y, x);
+        };
     }
     createGame(roomId, nickName) {
         this.game = new game_1.default(roomId, nickName);
@@ -22,11 +26,6 @@ class GameService extends baseService_1.default {
         var _a;
         return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getRoom();
     }
-    startGame() {
-        var _a;
-        (_a = this.game) === null || _a === void 0 ? void 0 : _a.start();
-        return this;
-    }
     getMyFieldArr() {
         var _a;
         return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().getArr();
@@ -35,9 +34,12 @@ class GameService extends baseService_1.default {
         var _a;
         return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().getArr();
     }
-    addShip(y, x) {
+    addShips(coordinates) {
         var _a;
-        (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().add(y, x);
+        const field = (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField();
+        if (field) {
+            coordinates.forEach(c => field.add(c.y, c.x));
+        }
         return this;
     }
     editMyField(cell, y, x) {

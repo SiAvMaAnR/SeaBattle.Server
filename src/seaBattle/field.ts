@@ -38,6 +38,10 @@ abstract class Field {
         }
     }
 
+    public getCell(y: number, x: number) {
+        return this.field[y][x];
+    }
+
 }
 
 export default Field;

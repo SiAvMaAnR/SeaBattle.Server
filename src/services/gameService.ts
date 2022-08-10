@@ -1,6 +1,7 @@
 import BaseService from "./baseService";
 import Cell from "../enums/cell";
 import Game from "../seaBattle/game";
+import Coordinate from "../types/coordinate";
 
 class GameService extends BaseService {
 
@@ -24,10 +25,6 @@ class GameService extends BaseService {
         return this.game?.getRoom();
     }
 
-    public startGame(): this {
-        this.game?.start();
-        return this;
-    }
 
     public getMyFieldArr(): number[][] {
         return this.game?.getMyField().getArr();
@@ -37,8 +34,12 @@ class GameService extends BaseService {
         return this.game?.getEnemyField().getArr();
     }
 
-    public addShip(y: number, x: number): this {
-        this.game?.getMyField().add(y, x);
+    public addShips(coordinates: Coordinate[]): this {
+        const field = this.game?.getMyField();
+
+        if (field) {
+            coordinates.forEach(c => field.add(c.y, c.x));
+        }
         return this;
     }
 
@@ -52,32 +53,9 @@ class GameService extends BaseService {
         return this;
     }
 
-    // public getCell = ({ y, x }: ICoordinate): Cell => {
-    //     return this.battleground[y][x];
-    // }
-
-
-
-    // public removeShip = ({ y, x }: ICoordinate) => {
-    //     this.battleground[y][x] = Cell.Empty;
-    // }
-
-    // public addShip = ({ y, x }: ICoordinate) => {
-    //     this.battleground[y][x] = Cell.Added;
-    // }
-
-    // public shot = ({ y, x }: ICoordinate): boolean => {
-    //     return this.getCell({ y, x }) == 1;
-    // }
-
-    // public missShip = ({ y, x }: ICoordinate) => {
-    //     this.battleground[y][x] = Cell.Missed;
-    // }
-
-    // public killShip = ({ y, x }: ICoordinate) => {
-    //     this.battleground[y][x] = Cell.Killed;
-    // }
-
+    public getCell = (y: number, x: number): Cell => {
+        return this.game?.getEnemyField().getCell(y, x);
+    }
 }
 
 export default GameService;

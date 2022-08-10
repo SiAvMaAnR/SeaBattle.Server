@@ -30,6 +30,9 @@ class Field {
             this.field[y][x] = 1 /* Cell.Added */;
         }
     }
+    getCell(y, x) {
+        return this.field[y][x];
+    }
 }
 exports.default = Field;
 //# sourceMappingURL=field.js.map

@@ -20,15 +20,6 @@ class Game {
         return this.gameData.getRoomId();
     }
 
-    public start() {
-
-    }
-
-    public end() {
-
-    }
-
-
     public getMyField(): MyField {
         return this.gameData.getMyField();
     }
