@@ -8,35 +8,46 @@ const game_1 = __importDefault(require("../seaBattle/game"));
 class GameService extends baseService_1.default {
     constructor() {
         super();
-        this.game = new game_1.default("");
+        this.game = null;
     }
-    newGame(roomId) {
-        this.game = new game_1.default(roomId);
+    createGame(roomId, nickName) {
+        this.game = new game_1.default(roomId, nickName);
+        return this;
+    }
+    deleteGame() {
+        this.game = null;
         return this;
     }
     getRoomId() {
-        return this.game.getRoom();
+        var _a;
+        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getRoom();
     }
     startGame() {
-        this.game.start();
+        var _a;
+        (_a = this.game) === null || _a === void 0 ? void 0 : _a.start();
         return this;
     }
     getMyFieldArr() {
-        return this.game.getMyField().getArr();
+        var _a;
+        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().getArr();
     }
     getEnemyFieldArr() {
-        return this.game.getEnemyField().getArr();
+        var _a;
+        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().getArr();
     }
     addShip(y, x) {
-        this.game.getMyField().add(y, x);
+        var _a;
+        (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().add(y, x);
         return this;
     }
     editMyField(cell, y, x) {
-        this.game.getMyField().edit(cell, y, x);
+        var _a;
+        (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().edit(cell, y, x);
         return this;
     }
     editEnemyField(cell, y, x) {
-        this.game.getEnemyField().edit(cell, y, x);
+        var _a;
+        (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().edit(cell, y, x);
         return this;
     }
 }

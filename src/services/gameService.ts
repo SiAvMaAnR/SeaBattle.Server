@@ -4,46 +4,51 @@ import Game from "../seaBattle/game";
 
 class GameService extends BaseService {
 
-    private game: Game = new Game("");
+    private game: Game = null;
 
     constructor() {
         super();
     }
 
-    public newGame(roomId: string): this {
-        this.game = new Game(roomId);
+    public createGame(roomId: string, nickName: string): this {
+        this.game = new Game(roomId, nickName);
+        return this;
+    }
+
+    public deleteGame(): this {
+        this.game = null;
         return this;
     }
 
     public getRoomId(): string {
-        return this.game.getRoom();
+        return this.game?.getRoom();
     }
 
     public startGame(): this {
-        this.game.start();
+        this.game?.start();
         return this;
     }
 
     public getMyFieldArr(): number[][] {
-        return this.game.getMyField().getArr();
+        return this.game?.getMyField().getArr();
     }
 
     public getEnemyFieldArr(): number[][] {
-        return this.game.getEnemyField().getArr();
+        return this.game?.getEnemyField().getArr();
     }
 
     public addShip(y: number, x: number): this {
-        this.game.getMyField().add(y, x);
+        this.game?.getMyField().add(y, x);
         return this;
     }
 
     public editMyField(cell: Cell, y: number, x: number): this {
-        this.game.getMyField().edit(cell, y, x);
+        this.game?.getMyField().edit(cell, y, x);
         return this;
     }
 
     public editEnemyField(cell: Cell, y: number, x: number): this {
-        this.game.getEnemyField().edit(cell, y, x);
+        this.game?.getEnemyField().edit(cell, y, x);
         return this;
     }
 

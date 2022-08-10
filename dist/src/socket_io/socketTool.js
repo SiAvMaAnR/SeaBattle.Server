@@ -9,6 +9,12 @@ class SocketTool {
         var _a;
         return ((_a = this.io.sockets.adapter.rooms.get(roomId)) === null || _a === void 0 ? void 0 : _a.size) || 0;
     }
+    getRooms() {
+        return this.io.sockets.adapter.rooms;
+    }
+    getSocketsInRoom(roomId) {
+        return this.io.sockets.adapter.rooms[roomId].sockets;
+    }
 }
 exports.default = SocketTool;
 //# sourceMappingURL=socketTool.js.map

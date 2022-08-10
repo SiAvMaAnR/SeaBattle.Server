@@ -7,12 +7,14 @@ import MyGameData from "./myField";
 
 class Game {
     private gameData: GameData;
-    private nickName: string;
 
-    constructor(roomId: string) {
-        this.gameData = new GameData(roomId);
+    constructor(roomId: string, nickName: string) {
+        this.gameData = new GameData(roomId, nickName);
     }
 
+    public getName(): string {
+        return this.gameData.getName();
+    }
 
     public getRoom(): string {
         return this.gameData.getRoomId();
@@ -22,8 +24,8 @@ class Game {
 
     }
 
-    public end(){
-        
+    public end() {
+
     }
 
 

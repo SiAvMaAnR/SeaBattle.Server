@@ -1,4 +1,4 @@
-import { Server, Socket } from "socket.io";
+import { Namespace, Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
 class SocketTool {
@@ -17,8 +17,12 @@ class SocketTool {
         return this.io.sockets.adapter.rooms.get(roomId)?.size || 0;
     }
 
-    public getFreeRooms() {
+    public getRooms(): Map<string, Set<string>> {
         return this.io.sockets.adapter.rooms;
+    }
+
+    public getSocketsInRoom(roomId: string): Namespace<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any> {
+        return this.io.sockets.adapter.rooms[roomId].sockets;
     }
 
 
