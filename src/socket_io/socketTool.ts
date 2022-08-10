@@ -17,8 +17,20 @@ class SocketTool {
         return this.io.sockets.adapter.rooms.get(roomId)?.size || 0;
     }
 
-    public getRooms(): Map<string, Set<string>> {
-        return this.io.sockets.adapter.rooms;
+    public getRooms() {
+
+        const allRooms = Array.from(this.io.sockets.adapter.rooms);
+        const activeRooms = allRooms.filter(room => !room[1].has(room[0]));
+
+
+        const result = activeRooms.map(i => {
+            return {
+                room: i[0],
+                count: i[1]?.size
+            }
+        });
+
+        return result;
     }
 
     public getSocketsInRoom(roomId: string): Namespace<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any> {

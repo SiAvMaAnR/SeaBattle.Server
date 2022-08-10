@@ -10,7 +10,16 @@ class SocketTool {
         return ((_a = this.io.sockets.adapter.rooms.get(roomId)) === null || _a === void 0 ? void 0 : _a.size) || 0;
     }
     getRooms() {
-        return this.io.sockets.adapter.rooms;
+        const allRooms = Array.from(this.io.sockets.adapter.rooms);
+        const activeRooms = allRooms.filter(room => !room[1].has(room[0]));
+        const result = activeRooms.map(i => {
+            var _a;
+            return {
+                room: i[0],
+                count: (_a = i[1]) === null || _a === void 0 ? void 0 : _a.size
+            };
+        });
+        return result;
     }
     getSocketsInRoom(roomId) {
         return this.io.sockets.adapter.rooms[roomId].sockets;
