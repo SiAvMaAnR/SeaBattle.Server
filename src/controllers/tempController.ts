@@ -15,7 +15,7 @@ class TempController extends BaseController {
     public test1 = async (req: Request, res: Response) => {
         const service = new MySeaBattleService();
 
-        const battleground = service.getMyField();
+        const battleground = service.getMyFieldArr();
 
 
 

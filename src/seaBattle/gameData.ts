@@ -1,20 +1,20 @@
-import EnemyFieldData from "./enemyField";
-import MyFieldData from "./myField";
+import EnemyField from "./enemyField";
+import MyField from "./myField";
 
 class GameData {
-    private myField: MyFieldData = new MyFieldData();
-    private enemyField: EnemyFieldData = new EnemyFieldData();
-    private roomId: string = "";
+    private myField: MyField = new MyField();
+    private enemyField: EnemyField = new EnemyField();
+    private roomId: string = "queue";
 
     constructor(roomId: string) {
         this.roomId = roomId;
     }
 
-    public getMyField(): MyFieldData {
+    public getMyField(): MyField {
         return this.myField;
     }
 
-    public getEnemyField(): EnemyFieldData {
+    public getEnemyField(): EnemyField {
         return this.enemyField;
     }
 

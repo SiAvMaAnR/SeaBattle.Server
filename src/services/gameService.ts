@@ -1,6 +1,5 @@
 import BaseService from "./baseService";
 import Cell from "../enums/cell";
-import ICoordinate from "../interfaces/common/ICoordinate";
 import Game from "../seaBattle/game";
 
 class GameService extends BaseService {
@@ -11,42 +10,40 @@ class GameService extends BaseService {
         super();
     }
 
-    public newGame = (roomId: string): this => {
+    public newGame(roomId: string): this {
         this.game = new Game(roomId);
         return this;
     }
 
-    public getRoomId = (): string => {
+    public getRoomId(): string {
         return this.game.getRoom();
     }
 
-    public startGame = (): this => {
+    public startGame(): this {
         this.game.start();
         return this;
     }
 
-    public getMyField = (): number[][] => {
-        return this.game.getMyField();
+    public getMyFieldArr(): number[][] {
+        return this.game.getMyField().getArr();
     }
 
-    public getEnemyField = (): number[][] => {
-        return this.game.getEnemyField();
+    public getEnemyFieldArr(): number[][] {
+        return this.game.getEnemyField().getArr();
     }
 
-    public addShip = (coordinates: ICoordinate[]): this => {
-        this.game.addShips(coordinates);
+    public addShip(y: number, x: number): this {
+        this.game.getMyField().add(y, x);
         return this;
     }
 
-    public editMyField = (cell: Cell, { y, x }: ICoordinate): this => {
-        const field = this.game.getMyField();
-        field[y][x] = cell;
+    public editMyField(cell: Cell, y: number, x: number): this {
+        this.game.getMyField().edit(cell, y, x);
         return this;
     }
 
-    public editEnemyField = (cell: Cell, { y, x }: ICoordinate): this => {
-        const field = this.game.getEnemyField();
-        field[y][x] = cell;
+    public editEnemyField(cell: Cell, y: number, x: number): this {
+        this.game.getEnemyField().edit(cell, y, x);
         return this;
     }
 

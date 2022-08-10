@@ -9,7 +9,7 @@ class GameData {
     constructor(roomId) {
         this.myField = new myField_1.default();
         this.enemyField = new enemyField_1.default();
-        this.roomId = "";
+        this.roomId = "queue";
         this.roomId = roomId;
     }
     getMyField() {
@@ -19,7 +19,7 @@ class GameData {
         return this.enemyField;
     }
     getRoomId() {
-        return this.roomId || "none";
+        return this.roomId;
     }
 }
 exports.default = GameData;

@@ -4,28 +4,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const gameService_1 = __importDefault(require("../../services/gameService"));
+const socketTool_1 = __importDefault(require("../socketTool"));
 const gameHandlers = (io, socket) => {
+    const tool = new socketTool_1.default(io, socket);
     const gameService = new gameService_1.default();
-    socket.on("battle:shot", (y, x) => {
-        // const isHit = gameService.shot({ y, x });
-        // socket.emit(`${isHit}`);
-    });
     socket.on("battle:join", (roomId) => {
-        gameService.newGame(roomId);
-        const room = gameService.getRoomId();
-        console.log(room);
+        if (tool.getCountInRoom(roomId) > 1) {
+            socket.emit("battle:join", "Join: no");
+            return;
+        }
+        const room = gameService.newGame(roomId).getRoomId();
         socket.join(room);
-        const countSocketsInRoom = io.sockets.adapter.rooms.get(room).size;
-        io.to(room).emit("battle:join", `${countSocketsInRoom}`);
-        io.to(room).emit("battle:join", room);
+        socket.emit("battle:join", "Join: yes");
     });
-    socket.on("battle:test", (data) => {
+    socket.on("battle:init", (y, x) => {
+        const field = gameService.addShip(y, x)
+            .getMyFieldArr();
+        socket.emit("battle:init", field);
+    });
+    socket.on("battle:room", (data) => {
         const room = gameService.getRoomId();
-        io.to(room).emit("battle:test", "OK");
-    });
-    socket.on("battle:turn", (data) => {
-    });
-    socket.on("battle:end", (data) => {
+        socket.emit("battle:room", room);
     });
 };
 exports.default = gameHandlers;

@@ -15,8 +15,20 @@ class Field {
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
     }
-    get() {
+    getArr() {
         return this.field;
+    }
+    edit(cell, y, x) {
+        const length = this.field.length;
+        if (y < length && x < length) {
+            this.field[y][x] = cell;
+        }
+    }
+    add(y, x) {
+        const length = this.field.length;
+        if (y < length && x < length) {
+            this.field[y][x] = 1 /* Cell.Added */;
+        }
     }
 }
 exports.default = Field;

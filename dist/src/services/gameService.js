@@ -9,37 +9,35 @@ class GameService extends baseService_1.default {
     constructor() {
         super();
         this.game = new game_1.default("");
-        this.newGame = (roomId) => {
-            this.game = new game_1.default(roomId);
-            return this;
-        };
-        this.getRoomId = () => {
-            return this.game.getRoom();
-        };
-        this.startGame = () => {
-            this.game.start();
-            return this;
-        };
-        this.getMyField = () => {
-            return this.game.getMyField();
-        };
-        this.getEnemyField = () => {
-            return this.game.getEnemyField();
-        };
-        this.addShip = (coordinates) => {
-            this.game.addShips(coordinates);
-            return this;
-        };
-        this.editMyField = (cell, { y, x }) => {
-            const field = this.game.getMyField();
-            field[y][x] = cell;
-            return this;
-        };
-        this.editEnemyField = (cell, { y, x }) => {
-            const field = this.game.getEnemyField();
-            field[y][x] = cell;
-            return this;
-        };
+    }
+    newGame(roomId) {
+        this.game = new game_1.default(roomId);
+        return this;
+    }
+    getRoomId() {
+        return this.game.getRoom();
+    }
+    startGame() {
+        this.game.start();
+        return this;
+    }
+    getMyFieldArr() {
+        return this.game.getMyField().getArr();
+    }
+    getEnemyFieldArr() {
+        return this.game.getEnemyField().getArr();
+    }
+    addShip(y, x) {
+        this.game.getMyField().add(y, x);
+        return this;
+    }
+    editMyField(cell, y, x) {
+        this.game.getMyField().edit(cell, y, x);
+        return this;
+    }
+    editEnemyField(cell, y, x) {
+        this.game.getEnemyField().edit(cell, y, x);
+        return this;
     }
 }
 exports.default = GameService;
