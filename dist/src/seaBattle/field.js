@@ -27,7 +27,7 @@ class Field {
     add(y, x) {
         const length = this.field.length;
         if (y < length && x < length) {
-            this.field[y][x] = 1 /* Cell.Added */;
+            this.field[y][x] = 1 /* Cell.Exists */;
         }
     }
     getCell(y, x) {

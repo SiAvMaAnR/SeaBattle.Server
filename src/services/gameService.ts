@@ -40,21 +40,26 @@ class GameService extends BaseService {
         if (field) {
             coordinates.forEach(c => field.add(c.y, c.x));
         }
+
         return this;
     }
 
-    public editMyField(cell: Cell, y: number, x: number): this {
-        this.game?.getMyField().edit(cell, y, x);
+    public editMyField(cell: Cell, coordinate: Coordinate): this {
+        this.game?.getMyField().edit(cell, coordinate.y, coordinate.x);
         return this;
     }
 
-    public editEnemyField(cell: Cell, y: number, x: number): this {
-        this.game?.getEnemyField().edit(cell, y, x);
+    public editEnemyField(cell: Cell, coordinate: Coordinate): this {
+        this.game?.getEnemyField().edit(cell, coordinate.y, coordinate.x);
         return this;
     }
 
-    public getCell = (y: number, x: number): Cell => {
-        return this.game?.getEnemyField().getCell(y, x);
+    public getMyCell = (coordinate: Coordinate): Cell => {
+        return this.game?.getMyField().getCell(coordinate.y, coordinate.x);
+    }
+
+    public getEnemyCell = (coordinate: Coordinate): Cell => {
+        return this.game?.getEnemyField().getCell(coordinate.y, coordinate.x);
     }
 }
 

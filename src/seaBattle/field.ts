@@ -34,11 +34,11 @@ abstract class Field {
         const length = this.field.length;
 
         if (y < length && x < length) {
-            this.field[y][x] = Cell.Added;
+            this.field[y][x] = Cell.Exists;
         }
     }
 
-    public getCell(y: number, x: number) {
+    public getCell(y: number, x: number): Cell {
         return this.field[y][x];
     }
 

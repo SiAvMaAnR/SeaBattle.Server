@@ -9,9 +9,13 @@ class GameService extends baseService_1.default {
     constructor() {
         super();
         this.game = null;
-        this.getCell = (y, x) => {
+        this.getMyCell = (coordinate) => {
             var _a;
-            return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().getCell(y, x);
+            return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().getCell(coordinate.y, coordinate.x);
+        };
+        this.getEnemyCell = (coordinate) => {
+            var _a;
+            return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().getCell(coordinate.y, coordinate.x);
         };
     }
     createGame(roomId, nickName) {
@@ -42,14 +46,14 @@ class GameService extends baseService_1.default {
         }
         return this;
     }
-    editMyField(cell, y, x) {
+    editMyField(cell, coordinate) {
         var _a;
-        (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().edit(cell, y, x);
+        (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().edit(cell, coordinate.y, coordinate.x);
         return this;
     }
-    editEnemyField(cell, y, x) {
+    editEnemyField(cell, coordinate) {
         var _a;
-        (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().edit(cell, y, x);
+        (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().edit(cell, coordinate.y, coordinate.x);
         return this;
     }
 }
