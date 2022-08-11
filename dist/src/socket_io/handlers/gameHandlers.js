@@ -13,15 +13,24 @@ const gameHandlers = ({ io, socket, gameService }) => {
     }
     function shootGame(coordinate) {
         const roomId = gameService.getRoomId();
-        socket.to(roomId).emit("game:shoot", coordinate);
+        socket.to(roomId).emit("game:shoot:init", coordinate);
     }
-    function shootResultGame(coordinate) {
+    function shootProcessGame(coordinate) {
         const roomId = gameService.getRoomId();
         const cell = gameService.getMyCell(coordinate);
         const isHit = (cell == 1 /* Cell.Exists */);
-        const newCell = isHit ? 3 /* Cell.Killed */ : 2 /* Cell.Missed */;
-        gameService.editEnemyField(newCell, coordinate);
-        io.to(roomId).emit("game:shoot:result", isHit);
+        io.to(roomId).emit("game:shoot:process", isHit, coordinate);
+    }
+    function shootResultGame(isHit, coordinate) {
+        const isMyMove = gameService.getIsMyMove();
+        const cell = (isHit) ? 3 /* Cell.Killed */ : 2 /* Cell.Missed */;
+        const service = (isMyMove)
+            ? gameService.editEnemyField(cell, coordinate).setIsMyMove(isHit)
+            : gameService.editMyField(cell, coordinate).setIsMyMove(!isHit);
+        socket.emit("game:shoot:result", {
+            myField: service.getMyFieldArr(),
+            enemyField: service.getEnemyFieldArr()
+        });
     }
     function getMyFieldGame() {
         const field = gameService.getMyFieldArr();
@@ -31,11 +40,17 @@ const gameHandlers = ({ io, socket, gameService }) => {
         const field = gameService.getEnemyFieldArr();
         socket.emit("game:field:enemy", field);
     }
+    function getIsMyMove() {
+        const isMyMove = gameService.getIsMyMove();
+        socket.emit("game:move", isMyMove);
+    }
     socket.on("game:field:init", initGame);
     socket.on("game:field:my", getMyFieldGame);
     socket.on("game:field:enemy", getEnemyFieldGame);
-    socket.on("game:shoot", shootGame);
+    socket.on("game:shoot:init", shootGame);
+    socket.on("game:shoot:process", shootProcessGame);
     socket.on("game:shoot:result", shootResultGame);
+    socket.on("game:move", getIsMyMove);
 };
 exports.default = gameHandlers;
 //# sourceMappingURL=gameHandlers.js.map

@@ -19,7 +19,7 @@ const gameHandlers = ({ io, socket, gameService }) => {
         const isFull = tool.getCountInRoom(roomId) > 1;
         const isRoomExists = gameService === null || gameService === void 0 ? void 0 : gameService.getRoomId();
         if (isRoomExists) {
-            socket.emit("rooms:join", false, "Room already exists!");
+            socket.emit("rooms:join", false, "You are already in this room!");
             return;
         }
         if (isFull) {
@@ -29,6 +29,10 @@ const gameHandlers = ({ io, socket, gameService }) => {
         gameService.createGame(roomId, socket.id);
         socket.data.name = gameService.getName();
         socket.join(roomId);
+        //порождает баг
+        if (tool.getCountInRoom(roomId) == 2) {
+            gameService.setIsMyMove(true);
+        }
         io.to(roomId).emit("rooms:join", true, `Success, ${socket.data['name']} join!`);
     }
     function leaveRoom(roomId) {

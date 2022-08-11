@@ -11,8 +11,15 @@ class GameData {
         this.enemyField = new enemyField_1.default();
         this.roomId = "none";
         this.nickName = "none";
+        this.isMyMove = false;
         this.roomId = roomId;
         this.nickName = nickName;
+    }
+    getIsMyMove() {
+        return this.isMyMove;
+    }
+    setIsMyMove(isMyMove) {
+        this.isMyMove = isMyMove;
     }
     getMyField() {
         return this.myField;

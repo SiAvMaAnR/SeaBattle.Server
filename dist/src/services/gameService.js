@@ -10,6 +10,14 @@ class GameService extends baseService_1.default {
         super();
         this.game = null;
     }
+    getIsMyMove() {
+        var _a;
+        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getIsMyMove();
+    }
+    setIsMyMove(isMyMove) {
+        this.game.setIsMyMove(isMyMove);
+        return this;
+    }
     createGame(roomId, nickName) {
         this.game = new game_1.default(roomId, nickName);
         return this;
@@ -19,7 +27,8 @@ class GameService extends baseService_1.default {
         return this;
     }
     getName() {
-        return this.game.getName();
+        var _a;
+        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getName();
     }
     deleteGame() {
         this.game = null;

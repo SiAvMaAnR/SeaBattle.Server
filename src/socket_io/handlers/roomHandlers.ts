@@ -28,6 +28,7 @@ const gameHandlers = ({ io, socket, gameService }: {
         gameService.createGame(roomId, socket.id);
         socket.data.name = gameService.getName();
         socket.join(roomId);
+
         io.to(roomId).emit("rooms:join", true, `Success, ${socket.data['name']} join!`);
     }
 

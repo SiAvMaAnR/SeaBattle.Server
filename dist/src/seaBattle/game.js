@@ -8,6 +8,12 @@ class Game {
     constructor(roomId, nickName) {
         this.gameData = new gameData_1.default(roomId, nickName);
     }
+    getIsMyMove() {
+        return this.gameData.getIsMyMove();
+    }
+    setIsMyMove(isMyMove) {
+        this.gameData.setIsMyMove(isMyMove);
+    }
     getName() {
         return this.gameData.getName();
     }

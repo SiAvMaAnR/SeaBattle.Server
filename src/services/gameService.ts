@@ -11,6 +11,15 @@ class GameService extends BaseService {
         super();
     }
 
+    public getIsMyMove(): boolean {
+        return this.game?.getIsMyMove();
+    }
+
+    public setIsMyMove(isMyMove: boolean): this {
+        this.game.setIsMyMove(isMyMove);
+        return this;
+    }
+
     public createGame(roomId: string, nickName: string): this {
         this.game = new Game(roomId, nickName);
         return this;
@@ -22,7 +31,7 @@ class GameService extends BaseService {
     }
 
     public getName(): string {
-        return this.game.getName();
+        return this.game?.getName();
     }
 
     public deleteGame(): this {

@@ -12,6 +12,14 @@ class Game {
         this.gameData = new GameData(roomId, nickName);
     }
 
+    public getIsMyMove(): boolean {
+        return this.gameData.getIsMyMove();
+    }
+
+    public setIsMyMove(isMyMove: boolean) {
+        this.gameData.setIsMyMove(isMyMove);
+    }
+
     public getName(): string {
         return this.gameData.getName();
     }
