@@ -20,18 +20,9 @@ class GameService extends BaseService {
         return this;
     }
 
-    public createGame(roomId: string, nickName: string): this {
-        this.game = new Game(roomId, nickName);
+    public createGame(roomId: string): this {
+        this.game = new Game(roomId);
         return this;
-    }
-
-    public setName(name: string): this {
-        this.game.setName(name);
-        return this;
-    }
-
-    public getName(): string {
-        return this.game?.getName();
     }
 
     public deleteGame(): this {

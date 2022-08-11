@@ -10,6 +10,8 @@ import roomHandlers from "./handlers/roomHandlers";
 const onConnection = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>, socket: Socket) => {
     const gameService = new GameService();
 
+    socket.data.name = "BOSS";
+
     gameHandlers({io, socket, gameService});
     roomHandlers({io, socket, gameService});
 }

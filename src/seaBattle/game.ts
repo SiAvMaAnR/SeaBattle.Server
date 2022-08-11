@@ -8,8 +8,8 @@ import MyGameData from "./myField";
 class Game {
     private gameData: GameData;
 
-    constructor(roomId: string, nickName: string) {
-        this.gameData = new GameData(roomId, nickName);
+    constructor(roomId: string) {
+        this.gameData = new GameData(roomId);
     }
 
     public getIsMyMove(): boolean {
@@ -18,14 +18,6 @@ class Game {
 
     public setIsMyMove(isMyMove: boolean) {
         this.gameData.setIsMyMove(isMyMove);
-    }
-
-    public getName(): string {
-        return this.gameData.getName();
-    }
-
-    public setName(name: string): void {
-        this.gameData.setName(name);
     }
 
     public getRoom(): string {

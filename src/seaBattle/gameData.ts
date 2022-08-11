@@ -5,12 +5,10 @@ class GameData {
     private myField: MyField = new MyField();
     private enemyField: EnemyField = new EnemyField();
     private roomId: string = "none";
-    private nickName: string = "none";
     private isMyMove: boolean = false;
 
-    constructor(roomId: string, nickName: string) {
+    constructor(roomId: string) {
         this.roomId = roomId;
-        this.nickName = nickName;
     }
 
     public getIsMyMove(): boolean {
@@ -31,14 +29,6 @@ class GameData {
 
     public getRoomId(): string {
         return this.roomId;
-    }
-
-    public getName(): string {
-        return this.nickName;
-    }
-
-    public setName(name: string): void {
-        this.nickName = name;
     }
 }
 

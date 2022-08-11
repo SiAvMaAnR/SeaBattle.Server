@@ -16,6 +16,9 @@ const gameHandlers = ({ io, socket, gameService }) => {
         socket.to(roomId).emit("game:shoot:init", coordinate);
     }
     function shootProcessGame(coordinate) {
+        const isMyMove = gameService.getIsMyMove();
+        if (!isMyMove)
+            return;
         const roomId = gameService.getRoomId();
         const cell = gameService.getMyCell(coordinate);
         const isHit = (cell == 1 /* Cell.Exists */);

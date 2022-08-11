@@ -25,10 +25,9 @@ const gameHandlers = ({ io, socket, gameService }: {
             return;
         }
 
-        gameService.createGame(roomId, socket.id);
-        socket.data.name = gameService.getName();
+        gameService.createGame(roomId);
+        
         socket.join(roomId);
-
         io.to(roomId).emit("rooms:join", true, `Success, ${socket.data['name']} join!`);
     }
 
@@ -57,7 +56,7 @@ const gameHandlers = ({ io, socket, gameService }: {
     }
 
     async function getUsers(roomId: string) {
-        const users = await tool.getUsersInRoom(roomId);
+        const users = await tool.getUsers();
         socket.emit("rooms:users", users);
     }
 

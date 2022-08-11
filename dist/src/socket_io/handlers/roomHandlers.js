@@ -27,12 +27,7 @@ const gameHandlers = ({ io, socket, gameService }) => {
             return;
         }
         gameService.createGame(roomId, socket.id);
-        socket.data.name = gameService.getName();
         socket.join(roomId);
-        //порождает баг
-        if (tool.getCountInRoom(roomId) == 2) {
-            gameService.setIsMyMove(true);
-        }
         io.to(roomId).emit("rooms:join", true, `Success, ${socket.data['name']} join!`);
     }
     function leaveRoom(roomId) {
@@ -54,7 +49,7 @@ const gameHandlers = ({ io, socket, gameService }) => {
     }
     function getUsers(roomId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield tool.getUsersInRoom(roomId);
+            const users = yield tool.getUsers();
             socket.emit("rooms:users", users);
         });
     }

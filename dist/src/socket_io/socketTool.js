@@ -33,7 +33,7 @@ class SocketTool {
     getSocketsInRoom(roomId) {
         return this.io.sockets.adapter.rooms[roomId].sockets;
     }
-    getUsersInRoom(roomId) {
+    getUsers() {
         return __awaiter(this, void 0, void 0, function* () {
             const sockets = yield this.io.fetchSockets();
             return sockets.map(socket => socket.data["name"]).filter(socket => socket);
