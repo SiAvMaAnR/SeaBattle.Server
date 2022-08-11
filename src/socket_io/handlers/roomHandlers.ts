@@ -16,7 +16,7 @@ const gameHandlers = ({ io, socket, gameService }: {
         const isRoomExists = gameService?.getRoomId();
 
         if (isRoomExists) {
-            socket.emit("rooms:join", false, "Room already exists!");
+            socket.emit("rooms:join", false, "You are already in this room!");
             return;
         }
 
@@ -25,9 +25,10 @@ const gameHandlers = ({ io, socket, gameService }: {
             return;
         }
 
-        gameService.createGame(roomId, "user");
+        gameService.createGame(roomId, socket.id);
+        socket.data.name = gameService.getName();
         socket.join(roomId);
-        socket.emit("rooms:join", true, "Success!");
+        io.to(roomId).emit("rooms:join", true, `Success, ${socket.data['name']} join!`);
     }
 
     function leaveRoom(roomId: string) {
@@ -40,14 +41,13 @@ const gameHandlers = ({ io, socket, gameService }: {
         }
 
         gameService.deleteGame();
+        io.to(roomId).emit("rooms:leave", true, `Success, ${socket.data['name']} left!`);
         socket.leave(roomId);
-        socket.emit("rooms:leave", true, "Success!");
     }
 
     function getRooms() {
         socket.emit("rooms:get:all", tool.getRooms());
     }
-
 
     function getRoom() {
         const room = gameService.getRoomId();
@@ -55,12 +55,16 @@ const gameHandlers = ({ io, socket, gameService }: {
         socket.emit("rooms:get:current", room);
     }
 
-
+    async function getUsers(roomId: string) {
+        const users = await tool.getUsersInRoom(roomId);
+        socket.emit("rooms:users", users);
+    }
 
     socket.on("rooms:join", joinRoom);
     socket.on("rooms:leave", leaveRoom);
     socket.on("rooms:get:all", getRooms);
     socket.on("rooms:get:current", getRoom);
+    socket.on("rooms:users", getUsers);
 }
 
 export default gameHandlers;

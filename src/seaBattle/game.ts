@@ -16,6 +16,10 @@ class Game {
         return this.gameData.getName();
     }
 
+    public setName(name: string): void {
+        this.gameData.setName(name);
+    }
+
     public getRoom(): string {
         return this.gameData.getRoomId();
     }

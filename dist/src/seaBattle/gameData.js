@@ -26,6 +26,9 @@ class GameData {
     getName() {
         return this.nickName;
     }
+    setName(name) {
+        this.nickName = name;
+    }
 }
 exports.default = GameData;
 //# sourceMappingURL=gameData.js.map

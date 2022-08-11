@@ -19,11 +19,14 @@ class StatisticController extends baseController_1.default {
     constructor() {
         super();
         this.statisticRepository = new gameStatRepository_1.default(sequelize_1.default);
-        this.getStatistics = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    }
+    getStatistics(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
             const statistics = yield this.statisticRepository.getAll();
             return res.status(200).send({ data: "getStatistics", statistics: statistics });
         });
     }
+    ;
 }
 exports.default = StatisticController;
 //# sourceMappingURL=statisticController.js.map

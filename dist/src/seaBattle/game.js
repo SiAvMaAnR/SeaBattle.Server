@@ -11,6 +11,9 @@ class Game {
     getName() {
         return this.gameData.getName();
     }
+    setName(name) {
+        this.gameData.setName(name);
+    }
     getRoom() {
         return this.gameData.getRoomId();
     }

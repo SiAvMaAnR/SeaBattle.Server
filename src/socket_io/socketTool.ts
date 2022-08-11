@@ -38,6 +38,11 @@ class SocketTool {
     }
 
 
+    public async getUsersInRoom(roomId: string): Promise<string[]> {
+        const sockets = await this.io.fetchSockets();
+        return sockets.map(socket => socket.data["name"]).filter(socket => socket);
+    }
+
 }
 
 

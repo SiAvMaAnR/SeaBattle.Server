@@ -20,7 +20,9 @@ class TempController extends baseController_1.default {
     constructor() {
         super();
         this.statisticRepository = new gameStatRepository_1.default(sequelize_1.default);
-        this.test1 = (req, res) => __awaiter(this, void 0, void 0, function* () {
+    }
+    test1(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
             const service = new gameService_1.default();
             const battleground = service.getMyFieldArr();
             return res.status(200).send({
@@ -28,6 +30,7 @@ class TempController extends baseController_1.default {
             });
         });
     }
+    ;
 }
 exports.default = TempController;
 //# sourceMappingURL=tempController.js.map

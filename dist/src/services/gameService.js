@@ -9,18 +9,17 @@ class GameService extends baseService_1.default {
     constructor() {
         super();
         this.game = null;
-        this.getMyCell = (coordinate) => {
-            var _a;
-            return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().getCell(coordinate.y, coordinate.x);
-        };
-        this.getEnemyCell = (coordinate) => {
-            var _a;
-            return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().getCell(coordinate.y, coordinate.x);
-        };
     }
     createGame(roomId, nickName) {
         this.game = new game_1.default(roomId, nickName);
         return this;
+    }
+    setName(name) {
+        this.game.setName(name);
+        return this;
+    }
+    getName() {
+        return this.game.getName();
     }
     deleteGame() {
         this.game = null;
@@ -55,6 +54,14 @@ class GameService extends baseService_1.default {
         var _a;
         (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().edit(cell, coordinate.y, coordinate.x);
         return this;
+    }
+    getMyCell(coordinate) {
+        var _a;
+        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().getCell(coordinate.y, coordinate.x);
+    }
+    getEnemyCell(coordinate) {
+        var _a;
+        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().getCell(coordinate.y, coordinate.x);
     }
 }
 exports.default = GameService;

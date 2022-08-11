@@ -16,6 +16,15 @@ class GameService extends BaseService {
         return this;
     }
 
+    public setName(name: string): this {
+        this.game.setName(name);
+        return this;
+    }
+
+    public getName(): string {
+        return this.game.getName();
+    }
+
     public deleteGame(): this {
         this.game = null;
         return this;
