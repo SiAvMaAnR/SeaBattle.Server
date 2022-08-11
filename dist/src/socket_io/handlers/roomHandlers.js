@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const socketTool_1 = __importDefault(require("../socketTool"));
 const gameHandlers = ({ io, socket, gameService }) => {
     const tool = new socketTool_1.default(io, socket);
-    const joinRoom = (roomId) => {
+    function joinRoom(roomId) {
         const isFull = tool.getCountInRoom(roomId) > 1;
         const isRoomExists = gameService === null || gameService === void 0 ? void 0 : gameService.getRoomId();
         if (isRoomExists) {
@@ -20,8 +20,8 @@ const gameHandlers = ({ io, socket, gameService }) => {
         gameService.createGame(roomId, "user");
         socket.join(roomId);
         socket.emit("rooms:join", true, "Success!");
-    };
-    const leaveRoom = (roomId) => {
+    }
+    function leaveRoom(roomId) {
         const isMissingRoom = gameService.getRoomId() != roomId;
         if (isMissingRoom) {
             socket.emit("rooms:leave", false, "You are not in this room!");
@@ -30,14 +30,14 @@ const gameHandlers = ({ io, socket, gameService }) => {
         gameService.deleteGame();
         socket.leave(roomId);
         socket.emit("rooms:leave", true, "Success!");
-    };
-    const getRooms = () => {
+    }
+    function getRooms() {
         socket.emit("rooms:get:all", tool.getRooms());
-    };
-    const getRoom = () => {
+    }
+    function getRoom() {
         const room = gameService.getRoomId();
         socket.emit("rooms:get:current", room);
-    };
+    }
     socket.on("rooms:join", joinRoom);
     socket.on("rooms:leave", leaveRoom);
     socket.on("rooms:get:all", getRooms);

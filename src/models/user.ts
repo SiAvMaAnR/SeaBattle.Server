@@ -1,7 +1,7 @@
 import { Table, Column, AutoIncrement, PrimaryKey, NotEmpty, ForeignKey, BelongsTo, Model, NotNull, BelongsToMany, HasMany, AllowNull } from "sequelize-typescript";
-import IUser from "../interfaces/models/IUser";
 import GameStat from "./gameStat";
 import { Statistic } from "./index";
+import IUser from "./interfaces/IUser";
 
 
 @Table({

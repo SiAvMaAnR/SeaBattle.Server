@@ -10,7 +10,7 @@ class StatisticController extends BaseController {
         super();
     }
 
-    public getStatistics = async (req: Request, res: Response) => {
+    public async getStatistics(req: Request, res: Response) {
 
         const statistics = await this.statisticRepository.getAll();
 

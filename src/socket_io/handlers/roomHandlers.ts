@@ -10,7 +10,7 @@ const gameHandlers = ({ io, socket, gameService }: {
 }) => {
     const tool = new SocketTool(io, socket);
 
-    const joinRoom = (roomId: string) => {
+    function joinRoom(roomId: string) {
 
         const isFull = tool.getCountInRoom(roomId) > 1;
         const isRoomExists = gameService?.getRoomId();
@@ -30,7 +30,7 @@ const gameHandlers = ({ io, socket, gameService }: {
         socket.emit("rooms:join", true, "Success!");
     }
 
-    const leaveRoom = (roomId: string) => {
+    function leaveRoom(roomId: string) {
 
         const isMissingRoom = gameService.getRoomId() != roomId;
 
@@ -44,12 +44,12 @@ const gameHandlers = ({ io, socket, gameService }: {
         socket.emit("rooms:leave", true, "Success!");
     }
 
-    const getRooms = () => {
+    function getRooms() {
         socket.emit("rooms:get:all", tool.getRooms());
     }
 
 
-    const getRoom = () => {
+    function getRoom() {
         const room = gameService.getRoomId();
 
         socket.emit("rooms:get:current", room);

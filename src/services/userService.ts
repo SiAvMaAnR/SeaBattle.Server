@@ -1,12 +1,11 @@
-import { Model } from "sequelize-typescript";
 import { Optional } from "sequelize/types";
 import { NullishPropertiesOf } from "sequelize/types/utils";
-import IUser from "../interfaces/models/IUser";
-import IUserService from "../interfaces/services/IUserService";
 import { User } from "../models";
+import IUser from "../models/interfaces/IUser";
 import UserRepository from "../repositories/userRepository";
 import sequelize from "../sequelize/sequelize";
 import BaseService from "./baseService";
+import IUserService from "./interfaces/IUserService";
 
 
 class UserService extends BaseService implements IUserService {

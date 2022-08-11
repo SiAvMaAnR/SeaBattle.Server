@@ -13,7 +13,7 @@ class UserController extends BaseController {
         super();
     }
 
-    public getUsers = async (req: Request, res: Response) => {
+    public async getUsers(req: Request, res: Response) {
 
         const users = await this.userService.getUsers();
 
@@ -22,7 +22,7 @@ class UserController extends BaseController {
             : res.status(404).send({ data: users, message: "Users is not found!" })
     };
 
-    public getUser = async (req: Request, res: Response) => {
+    public async getUser(req: Request, res: Response) {
 
         const id = parseInt(req.params.id);
 
@@ -33,7 +33,7 @@ class UserController extends BaseController {
             : res.status(404).send({ data: user, message: "User is not found!" })
     };
 
-    public addUser = async (req: Request, res: Response) => {
+    public async addUser(req: Request, res: Response) {
 
         const user = await this.userService.addUser({
             login: req.body.login,
@@ -47,7 +47,7 @@ class UserController extends BaseController {
 
 
 
-    public deleteUser = async (req: Request, res: Response) => {
+    public async deleteUser(req: Request, res: Response) {
 
         const id = parseInt(req.params.id);
         const isDeleted = this.userService.deleteUserById(id);

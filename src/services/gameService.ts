@@ -54,11 +54,11 @@ class GameService extends BaseService {
         return this;
     }
 
-    public getMyCell = (coordinate: Coordinate): Cell => {
+    public getMyCell(coordinate: Coordinate): Cell {
         return this.game?.getMyField().getCell(coordinate.y, coordinate.x);
     }
 
-    public getEnemyCell = (coordinate: Coordinate): Cell => {
+    public getEnemyCell(coordinate: Coordinate): Cell {
         return this.game?.getEnemyField().getCell(coordinate.y, coordinate.x);
     }
 }

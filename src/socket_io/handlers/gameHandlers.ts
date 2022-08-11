@@ -15,19 +15,19 @@ const gameHandlers = ({ io, socket, gameService }: {
     const tool = new SocketTool(io, socket);
 
 
-    const initBattle = (coordinates: Coordinate[]) => {
+    function initBattle(coordinates: Coordinate[]) {
         const field = gameService.addShips(coordinates)
             .getMyFieldArr();
 
-        socket.emit("battle:init", field);
+        socket.emit("battle:field:init", field);
     }
 
-    const shootBattle = (coordinate: Coordinate) => {
+    function shootBattle(coordinate: Coordinate) {
         const roomId = gameService.getRoomId();
         socket.to(roomId).emit("battle:shoot", coordinate);
     }
 
-    const shootResultBattle = (coordinate: Coordinate) => {
+    function shootResultBattle(coordinate: Coordinate) {
         const roomId = gameService.getRoomId();
         const cell = gameService.getMyCell(coordinate);
         const isHit = (cell == Cell.Exists);
@@ -35,17 +35,17 @@ const gameHandlers = ({ io, socket, gameService }: {
     }
 
 
-    const getMyFieldBattle = () => {
+    function getMyFieldBattle() {
         const field = gameService.getMyFieldArr();
         socket.emit("battle:field:my", field);
     }
 
-    const getEnemyFieldBattle = () => {
+    function getEnemyFieldBattle() {
         const field = gameService.getEnemyFieldArr();
         socket.emit("battle:field:enemy", field);
     }
 
-    socket.on("battle:init", initBattle);
+    socket.on("battle:field:init", initBattle);
     socket.on("battle:field:my", getMyFieldBattle);
     socket.on("battle:field:enemy", getEnemyFieldBattle);
     socket.on("battle:shoot", shootBattle);

@@ -1,5 +1,5 @@
 import { Model, Table, Column, AutoIncrement, PrimaryKey, NotEmpty, HasOne, ForeignKey, BelongsTo, AllowNull } from "sequelize-typescript";
-import IGameStat from "../interfaces/models/IGameStat";
+import IGameStat from "./interfaces/IGameStat";
 import User from "./user";
 
 @Table({

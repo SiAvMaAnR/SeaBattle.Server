@@ -1,5 +1,4 @@
-import IEntity from "../interfaces/models/IEntity";
-import IService from "../interfaces/services/IService"
+import IService from "./interfaces/IService";
 
 abstract class BaseService implements IService {
         
