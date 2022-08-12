@@ -11,6 +11,13 @@ class GameData {
         this.enemyField = new enemyField_1.default();
         this.isMyMove = false;
         this.isStart = false;
+        this.isVictory = false;
+    }
+    getIsVictory() {
+        return this.isVictory;
+    }
+    setIsVictory(isVictory) {
+        this.isVictory = isVictory;
     }
     getIsStart() {
         return this.isStart;

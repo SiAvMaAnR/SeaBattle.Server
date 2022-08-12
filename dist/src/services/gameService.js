@@ -70,6 +70,11 @@ class GameService extends baseService_1.default {
         var _a;
         return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().getCell(coordinate.y, coordinate.x);
     }
+    checkDefeat() {
+        var _a;
+        const myField = (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().getArr();
+        return myField.flat().filter(cell => cell == 1 /* Cell.Exists */).length == 0;
+    }
 }
 exports.default = GameService;
 //# sourceMappingURL=gameService.js.map

@@ -51,14 +51,17 @@ const gameHandlers = ({ io, socket, gameService, room }) => {
         const roomId = room.get();
         if (!roomId)
             return;
+        const isMyMove = gameService.getIsMyMove();
+        if (!isMyMove)
+            return;
+        const enemyField = gameService.getEnemyFieldArr();
+        if (enemyField[coordinate.y][coordinate.x] != 0)
+            return;
         socket.to(roomId).emit("game:shoot:init", coordinate);
     }
     function shootProcess(coordinate) {
         const roomId = room.get();
         if (!roomId)
-            return;
-        const isMyMove = gameService.getIsMyMove();
-        if (!isMyMove)
             return;
         const cell = gameService.getMyCell(coordinate);
         const isHit = (cell == 1 /* Cell.Exists */);
@@ -74,6 +77,14 @@ const gameHandlers = ({ io, socket, gameService, room }) => {
             myField: service.getMyFieldArr(),
             enemyField: service.getEnemyFieldArr()
         });
+        if (isMyMove)
+            return;
+        const isEnemyWon = gameService.checkDefeat();
+        if (isEnemyWon) {
+            const roomId = room.get();
+            socket.broadcast.to(roomId).emit("game:result", true);
+            socket.emit("game:result", false);
+        }
     }
     function getMyField() {
         const field = gameService.getMyFieldArr();
@@ -89,9 +100,9 @@ const gameHandlers = ({ io, socket, gameService, room }) => {
     }
     function ready() {
         return __awaiter(this, void 0, void 0, function* () {
-            const roomId = room.get();
-            const sockets = yield tool.getSockets(roomId);
-            sockets.forEach(socket => console.log(socket.data.name));
+            // const roomId = room.get();
+            // const sockets = await tool.getSockets(roomId);
+            // sockets.forEach(socket => console.log(socket.data.name));
         });
     }
     socket.on("game:field:init", init);

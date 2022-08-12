@@ -8,6 +8,12 @@ class Game {
     constructor() {
         this.gameData = new gameData_1.default();
     }
+    getIsVictory() {
+        return this.gameData.getIsVictory();
+    }
+    setIsVictory(isVictory) {
+        this.gameData.setIsVictory(isVictory);
+    }
     getIsStart() {
         return this.gameData.getIsStart();
     }

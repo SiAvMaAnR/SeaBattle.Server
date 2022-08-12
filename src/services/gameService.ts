@@ -74,6 +74,11 @@ class GameService extends BaseService {
     public getEnemyCell(coordinate: Coordinate): Cell {
         return this.game?.getEnemyField().getCell(coordinate.y, coordinate.x);
     }
+
+    public checkDefeat(): boolean {
+        const myField = this.game?.getMyField().getArr();
+        return myField.flat().filter(cell => cell == Cell.Exists).length == 0;
+    }
 }
 
 export default GameService;

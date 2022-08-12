@@ -6,6 +6,15 @@ class GameData {
     private enemyField: EnemyField = new EnemyField();
     private isMyMove: boolean = false;
     private isStart: boolean = false;
+    private isVictory: boolean = false;
+
+    public getIsVictory(): boolean {
+        return this.isVictory;
+    }
+
+    public setIsVictory(isVictory: boolean): void {
+        this.isVictory = isVictory;
+    }
 
     public getIsStart(): boolean {
         return this.isStart;

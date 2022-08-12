@@ -49,7 +49,6 @@ const gameHandlers = ({ io, socket, gameService, room }: {
         }
     }
 
-
     function remove(): void {
         if (room.get()) {
             gameService.deleteGame();
@@ -57,10 +56,15 @@ const gameHandlers = ({ io, socket, gameService, room }: {
         }
     }
 
-
     function shootInit(coordinate: Coordinate): void {
         const roomId = room.get();
         if (!roomId) return;
+
+        const isMyMove = gameService.getIsMyMove();
+        if (!isMyMove) return;
+
+        const enemyField = gameService.getEnemyFieldArr();
+        if (enemyField[coordinate.y][coordinate.x] != 0) return;
 
         socket.to(roomId).emit("game:shoot:init", coordinate);
     }
@@ -68,9 +72,6 @@ const gameHandlers = ({ io, socket, gameService, room }: {
     function shootProcess(coordinate: Coordinate): void {
         const roomId = room.get();
         if (!roomId) return;
-
-        const isMyMove = gameService.getIsMyMove();
-        if (!isMyMove) return;
 
         const cell = gameService.getMyCell(coordinate);
         const isHit = (cell == Cell.Exists);
@@ -87,10 +88,22 @@ const gameHandlers = ({ io, socket, gameService, room }: {
             : gameService.editMyField(cell, coordinate).setIsMyMove(!isHit);
 
 
+
         socket.emit("game:shoot:result", {
             myField: service.getMyFieldArr(),
             enemyField: service.getEnemyFieldArr()
         });
+
+        if (isMyMove) return;
+
+        const isEnemyWon = gameService.checkDefeat();
+
+        if (isEnemyWon) {
+            const roomId = room.get();
+
+            socket.broadcast.to(roomId).emit("game:result", true);
+            socket.emit("game:result", false);
+        }
     }
 
     function getMyField(): void {
@@ -109,9 +122,9 @@ const gameHandlers = ({ io, socket, gameService, room }: {
     }
 
     async function ready(): Promise<void> {
-        const roomId = room.get();
-        const sockets = await tool.getSockets(roomId);
-        sockets.forEach(socket => console.log(socket.data.name));
+        // const roomId = room.get();
+        // const sockets = await tool.getSockets(roomId);
+        // sockets.forEach(socket => console.log(socket.data.name));
     }
 
     socket.on("game:field:init", init);
