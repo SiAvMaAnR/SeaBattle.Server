@@ -15,28 +15,23 @@ class GameService extends baseService_1.default {
         return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getIsMyMove();
     }
     setIsMyMove(isMyMove) {
-        this.game.setIsMyMove(isMyMove);
-        return this;
-    }
-    createGame(roomId, nickName) {
-        this.game = new game_1.default(roomId, nickName);
-        return this;
-    }
-    setName(name) {
-        this.game.setName(name);
-        return this;
-    }
-    getName() {
         var _a;
-        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getName();
+        (_a = this.game) === null || _a === void 0 ? void 0 : _a.setIsMyMove(isMyMove);
+        return this;
+    }
+    startGame() {
+        return this;
+    }
+    endGame() {
+        return this;
+    }
+    createGame() {
+        this.game = new game_1.default();
+        return this;
     }
     deleteGame() {
         this.game = null;
         return this;
-    }
-    getRoomId() {
-        var _a;
-        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getRoom();
     }
     getMyFieldArr() {
         var _a;

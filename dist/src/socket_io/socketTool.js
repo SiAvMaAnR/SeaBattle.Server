@@ -14,7 +14,7 @@ class SocketTool {
         this.io = io;
         this.socket = socket;
     }
-    getCountInRoom(roomId) {
+    getSizeRoom(roomId) {
         var _a;
         return ((_a = this.io.sockets.adapter.rooms.get(roomId)) === null || _a === void 0 ? void 0 : _a.size) || 0;
     }
@@ -30,12 +30,14 @@ class SocketTool {
         });
         return result;
     }
-    getSocketsInRoom(roomId) {
-        return this.io.sockets.adapter.rooms[roomId].sockets;
-    }
-    getUsers() {
+    getSockets(roomId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const sockets = yield this.io.fetchSockets();
+            return yield this.io.to(roomId).fetchSockets();
+        });
+    }
+    getUsers(roomId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sockets = yield this.io.to(roomId).fetchSockets();
             return sockets.map(socket => socket.data["name"]).filter(socket => socket);
         });
     }

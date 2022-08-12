@@ -1,30 +1,55 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const socketTool_1 = __importDefault(require("../socketTool"));
-const gameHandlers = ({ io, socket, gameService }) => {
+const gameHandlers = ({ io, socket, gameService, room }) => {
     const tool = new socketTool_1.default(io, socket);
-    function initGame(coordinates) {
+    function init(coordinates) {
         const field = gameService.addShips(coordinates)
             .getMyFieldArr();
         socket.emit("game:field:init", field);
     }
-    function shootGame(coordinate) {
-        const roomId = gameService.getRoomId();
+    function start() {
+        const roomId = room.get();
+        console.log(roomId);
+        if (roomId && tool.getSizeRoom(roomId) == 2) {
+            io.to(roomId).emit("game:start", true);
+            return;
+        }
+        socket.emit("game:start", false);
+    }
+    function create() {
+        gameService.createGame();
+        console.log("CREATE");
+    }
+    function remove() {
+        gameService.deleteGame();
+    }
+    function shoot(coordinate) {
+        const roomId = room.get();
         socket.to(roomId).emit("game:shoot:init", coordinate);
     }
-    function shootProcessGame(coordinate) {
+    function shootProcess(coordinate) {
         const isMyMove = gameService.getIsMyMove();
         if (!isMyMove)
             return;
-        const roomId = gameService.getRoomId();
+        const roomId = room.get();
         const cell = gameService.getMyCell(coordinate);
         const isHit = (cell == 1 /* Cell.Exists */);
         io.to(roomId).emit("game:shoot:process", isHit, coordinate);
     }
-    function shootResultGame(isHit, coordinate) {
+    function shootResult(isHit, coordinate) {
         const isMyMove = gameService.getIsMyMove();
         const cell = (isHit) ? 3 /* Cell.Killed */ : 2 /* Cell.Missed */;
         const service = (isMyMove)
@@ -35,11 +60,11 @@ const gameHandlers = ({ io, socket, gameService }) => {
             enemyField: service.getEnemyFieldArr()
         });
     }
-    function getMyFieldGame() {
+    function getMyField() {
         const field = gameService.getMyFieldArr();
         socket.emit("game:field:my", field);
     }
-    function getEnemyFieldGame() {
+    function getEnemyField() {
         const field = gameService.getEnemyFieldArr();
         socket.emit("game:field:enemy", field);
     }
@@ -47,13 +72,24 @@ const gameHandlers = ({ io, socket, gameService }) => {
         const isMyMove = gameService.getIsMyMove();
         socket.emit("game:move", isMyMove);
     }
-    socket.on("game:field:init", initGame);
-    socket.on("game:field:my", getMyFieldGame);
-    socket.on("game:field:enemy", getEnemyFieldGame);
-    socket.on("game:shoot:init", shootGame);
-    socket.on("game:shoot:process", shootProcessGame);
-    socket.on("game:shoot:result", shootResultGame);
+    function ready() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const roomId = room.get();
+            const sockets = yield tool.getSockets(roomId);
+            sockets.forEach(socket => console.log(socket.data.name));
+        });
+    }
+    socket.on("game:field:init", init);
+    socket.on("game:field:my", getMyField);
+    socket.on("game:field:enemy", getEnemyField);
+    socket.on("game:shoot:init", shoot);
+    socket.on("game:shoot:process", shootProcess);
+    socket.on("game:shoot:result", shootResult);
     socket.on("game:move", getIsMyMove);
+    socket.on("game:start", start);
+    socket.on("game:create", create);
+    socket.on("game:remove", remove);
+    socket.on("game:ready", ready);
 };
 exports.default = gameHandlers;
 //# sourceMappingURL=gameHandlers.js.map

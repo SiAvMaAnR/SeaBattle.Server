@@ -4,12 +4,7 @@ import MyField from "./myField";
 class GameData {
     private myField: MyField = new MyField();
     private enemyField: EnemyField = new EnemyField();
-    private roomId: string = "none";
     private isMyMove: boolean = false;
-
-    constructor(roomId: string) {
-        this.roomId = roomId;
-    }
 
     public getIsMyMove(): boolean {
         return this.isMyMove;
@@ -25,10 +20,6 @@ class GameData {
 
     public getEnemyField(): EnemyField {
         return this.enemyField;
-    }
-
-    public getRoomId(): string {
-        return this.roomId;
     }
 }
 

@@ -3,17 +3,18 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import GameService from "../services/gameService";
 import gameHandlers from "./handlers/gameHandlers";
 import roomHandlers from "./handlers/roomHandlers";
-
-
+import Room from "./room";
 
 
 const onConnection = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>, socket: Socket) => {
-    const gameService = new GameService();
+    const gameService: GameService = new GameService();
+    const room: Room = new Room();
 
-    socket.data.name = "BOSS";
+    const rand = Math.floor(Math.random() * 100);
+    socket.data.name = rand.toString();
 
-    gameHandlers({io, socket, gameService});
-    roomHandlers({io, socket, gameService});
+    gameHandlers({ io, socket, gameService, room });
+    roomHandlers({ io, socket, gameService, room });
 }
 
 export default onConnection;

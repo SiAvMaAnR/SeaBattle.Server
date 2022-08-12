@@ -1,4 +1,4 @@
-import { Namespace, Server, Socket } from "socket.io";
+import { Namespace, RemoteSocket, Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
 class SocketTool {
@@ -13,7 +13,7 @@ class SocketTool {
     }
 
 
-    public getCountInRoom(roomId: string): number {
+    public getSizeRoom(roomId: string): number {
         return this.io.sockets.adapter.rooms.get(roomId)?.size || 0;
     }
 
@@ -33,13 +33,13 @@ class SocketTool {
         return result;
     }
 
-    public getSocketsInRoom(roomId: string): Namespace<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any> {
-        return this.io.sockets.adapter.rooms[roomId].sockets;
+    public async getSockets(roomId: string): Promise<RemoteSocket<DefaultEventsMap, any>[]> {
+        return await this.io.to(roomId).fetchSockets();
     }
 
 
-    public async getUsers(): Promise<string[]> {
-        const sockets = await this.io.fetchSockets();
+    public async getUsers(roomId: string): Promise<string[]> {
+        const sockets = await this.io.to(roomId).fetchSockets();
         return sockets.map(socket => socket.data["name"]).filter(socket => socket);
     }
 
