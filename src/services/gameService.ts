@@ -11,20 +11,21 @@ class GameService extends BaseService {
         super();
     }
 
+    public getIsStart(): boolean {
+        return this.game?.getIsStart();
+    }
+
+    public setIsStart(isStart: boolean): this {
+        this.game?.setIsStart(isStart);
+        return this;
+    }
+
     public getIsMyMove(): boolean {
         return this.game?.getIsMyMove();
     }
 
     public setIsMyMove(isMyMove: boolean): this {
         this.game?.setIsMyMove(isMyMove);
-        return this;
-    }
-
-    public startGame(): this {
-        return this;
-    }
-
-    public endGame(): this {
         return this;
     }
 

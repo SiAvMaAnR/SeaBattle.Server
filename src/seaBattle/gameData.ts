@@ -5,6 +5,15 @@ class GameData {
     private myField: MyField = new MyField();
     private enemyField: EnemyField = new EnemyField();
     private isMyMove: boolean = false;
+    private isStart: boolean = false;
+
+    public getIsStart(): boolean {
+        return this.isStart;
+    }
+
+    public setIsStart(isStart: boolean): void {
+        this.isStart = isStart;
+    }
 
     public getIsMyMove(): boolean {
         return this.isMyMove;

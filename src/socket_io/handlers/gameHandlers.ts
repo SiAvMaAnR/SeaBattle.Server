@@ -26,38 +26,52 @@ const gameHandlers = ({ io, socket, gameService, room }: {
     function start(): void {
 
         const roomId = room.get();
-        console.log(roomId);
+        if (!roomId) return;
 
-        if (roomId && tool.getSizeRoom(roomId) == 2) {
-            io.to(roomId).emit("game:start", true);
-            return;
-        }
-        socket.emit("game:start", false);
+        const isFullRoom = tool.getSizeRoom(roomId) == 2;
+
+        socket.emit("game:start", {
+            isStart: isFullRoom,
+            isFirstMove: true
+        });
+
+        socket.broadcast.to(roomId).emit("game:start", {
+            isStart: isFullRoom,
+            isFirstMove: false
+        });
     }
 
-    function create(): void {
-        gameService.createGame();
-        console.log("CREATE");
+    function create(isFirstMove: boolean): void {
+        if (room.get()) {
+            gameService.createGame();
+            gameService.setIsMyMove(isFirstMove);
+            console.log("CREATE");
+        }
     }
 
 
     function remove(): void {
-        gameService.deleteGame();
+        if (room.get()) {
+            gameService.deleteGame();
+            console.log("REMOVE");
+        }
     }
 
 
-    function shoot(coordinate: Coordinate): void {
+    function shootInit(coordinate: Coordinate): void {
         const roomId = room.get();
+        if (!roomId) return;
 
         socket.to(roomId).emit("game:shoot:init", coordinate);
     }
 
     function shootProcess(coordinate: Coordinate): void {
-        const isMyMove = gameService.getIsMyMove();
+        const roomId = room.get();
+        if (!roomId) return;
 
+        const isMyMove = gameService.getIsMyMove();
         if (!isMyMove) return;
 
-        const roomId = room.get();
         const cell = gameService.getMyCell(coordinate);
         const isHit = (cell == Cell.Exists);
 
@@ -95,19 +109,15 @@ const gameHandlers = ({ io, socket, gameService, room }: {
     }
 
     async function ready(): Promise<void> {
-
         const roomId = room.get();
-
         const sockets = await tool.getSockets(roomId);
-
         sockets.forEach(socket => console.log(socket.data.name));
-
     }
 
     socket.on("game:field:init", init);
     socket.on("game:field:my", getMyField);
     socket.on("game:field:enemy", getEnemyField);
-    socket.on("game:shoot:init", shoot);
+    socket.on("game:shoot:init", shootInit);
     socket.on("game:shoot:process", shootProcess);
     socket.on("game:shoot:result", shootResult);
     socket.on("game:move", getIsMyMove);

@@ -12,6 +12,14 @@ class Game {
         this.gameData = new GameData();
     }
 
+    public getIsStart(): boolean {
+        return this.gameData.getIsStart();
+    }
+
+    public setIsStart(isStart: boolean): void {
+        this.gameData.setIsStart(isStart);
+    }
+
     public getIsMyMove(): boolean {
         return this.gameData.getIsMyMove();
     }

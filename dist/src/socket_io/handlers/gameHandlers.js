@@ -22,29 +22,44 @@ const gameHandlers = ({ io, socket, gameService, room }) => {
     }
     function start() {
         const roomId = room.get();
-        console.log(roomId);
-        if (roomId && tool.getSizeRoom(roomId) == 2) {
-            io.to(roomId).emit("game:start", true);
+        if (!roomId)
             return;
-        }
-        socket.emit("game:start", false);
+        const isFullRoom = tool.getSizeRoom(roomId) == 2;
+        socket.emit("game:start", {
+            isStart: isFullRoom,
+            isFirstMove: true
+        });
+        socket.broadcast.to(roomId).emit("game:start", {
+            isStart: isFullRoom,
+            isFirstMove: false
+        });
     }
-    function create() {
-        gameService.createGame();
-        console.log("CREATE");
+    function create(isFirstMove) {
+        if (room.get()) {
+            gameService.createGame();
+            gameService.setIsMyMove(isFirstMove);
+            console.log("CREATE");
+        }
     }
     function remove() {
-        gameService.deleteGame();
+        if (room.get()) {
+            gameService.deleteGame();
+            console.log("REMOVE");
+        }
     }
-    function shoot(coordinate) {
+    function shootInit(coordinate) {
         const roomId = room.get();
+        if (!roomId)
+            return;
         socket.to(roomId).emit("game:shoot:init", coordinate);
     }
     function shootProcess(coordinate) {
+        const roomId = room.get();
+        if (!roomId)
+            return;
         const isMyMove = gameService.getIsMyMove();
         if (!isMyMove)
             return;
-        const roomId = room.get();
         const cell = gameService.getMyCell(coordinate);
         const isHit = (cell == 1 /* Cell.Exists */);
         io.to(roomId).emit("game:shoot:process", isHit, coordinate);
@@ -82,7 +97,7 @@ const gameHandlers = ({ io, socket, gameService, room }) => {
     socket.on("game:field:init", init);
     socket.on("game:field:my", getMyField);
     socket.on("game:field:enemy", getEnemyField);
-    socket.on("game:shoot:init", shoot);
+    socket.on("game:shoot:init", shootInit);
     socket.on("game:shoot:process", shootProcess);
     socket.on("game:shoot:result", shootResult);
     socket.on("game:move", getIsMyMove);

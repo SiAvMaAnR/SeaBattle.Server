@@ -10,6 +10,13 @@ class GameData {
         this.myField = new myField_1.default();
         this.enemyField = new enemyField_1.default();
         this.isMyMove = false;
+        this.isStart = false;
+    }
+    getIsStart() {
+        return this.isStart;
+    }
+    setIsStart(isStart) {
+        this.isStart = isStart;
     }
     getIsMyMove() {
         return this.isMyMove;

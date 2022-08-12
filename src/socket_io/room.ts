@@ -2,10 +2,6 @@
 class Room {
     private roomId: string = null;
 
-    // constructor(roomId: string) {
-    //     this.roomId = roomId;
-    // }
-
     public get(): string {
         return this.roomId;
     }

@@ -4,9 +4,6 @@ class Room {
     constructor() {
         this.roomId = null;
     }
-    // constructor(roomId: string) {
-    //     this.roomId = roomId;
-    // }
     get() {
         return this.roomId;
     }

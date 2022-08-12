@@ -10,6 +10,15 @@ class GameService extends baseService_1.default {
         super();
         this.game = null;
     }
+    getIsStart() {
+        var _a;
+        return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getIsStart();
+    }
+    setIsStart(isStart) {
+        var _a;
+        (_a = this.game) === null || _a === void 0 ? void 0 : _a.setIsStart(isStart);
+        return this;
+    }
     getIsMyMove() {
         var _a;
         return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getIsMyMove();
@@ -17,12 +26,6 @@ class GameService extends baseService_1.default {
     setIsMyMove(isMyMove) {
         var _a;
         (_a = this.game) === null || _a === void 0 ? void 0 : _a.setIsMyMove(isMyMove);
-        return this;
-    }
-    startGame() {
-        return this;
-    }
-    endGame() {
         return this;
     }
     createGame() {
