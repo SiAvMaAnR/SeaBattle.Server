@@ -32,17 +32,9 @@ const roomHandlers = ({ io, socket, gameService, room }: {
         room.set(roomId);
     }
 
-    function leave(roomId: string) {
-
-        const isMissingRoom = room.get() != roomId;
-
-        if (isMissingRoom) {
-            socket.emit("room:leave", false, "You are not in this room!");
-            return;
-        }
-
+    function leave(roomId?: string) {
         io.to(roomId).emit("room:leave", true, `Success, ${socket.data['name']} left!`);
-        socket.leave(roomId);
+        socket.leave(room.get());
         room.set(null);
     }
 

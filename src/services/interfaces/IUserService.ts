@@ -1,8 +1,7 @@
 import { User } from "../../models";
-import IService from "./IService";
 
 
-interface IUserService extends IService {
+interface IUserService {
     addUser(user: User): Promise<User>;
     getUserById(id: number): Promise<User>;
     getUsers(fn?: Function): Promise<User[]>;

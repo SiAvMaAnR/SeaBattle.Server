@@ -1,6 +1,5 @@
-import IService from "./interfaces/IService";
 
-abstract class BaseService implements IService {
+abstract class BaseService {
         
 }
 

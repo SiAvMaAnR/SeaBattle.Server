@@ -23,10 +23,11 @@ class SocketTool {
         const activeRooms = allRooms.filter(room => !room[1].has(room[0]));
 
 
-        const result = activeRooms.map(i => {
+        const result = activeRooms.map((room, index) => {
             return {
-                room: i[0],
-                count: i[1]?.size
+                id: index,
+                name: room[0],
+                count: room[1]?.size
             }
         });
 

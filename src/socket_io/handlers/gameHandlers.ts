@@ -45,14 +45,12 @@ const gameHandlers = ({ io, socket, gameService, room }: {
         if (room.get()) {
             gameService.createGame();
             gameService.setIsMyMove(isFirstMove);
-            console.log("CREATE");
         }
     }
 
     function remove(): void {
         if (room.get()) {
             gameService.deleteGame();
-            console.log("REMOVE");
         }
     }
 
@@ -87,8 +85,6 @@ const gameHandlers = ({ io, socket, gameService, room }: {
             ? gameService.editEnemyField(cell, coordinate).setIsMyMove(isHit)
             : gameService.editMyField(cell, coordinate).setIsMyMove(!isHit);
 
-
-
         socket.emit("game:shoot:result", {
             myField: service.getMyFieldArr(),
             enemyField: service.getEnemyFieldArr()
@@ -121,10 +117,14 @@ const gameHandlers = ({ io, socket, gameService, room }: {
         socket.emit("game:move", isMyMove);
     }
 
-    async function ready(): Promise<void> {
-        // const roomId = room.get();
-        // const sockets = await tool.getSockets(roomId);
-        // sockets.forEach(socket => console.log(socket.data.name));
+    function ready(): void {
+        const roomId = room.get();
+        if (!roomId) return;
+
+
+        io.to(roomId).emit("game:ready", true);
+
+        
     }
 
     socket.on("game:field:init", init);

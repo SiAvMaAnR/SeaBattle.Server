@@ -21,11 +21,12 @@ class SocketTool {
     getRooms() {
         const allRooms = Array.from(this.io.sockets.adapter.rooms);
         const activeRooms = allRooms.filter(room => !room[1].has(room[0]));
-        const result = activeRooms.map(i => {
+        const result = activeRooms.map((room, index) => {
             var _a;
             return {
-                room: i[0],
-                count: (_a = i[1]) === null || _a === void 0 ? void 0 : _a.size
+                id: index,
+                name: room[0],
+                count: (_a = room[1]) === null || _a === void 0 ? void 0 : _a.size
             };
         });
         return result;
