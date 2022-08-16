@@ -32,6 +32,9 @@ class Game {
     getEnemyField() {
         return this.gameData.getEnemyField();
     }
+    init(field) {
+        this.getMyField().setField(field);
+    }
 }
 exports.default = Game;
 //# sourceMappingURL=game.js.map

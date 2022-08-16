@@ -8,6 +8,9 @@ class MyField extends field_1.default {
     constructor() {
         super();
     }
+    setField(field) {
+        super.field = field;
+    }
 }
 exports.default = MyField;
 //# sourceMappingURL=myField.js.map

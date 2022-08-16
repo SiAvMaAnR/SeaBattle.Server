@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -15,10 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const socketTool_1 = __importDefault(require("../socketTool"));
 const gameHandlers = ({ io, socket, gameService, room }) => {
     const tool = new socketTool_1.default(io, socket);
-    function init(coordinates) {
-        const field = gameService.addShips(coordinates)
-            .getMyFieldArr();
-        socket.emit("game:field:init", field);
+    // function init(coordinates: Coordinate[]): void {
+    //     const field = gameService.addShips(coordinates)
+    //         .getMyFieldArr();
+    //     socket.emit("game:field:init", field);
+    // }
+    function initField(field) {
+        const myField = gameService.initMyField(field).getMyFieldArr();
+        socket.emit("game:field:init", myField);
     }
     function start() {
         const roomId = room.get();
@@ -38,13 +33,11 @@ const gameHandlers = ({ io, socket, gameService, room }) => {
         if (room.get()) {
             gameService.createGame();
             gameService.setIsMyMove(isFirstMove);
-            console.log("CREATE");
         }
     }
     function remove() {
         if (room.get()) {
             gameService.deleteGame();
-            console.log("REMOVE");
         }
     }
     function shootInit(coordinate) {
@@ -99,13 +92,12 @@ const gameHandlers = ({ io, socket, gameService, room }) => {
         socket.emit("game:move", isMyMove);
     }
     function ready() {
-        return __awaiter(this, void 0, void 0, function* () {
-            // const roomId = room.get();
-            // const sockets = await tool.getSockets(roomId);
-            // sockets.forEach(socket => console.log(socket.data.name));
-        });
+        const roomId = room.get();
+        if (!roomId)
+            return;
+        io.to(roomId).emit("game:ready", true);
     }
-    socket.on("game:field:init", init);
+    socket.on("game:field:init", initField);
     socket.on("game:field:my", getMyField);
     socket.on("game:field:enemy", getEnemyField);
     socket.on("game:shoot:init", shootInit);

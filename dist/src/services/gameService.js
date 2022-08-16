@@ -10,6 +10,11 @@ class GameService extends baseService_1.default {
         super();
         this.game = null;
     }
+    initMyField(field) {
+        var _a;
+        (_a = this.game) === null || _a === void 0 ? void 0 : _a.init(field);
+        return this;
+    }
     getIsStart() {
         var _a;
         return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getIsStart();
@@ -44,14 +49,13 @@ class GameService extends baseService_1.default {
         var _a;
         return (_a = this.game) === null || _a === void 0 ? void 0 : _a.getEnemyField().getArr();
     }
-    addShips(coordinates) {
-        var _a;
-        const field = (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField();
-        if (field) {
-            coordinates.forEach(c => field.add(c.y, c.x));
-        }
-        return this;
-    }
+    // public addShips(coordinates: Coordinate[]): this {
+    //     const field = this.game?.getMyField();
+    //     if (field) {
+    //         coordinates.forEach(c => field.add(c.y, c.x));
+    //     }
+    //     return this;
+    // }
     editMyField(cell, coordinate) {
         var _a;
         (_a = this.game) === null || _a === void 0 ? void 0 : _a.getMyField().edit(cell, coordinate.y, coordinate.x);

@@ -44,6 +44,10 @@ class Game {
         return this.gameData.getEnemyField();
     }
 
+    public init(field): void{
+        this.getMyField().setField(field);
+    }
+
 }
 
 export default Game;

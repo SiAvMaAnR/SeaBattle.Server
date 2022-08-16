@@ -2,7 +2,7 @@ import Cell from "../enums/cell";
 
 abstract class Field {
 
-    private field: number[][] = [
+    protected field: number[][] = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

@@ -9,7 +9,9 @@ class MyField extends Field {
     }
 
    
-
+    public setField(field: number[][]){
+        super.field = field;
+    }
 }
 
 export default MyField;

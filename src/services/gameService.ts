@@ -11,6 +11,11 @@ class GameService extends BaseService {
         super();
     }
 
+    public initMyField(field: number[][]): this {
+        this.game?.init(field);
+        return this;
+    }
+
     public getIsStart(): boolean {
         return this.game?.getIsStart();
     }
@@ -45,16 +50,6 @@ class GameService extends BaseService {
 
     public getEnemyFieldArr(): number[][] {
         return this.game?.getEnemyField().getArr();
-    }
-
-    public addShips(coordinates: Coordinate[]): this {
-        const field = this.game?.getMyField();
-
-        if (field) {
-            coordinates.forEach(c => field.add(c.y, c.x));
-        }
-
-        return this;
     }
 
     public editMyField(cell: Cell, coordinate: Coordinate): this {

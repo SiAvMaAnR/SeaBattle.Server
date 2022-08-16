@@ -16,12 +16,11 @@ const gameHandlers = ({ io, socket, gameService, room }: {
 
     const tool = new SocketTool(io, socket);
 
-    function init(coordinates: Coordinate[]): void {
-        const field = gameService.addShips(coordinates)
-            .getMyFieldArr();
-
-        socket.emit("game:field:init", field);
+    function initField(field: number[][]): void {
+        const myField = gameService.initMyField(field).getMyFieldArr();
+        socket.emit("game:field:init", myField);
     }
+
 
     function start(): void {
 
@@ -120,14 +119,10 @@ const gameHandlers = ({ io, socket, gameService, room }: {
     function ready(): void {
         const roomId = room.get();
         if (!roomId) return;
-
-
         io.to(roomId).emit("game:ready", true);
-
-        
     }
 
-    socket.on("game:field:init", init);
+    socket.on("game:field:init", initField);
     socket.on("game:field:my", getMyField);
     socket.on("game:field:enemy", getEnemyField);
     socket.on("game:shoot:init", shootInit);
