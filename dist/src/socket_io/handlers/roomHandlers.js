@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const socketTool_1 = __importDefault(require("../socketTool"));
-const roomHandlers = ({ io, socket, gameService, room }) => {
+const roomHandlers = ({ io, socket, room }) => {
     const tool = new socketTool_1.default(io, socket);
     function join(roomId) {
         const isFull = tool.getSizeRoom(roomId) >= 2;

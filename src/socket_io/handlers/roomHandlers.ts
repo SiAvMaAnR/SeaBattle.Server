@@ -4,10 +4,9 @@ import GameService from "../../services/gameService";
 import Room from "../room";
 import SocketTool from "../socketTool";
 
-const roomHandlers = ({ io, socket, gameService, room }: {
+const roomHandlers = ({ io, socket, room }: {
     io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>,
     socket: Socket,
-    gameService: GameService,
     room: Room
 }) => {
     const tool = new SocketTool(io, socket);

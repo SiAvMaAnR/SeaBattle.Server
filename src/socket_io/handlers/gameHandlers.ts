@@ -7,13 +7,13 @@ import Room from "../room";
 import SocketTool from "../socketTool";
 
 
-const gameHandlers = ({ io, socket, gameService, room }: {
+const gameHandlers = ({ io, socket, room }: {
     io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>,
     socket: Socket,
-    gameService: GameService,
+    
     room: Room
 }) => {
-
+    const gameService: GameService = new GameService();
     const tool = new SocketTool(io, socket);
 
     function initField(field: number[][]): void {
@@ -116,11 +116,7 @@ const gameHandlers = ({ io, socket, gameService, room }: {
         socket.emit("game:move", isMyMove);
     }
 
-    function ready(): void {
-        const roomId = room.get();
-        if (!roomId) return;
-        io.to(roomId).emit("game:ready", true);
-    }
+    
 
     socket.on("game:field:init", initField);
     socket.on("game:field:my", getMyField);
@@ -132,7 +128,6 @@ const gameHandlers = ({ io, socket, gameService, room }: {
     socket.on("game:start", start);
     socket.on("game:create", create);
     socket.on("game:remove", remove);
-    socket.on("game:ready", ready);
 }
 
 export default gameHandlers;
