@@ -33,11 +33,9 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
 
     public async get(where?: Record<string, any>): Promise<TEntity[]> {
         try {
-            const users = await this.repository.findAll({
+            return await this.repository.findAll({
                 where
             });
-            // return users.filter((el) => fn(el))
-            return users;
         }
         catch (err) {
             return null;

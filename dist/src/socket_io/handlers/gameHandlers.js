@@ -5,10 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const gameService_1 = __importDefault(require("../../services/gameService"));
 const socketTool_1 = __importDefault(require("../socketTool"));
+const test_1 = __importDefault(require("../../test"));
 const gameHandlers = ({ io, socket, room }) => {
     const gameService = new gameService_1.default();
     const tool = new socketTool_1.default(io, socket);
     function initField(field) {
+        test_1.default.add(5);
+        const log = test_1.default.get();
+        console.log(log);
         const myField = gameService.initMyField(field).getMyFieldArr();
         socket.emit("game:field:init", myField);
     }

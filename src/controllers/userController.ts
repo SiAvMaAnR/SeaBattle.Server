@@ -5,6 +5,7 @@ import StatisticRepository from "../repositories/gameStatRepository";
 import UserService from "../services/userService";
 import { Request, Response } from 'express';
 import jwt from "../helpers/jwt";
+import test from "../test";
 
 class UserController extends BaseController {
     private userService = new UserService();
@@ -15,6 +16,7 @@ class UserController extends BaseController {
 
     public async getUsers(req: Request, res: Response) {
 
+        
         const users = await this.userService.getUsersAll();
 
         return (users)
