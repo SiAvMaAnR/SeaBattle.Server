@@ -1,11 +1,10 @@
-import sequelize from "../sequelize/sequelize";
+import sequelize from "../database/sequelize";
 import UserRepository from "../repositories/userRepository";
 import BaseController from "./baseController";
 import StatisticRepository from "../repositories/gameStatRepository";
 import UserService from "../services/userService";
 import { Request, Response } from 'express';
 import jwt from "../helpers/jwt";
-import test from "../test";
 
 class UserController extends BaseController {
     private userService = new UserService();

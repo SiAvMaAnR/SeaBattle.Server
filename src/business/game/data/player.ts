@@ -1,22 +1,27 @@
+import EnemyField from "../fields/enemyField";
+import MyField from "../fields/myField";
+
 class Player {
     private _socketId: string;
-    private _name: string = "default";
+    private _myField: MyField = new MyField();
+    private _enemyField: EnemyField = new EnemyField();
 
-    constructor({ socketId, name }: {
-        socketId: string,
-        name?: string
-    }) {
-        this._name = name;
+
+    constructor(socketId: string) {
         this._socketId = socketId;
     }
 
 
-    public get name(){
-        return this._name;
+    public get socketId(): string {
+        return this._socketId;
     }
 
-    public get socketId(){
-        return this._socketId;
+    public get myField(): MyField {
+        return this._myField;
+    }
+
+    public get enemyField(): EnemyField {
+        return this._enemyField;
     }
 }
 

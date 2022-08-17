@@ -3,18 +3,15 @@ import MyField from "../fields/myField";
 import Statistic from "./statistic";
 
 class GameData {
-    private statistic: Statistic = new Statistic();
-    private myField: MyField = new MyField();
-    private enemyField: EnemyField = new EnemyField();
+    private _statistic: Statistic = new Statistic();
 
-
-    constructor(){
+    constructor() {
 
     }
 
-
-    
-
+    public get statistic(): Statistic {
+        return this._statistic;
+    }
 }
 
 export default GameData;

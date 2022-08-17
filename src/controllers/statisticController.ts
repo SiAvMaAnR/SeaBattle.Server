@@ -1,4 +1,4 @@
-import sequelize from "../sequelize/sequelize";
+import sequelize from "../database/sequelize";
 import BaseController from "./baseController";
 import StatisticRepository from "../repositories/gameStatRepository";
 import { Request, Response } from "express";

@@ -37,7 +37,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./src/routes/index"));
-const sequelize_1 = __importStar(require("./src/sequelize/sequelize"));
+const sequelize_1 = __importStar(require("./src/database/sequelize"));
 const http_1 = require("http");
 const onConnection_1 = __importDefault(require("./src/socket_io/onConnection"));
 const cors_1 = __importDefault(require("./src/config/cors"));

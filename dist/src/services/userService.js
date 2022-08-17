@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userRepository_1 = __importDefault(require("../repositories/userRepository"));
-const sequelize_1 = __importDefault(require("../sequelize/sequelize"));
+const sequelize_1 = __importDefault(require("../database/sequelize"));
 const baseService_1 = __importDefault(require("./baseService"));
 class UserService extends baseService_1.default {
     constructor() {

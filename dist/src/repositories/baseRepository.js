@@ -37,11 +37,9 @@ class BaseRepository {
     get(where) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const users = yield this.repository.findAll({
+                return yield this.repository.findAll({
                     where
                 });
-                // return users.filter((el) => fn(el))
-                return users;
             }
             catch (err) {
                 return null;

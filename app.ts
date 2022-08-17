@@ -1,6 +1,6 @@
 import express from 'express';
 import indexRouter from "./src/routes/index";
-import sequelize, { openConnection, sync } from './src/sequelize/sequelize';
+import sequelize, { openConnection, sync } from './src/database/sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { createServer } from 'http';
 import onConnection from './src/socket_io/onConnection';

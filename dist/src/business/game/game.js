@@ -1,39 +1,33 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const gameData_1 = __importDefault(require("./gameData"));
 class Game {
-    constructor() {
-        this.gameData = new gameData_1.default();
+    constructor(core) {
+        this.core = core;
     }
-    getIsVictory() {
-        return this.gameData.getIsVictory();
+    joinRoom(roomId, socketId) {
+        var _a;
+        return (_a = this.core.getRoomById(roomId)) === null || _a === void 0 ? void 0 : _a.addPlayer(socketId);
     }
-    setIsVictory(isVictory) {
-        this.gameData.setIsVictory(isVictory);
+    leaveRoom(socketId) {
+        var _a;
+        const isSuccess = (_a = this.core.getRoomByPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.removePlayer(socketId);
+        this.core.removeEmptyRooms();
+        return isSuccess;
     }
-    getIsStart() {
-        return this.gameData.getIsStart();
+    createRoom(roomId) {
+        return this.core.addRoom(roomId);
     }
-    setIsStart(isStart) {
-        this.gameData.setIsStart(isStart);
+    isExistsRoom(roomId) {
+        return this.core.isExistsRoom(roomId);
     }
-    getIsMyMove() {
-        return this.gameData.getIsMyMove();
+    getRooms() {
+        return this.core.rooms;
     }
-    setIsMyMove(isMyMove) {
-        this.gameData.setIsMyMove(isMyMove);
+    getRoomById(roomId) {
+        return this.core.getRoomById(roomId);
     }
-    getMyField() {
-        return this.gameData.getMyField();
-    }
-    getEnemyField() {
-        return this.gameData.getEnemyField();
-    }
-    init(field) {
-        this.getMyField().setField(field);
+    getRoomByPlayer(socketId) {
+        return this.core.getRoomByPlayer(socketId);
     }
 }
 exports.default = Game;

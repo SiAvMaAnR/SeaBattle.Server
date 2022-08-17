@@ -3,7 +3,7 @@ import { NullishPropertiesOf } from "sequelize/types/utils";
 import { User } from "../models";
 import IUser from "../models/interfaces/IUser";
 import UserRepository from "../repositories/userRepository";
-import sequelize from "../sequelize/sequelize";
+import sequelize from "../database/sequelize";
 import BaseService from "./baseService";
 import IUserService from "./interfaces/IUserService";
 

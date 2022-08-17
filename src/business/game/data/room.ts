@@ -1,39 +1,49 @@
+import UserService from "../../../services/userService";
 import GameData from "./gameData";
 import Player from "./player";
 
 class Room {
-    private _roomId: string;
+    private _id: string;
     private _players: Player[] = [];
     private _gameData: GameData = new GameData();
 
 
-    constructor(roomId: string) {
-        this._roomId = roomId;
+    constructor(id: string) {
+        this._id = id;
     }
 
-    public get count() {
+    public get count(): number {
         return this._players.length;
     }
 
-    public get roomId() {
-        return this._roomId;
+    public get id(): string {
+        return this._id;
     }
 
-    public get players() {
-        return this.players;
+    public get players(): Player[] {
+        return this._players;
     }
 
-    public addPlayer(player: Player): boolean {
+    public get gameData(): GameData {
+        return this._gameData;
+    }
+
+    public addPlayer(socketId: string): boolean {
         if (this.count >= 2) {
             return false;
         }
 
-        this._players.push();
+        this._players.push(new Player(socketId));
         return true;
     }
 
-    public removePlayer(sokcetId: string) {
+    public getPlayer(socketId: string): Player {
+        return this._players.find(player => player.socketId == socketId);
+    }
+
+    public removePlayer(sokcetId: string): boolean {
         this._players = this._players.filter(player => player.socketId != sokcetId);
+        return true;
     }
 
 }
