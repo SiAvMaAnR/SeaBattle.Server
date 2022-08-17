@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import corsConfig from '../cors/cors.config';
+import corsConfig from '../config/cors';
 
 const ioInit = (server) => {
     const io = new Server(server, {

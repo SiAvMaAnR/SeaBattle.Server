@@ -27,24 +27,28 @@ class BaseRepository {
     getOne(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return yield this.repository.findOne({
-                    where: {
-                        id: id
-                    }
-                });
+                return yield this.repository.findByPk(id);
             }
             catch (err) {
                 return null;
             }
         });
     }
-    getAll(fn) {
+    get(fn) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const users = yield this.repository.findAll();
-                return (fn)
-                    ? users.filter((el) => fn(el))
-                    : users;
+                return users.filter((el) => fn(el));
+            }
+            catch (err) {
+                return null;
+            }
+        });
+    }
+    getAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield this.repository.findAll();
             }
             catch (err) {
                 return null;

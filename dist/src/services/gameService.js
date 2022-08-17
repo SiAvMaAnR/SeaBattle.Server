@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const baseService_1 = __importDefault(require("./baseService"));
-const game_1 = __importDefault(require("../seaBattle/game"));
+const game_1 = __importDefault(require("../business/game/game"));
 class GameService extends baseService_1.default {
     constructor() {
         super();

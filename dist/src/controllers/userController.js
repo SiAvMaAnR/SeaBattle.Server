@@ -21,7 +21,7 @@ class UserController extends baseController_1.default {
     }
     getUsers(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield this.userService.getUsers();
+            const users = yield this.userService.getUsersAll();
             return (users)
                 ? res.status(200).send({ data: users, message: "Success!" })
                 : res.status(404).send({ data: users, message: "Users is not found!" });
@@ -40,16 +40,36 @@ class UserController extends baseController_1.default {
     ;
     addUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield this.userService.addUser({
-                login: req.body.login,
-                password: req.body.password
-            });
-            return (user)
-                ? res.status(200).send({ data: user, message: "Success!" })
-                : res.status(400).send({ data: user, message: "User not added!" });
+            // const user = await this.userService.addUser({
+            //     login: req.body.login,
+            //     password: req.body.password
+            // });
+            // return (user)
+            //     ? res.status(200).send({ data: user, message: "Success!" })
+            //     : res.status(400).send({ data: user, message: "User not added!" });
         });
     }
     ;
+    login(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // for (let user of users) {
+            //     if (
+            //       req.body.login === user.login &&
+            //       req.body.password === user.password
+            //     ) {
+            //       return res.status(200).json({
+            //         id: user.id,
+            //         login: user.login,
+            //         token: jwt.sign({ id: user.id }, tokenKey),
+            //       })
+            //     }
+            //   }
+            //   return res.status(404).json({ message: 'User not found' })
+            // }
+            // const token = jwt.generateAccessToken({ username: req.body.username });
+            // res.status(200).json(token);
+        });
+    }
     deleteUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const id = parseInt(req.params.id);

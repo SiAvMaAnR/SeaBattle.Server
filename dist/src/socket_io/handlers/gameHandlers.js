@@ -88,12 +88,6 @@ const gameHandlers = ({ io, socket, room }) => {
         const isMyMove = gameService.getIsMyMove();
         socket.emit("game:move", isMyMove);
     }
-    function ready() {
-        const roomId = room.get();
-        if (!roomId)
-            return;
-        io.to(roomId).emit("game:ready", true);
-    }
     socket.on("game:field:init", initField);
     socket.on("game:field:my", getMyField);
     socket.on("game:field:enemy", getEnemyField);
@@ -104,7 +98,6 @@ const gameHandlers = ({ io, socket, room }) => {
     socket.on("game:start", start);
     socket.on("game:create", create);
     socket.on("game:remove", remove);
-    socket.on("game:ready", ready);
 };
 exports.default = gameHandlers;
 //# sourceMappingURL=gameHandlers.js.map

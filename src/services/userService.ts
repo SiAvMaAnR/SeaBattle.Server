@@ -14,15 +14,18 @@ class UserService extends BaseService implements IUserService {
     constructor() {
         super();
     }
-    
+
     public async addUser(user: Optional<IUser, NullishPropertiesOf<IUser>>): Promise<User> {
         return await this.repository.create(user);
     }
     public async getUserById(id: number): Promise<User> {
         return await this.repository.getOne(id);
     }
-    public async getUsers(fn?: Function): Promise<User[]> {
-        return await this.repository.getAll(fn);
+    public async getUsers(fn: Function): Promise<User[]> {
+        return await this.repository.get(fn);
+    }
+    public async getUsersAll(): Promise<User[]> {
+        return await this.repository.getAll();
     }
     public async deleteUserById(id: number): Promise<boolean> {
         return await this.repository.delete(id);

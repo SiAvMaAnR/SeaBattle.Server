@@ -2,8 +2,6 @@ import Field from "./field";
 
 class EnemyField extends Field {
 
-
-
     constructor() {
         super();
     }

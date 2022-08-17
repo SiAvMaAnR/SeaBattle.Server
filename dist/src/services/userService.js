@@ -32,7 +32,12 @@ class UserService extends baseService_1.default {
     }
     getUsers(fn) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.getAll(fn);
+            return yield this.repository.get(fn);
+        });
+    }
+    getUsersAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.repository.getAll();
         });
     }
     deleteUserById(id) {

@@ -3,6 +3,7 @@ import IRead from "./interfaces/IRead";
 import IEntity from "../models/interfaces/IEntity";
 import { MakeNullishOptional } from "sequelize/types/utils";
 import IWrite from "./interfaces/IWrite";
+import { Attributes, NonNullFindOptions } from "sequelize/types";
 
 abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<TEntity>, IRead<TEntity> {
 
@@ -14,33 +15,38 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
 
     public async create(entity: MakeNullishOptional<TEntity["_creationAttributes"]>): Promise<TEntity> {
         try {
-            return await this.repository.create<TEntity>(entity);
+            return await this.repository.create(entity);
         }
         catch (err) {
             return null;
         }
     }
 
-    public async getOne(id: any): Promise<TEntity> {
+    public async getOne(id: number): Promise<TEntity> {
         try {
-            return await this.repository.findOne({
-                where: {
-                    id: id
-                }
+            return await this.repository.findByPk(id);
+        }
+        catch (err) {
+            return null;
+        }
+    }
+
+    public async get(where?: Record<string, any>): Promise<TEntity[]> {
+        try {
+            const users = await this.repository.findAll({
+                where
             });
+            // return users.filter((el) => fn(el))
+            return users;
         }
         catch (err) {
             return null;
         }
     }
 
-    public async getAll(fn?: Function): Promise<TEntity[]> {
+    public async getAll(): Promise<TEntity[]> {
         try {
-            const users = await this.repository.findAll();
-
-            return (fn)
-                ? users.filter((el) => fn(el))
-                : users;
+            return await this.repository.findAll();
         }
         catch (err) {
             return null;

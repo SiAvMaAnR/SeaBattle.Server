@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import Cell from "../../enums/cell";
+import { Cell } from "../../business/game/field";
 import GameService from "../../services/gameService";
 import Coordinate from "../../types/coordinate";
 import Room from "../room";

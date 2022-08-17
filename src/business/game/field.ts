@@ -1,4 +1,3 @@
-import Cell from "../enums/cell";
 
 abstract class Field {
 
@@ -43,5 +42,15 @@ abstract class Field {
     }
 
 }
+
+const enum Cell {
+    Empty = 0,
+    Exists = 1,
+    Missed = 2,
+    Killed = 3
+}
+
+
+export { Cell };
 
 export default Field;

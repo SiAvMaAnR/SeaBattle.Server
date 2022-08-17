@@ -1,9 +1,10 @@
 import BaseService from "./baseService";
-import Cell from "../enums/cell";
-import Game from "../seaBattle/game";
 import Coordinate from "../types/coordinate";
+import Game from "../business/game/game";
+import IGameService from "./interfaces/IGameService";
+import { Cell } from "../business/game/field";
 
-class GameService extends BaseService {
+class GameService extends BaseService implements IGameService {
 
     private game: Game = null;
 
