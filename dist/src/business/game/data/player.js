@@ -6,23 +6,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const enemyField_1 = __importDefault(require("../fields/enemyField"));
 const myField_1 = __importDefault(require("../fields/myField"));
 class Player {
-    constructor(socketId, name) {
+    constructor(socketId) {
         this._name = "NO NAME";
+        this._move = false;
         this._init = false;
         this._ready = false;
         this._myField = new myField_1.default();
         this._enemyField = new enemyField_1.default();
         this._socketId = socketId;
-        this._name = name !== null && name !== void 0 ? name : "NONE";
     }
-    get name() {
-        return this._name;
+    get move() {
+        return this._move;
     }
-    set init(init) {
-        this._init = init;
+    setMove(move) {
+        this._move = move;
+        return this._move;
     }
     get init() {
         return this._init;
+    }
+    set init(init) {
+        this._init = init;
     }
     set ready(ready) {
         this._ready = ready;

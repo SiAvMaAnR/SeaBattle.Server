@@ -10,6 +10,7 @@ class MyField extends field_1.default {
     }
     setField(field) {
         super.field = field;
+        return super.field;
     }
 }
 exports.default = MyField;

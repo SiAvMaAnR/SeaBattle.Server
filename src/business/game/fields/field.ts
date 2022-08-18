@@ -38,9 +38,17 @@ abstract class Field {
     }
 
     public getCell(y: number, x: number): Cell {
-        return this.field[y][x];
+        const length = this.field.length;
+
+        return (y < length && x < length)
+            ? this.field[y][x]
+            : null;
     }
 
+
+    public isDeadField(): boolean {
+        return this.field.flat().filter(cell => cell == Cell.Exists).length == 0;
+    }
 }
 
 const enum Cell {

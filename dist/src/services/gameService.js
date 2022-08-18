@@ -20,6 +20,7 @@ class GameService extends baseService_1.default {
     }
     leaveRoom() {
         this.game.leaveRoom(this.socketId);
+        this.game.removeEmptyRooms();
     }
     getRooms() {
         return this.game.getRooms().map((room, index) => {
@@ -54,12 +55,40 @@ class GameService extends baseService_1.default {
         var _a, _b;
         const players = this.game.getPlayers(this.socketId);
         return {
-            my: (_a = players === null || players === void 0 ? void 0 : players.my) === null || _a === void 0 ? void 0 : _a.name,
-            enemy: (_b = players === null || players === void 0 ? void 0 : players.enemy) === null || _b === void 0 ? void 0 : _b.name
+            my: (_a = players === null || players === void 0 ? void 0 : players.my) === null || _a === void 0 ? void 0 : _a.socketId,
+            enemy: (_b = players === null || players === void 0 ? void 0 : players.enemy) === null || _b === void 0 ? void 0 : _b.socketId
         };
     }
     isFullRoom() {
         return this.game.isFullRoom(this.socketId);
+    }
+    getMyField() {
+        var _a;
+        return (_a = this.game.getMyField(this.socketId)) === null || _a === void 0 ? void 0 : _a.getArr();
+    }
+    getEnemyField() {
+        var _a;
+        return (_a = this.game.getEnemyField(this.socketId)) === null || _a === void 0 ? void 0 : _a.getArr();
+    }
+    initMyField(field) {
+        var _a;
+        return (_a = this.game.getMyField(this.socketId)) === null || _a === void 0 ? void 0 : _a.setField(field);
+    }
+    getIsMove() {
+        return this.game.getIsMove(this.socketId);
+    }
+    moveGen(condition) {
+        var _a, _b;
+        const players = this.game.getPlayers(this.socketId);
+        const myMove = (_a = players === null || players === void 0 ? void 0 : players.my) === null || _a === void 0 ? void 0 : _a.setMove(condition);
+        const enemyMove = (_b = players === null || players === void 0 ? void 0 : players.enemy) === null || _b === void 0 ? void 0 : _b.setMove(!condition);
+        return myMove != enemyMove;
+    }
+    checkWin() {
+        return this.game.checkWin(this.socketId);
+    }
+    shoot(coordinate) {
+        return this.game.shoot(this.socketId, coordinate);
     }
 }
 exports.default = GameService;

@@ -1,6 +1,11 @@
+import Coordinate from "../../types/coordinate";
 import { Core } from "./data/core";
 import Player from "./data/player";
 import Room from "./data/room";
+import EnemyField from "./fields/enemyField";
+import { Cell } from "./fields/field";
+import MyField from "./fields/myField";
+import PairPlayers from "./types/PairPlayers";
 
 
 class Game {
@@ -15,9 +20,11 @@ class Game {
     }
 
     public leaveRoom(socketId: string): boolean {
-        const isSuccess = this.core.getRoomByPlayer(socketId)?.removePlayer(socketId);
+        return this.core.getRoomByPlayer(socketId)?.removePlayer(socketId);
+    }
+
+    public removeEmptyRooms(): void {
         this.core.removeEmptyRooms();
-        return isSuccess;
     }
 
     public getPlayers(socketId: string): PairPlayers {
@@ -52,14 +59,51 @@ class Game {
     }
 
     public isFullRoom(socketId: string): boolean {
-        return this.core.getRoomByPlayer(socketId).isFullRoom();
+        return this.core.getRoomByPlayer(socketId)?.isFullRoom();
     }
 
+    public getMyField(socketId: string): MyField {
+        return this.core.getMyPlayer(socketId)?.myField;
+    }
+
+    public getEnemyField(socketId: string): EnemyField {
+        return this.core.getMyPlayer(socketId)?.enemyField;
+    }
+
+    public getIsMove(socketId: string): boolean {
+        return this.core.getMyPlayer(socketId)?.move;
+    }
+
+    public checkWin(socketId: string): boolean {
+        return this.core.getEnemyPlayer(socketId)?.myField.isDeadField();
+    }
+
+    public shoot(socketId: string, coordinate: Coordinate): boolean {
+        const myPlayer = this.core.getMyPlayer(socketId);
+        const enemyPlayer = this.core.getEnemyPlayer(socketId);
+
+        if (!coordinate || !myPlayer || !enemyPlayer) {
+            return null;
+        }
+
+        const isCorrect = myPlayer.enemyField.getCell(coordinate.y, coordinate.x) == Cell.Empty;
+
+        if (!isCorrect) {
+            return null;
+        }
+
+        const isHit = enemyPlayer.myField.getCell(coordinate.y, coordinate.x) == Cell.Exists;
+        const cell = isHit ? Cell.Killed : Cell.Missed;
+
+        myPlayer.enemyField.edit(cell, coordinate.y, coordinate.x);
+        enemyPlayer.myField.edit(cell, coordinate.y, coordinate.x);
+
+        myPlayer.setMove(isHit);
+        enemyPlayer.setMove(!isHit);
+
+        return isHit;
+    }
 }
 
-type PairPlayers = {
-    my: Player,
-    enemy: Player
-}
 
 export default Game;

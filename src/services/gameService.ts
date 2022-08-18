@@ -5,6 +5,9 @@ import { Cell } from "../business/game/fields/field";
 import Game from "../business/game/game";
 import core from "../business/game/data/core";
 import Room from "../business/game/data/room";
+import MyField from "../business/game/fields/myField";
+import PlayersResponse from "../business/game/types/PlayersResponse";
+import RoomResponse from "../business/game/types/RoomResponse";
 
 class GameService extends BaseService implements IGameService {
 
@@ -26,6 +29,7 @@ class GameService extends BaseService implements IGameService {
 
     public leaveRoom(): void {
         this.game.leaveRoom(this.socketId);
+        this.game.removeEmptyRooms();
     }
 
     public getRooms(): RoomResponse[] {
@@ -67,26 +71,46 @@ class GameService extends BaseService implements IGameService {
     public getPlayerNames(): PlayersResponse {
         const players = this.game.getPlayers(this.socketId);
         return {
-            my: players?.my?.name,
-            enemy: players?.enemy?.name
+            my: players?.my?.socketId,
+            enemy: players?.enemy?.socketId
         }
     }
 
     public isFullRoom(): boolean {
         return this.game.isFullRoom(this.socketId);
     }
+
+    public getMyField(): number[][] {
+        return this.game.getMyField(this.socketId)?.getArr();
+    }
+
+    public getEnemyField(): number[][] {
+        return this.game.getEnemyField(this.socketId)?.getArr();
+    }
+
+    public initMyField(field: number[][]): number[][] {
+        return this.game.getMyField(this.socketId)?.setField(field);
+    }
+
+    public getIsMove(): boolean {
+        return this.game.getIsMove(this.socketId);
+    }
+
+    public moveGen(condition: boolean): boolean {
+        const players = this.game.getPlayers(this.socketId);
+        const myMove = players?.my?.setMove(condition);
+        const enemyMove = players?.enemy?.setMove(!condition);
+        return myMove != enemyMove;
+    }
+
+    public checkWin(): boolean {
+        return this.game.checkWin(this.socketId);
+    }
+
+    public shoot(coordinate: Coordinate): boolean {
+        return this.game.shoot(this.socketId, coordinate);
+    }
 }
 
-type RoomResponse = {
-    index?: number,
-    id: string,
-    count: number
-}
 
-type PlayersResponse = {
-    my: string,
-    enemy: string
-}
-
-export { RoomResponse };
 export default GameService;

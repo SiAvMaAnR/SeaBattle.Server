@@ -20,6 +20,26 @@ class Core {
         return this._rooms.find(room => room.players.some(player => player.socketId == socketId));
     }
 
+    public getMyPlayer(socketId: string): Player {
+        for (let room of this._rooms) {
+            const player = room.players.find(player => player.socketId == socketId);
+            if (player) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public getEnemyPlayer(socketId: string): Player{
+        for (let room of this._rooms) {
+            const player = room.players.find(player => player.socketId != socketId);
+            if (player) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     public addRoom(roomId: string): boolean {
         const isExists = this._rooms.find(room => room.id == roomId);
 
@@ -43,6 +63,7 @@ class Core {
     public isExistsRoom(roomId: string): boolean {
         return this._rooms.findIndex(room => room.id == roomId) !== -1;
     }
+
 }
 
 

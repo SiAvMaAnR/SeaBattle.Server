@@ -13,6 +13,7 @@ const onConnection = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEven
 
     gameHandlers({ io, socket, gameService });
     roomHandlers({ io, socket, gameService });
+
 }
 
 export default onConnection;

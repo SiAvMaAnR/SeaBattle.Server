@@ -31,7 +31,13 @@ class Field {
         }
     }
     getCell(y, x) {
-        return this.field[y][x];
+        const length = this.field.length;
+        return (y < length && x < length)
+            ? this.field[y][x]
+            : null;
+    }
+    isDeadField() {
+        return this.field.flat().filter(cell => cell == 1 /* Cell.Exists */).length == 0;
     }
 }
 exports.default = Field;

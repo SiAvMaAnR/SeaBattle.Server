@@ -18,6 +18,24 @@ class Core {
     getRoomByPlayer(socketId) {
         return this._rooms.find(room => room.players.some(player => player.socketId == socketId));
     }
+    getMyPlayer(socketId) {
+        for (let room of this._rooms) {
+            const player = room.players.find(player => player.socketId == socketId);
+            if (player) {
+                return player;
+            }
+        }
+        return null;
+    }
+    getEnemyPlayer(socketId) {
+        for (let room of this._rooms) {
+            const player = room.players.find(player => player.socketId != socketId);
+            if (player) {
+                return player;
+            }
+        }
+        return null;
+    }
     addRoom(roomId) {
         const isExists = this._rooms.find(room => room.id == roomId);
         if (isExists) {

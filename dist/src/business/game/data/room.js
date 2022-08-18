@@ -3,12 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const gameData_1 = __importDefault(require("./gameData"));
 const player_1 = __importDefault(require("./player"));
 class Room {
     constructor(id) {
         this._players = [];
-        this._gameData = new gameData_1.default();
         this._id = id;
     }
     get count() {
@@ -19,9 +17,6 @@ class Room {
     }
     get players() {
         return this._players;
-    }
-    get gameData() {
-        return this._gameData;
     }
     addPlayer(socketId) {
         if (this.count >= 2) {

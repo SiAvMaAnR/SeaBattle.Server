@@ -1,3 +1,4 @@
+import { disconnect } from "process";
 import { Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import GameService from "../../services/gameService";
@@ -63,6 +64,7 @@ const roomHandlers = ({ io, socket, gameService }: {
     socket.on("room:get:all", getAll);
     socket.on("room:get:current", getCurrent);
     socket.on("room:users", getPlayers);
+    socket.on("disconnecting", leave)
 }
 
 export default roomHandlers;

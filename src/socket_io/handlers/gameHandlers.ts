@@ -15,27 +15,71 @@ const gameHandlers = ({ io, socket, gameService }: {
 
     function start(): void {
 
-        const roomId = gameService.getRoomByPlayer().id;
+        const roomId = gameService.getRoomByPlayer()?.id;
         if (!roomId) return;
 
-        const isFullRoom = gameService.isFullRoom();
+        const isStart = gameService.isFullRoom();
+        if (!isStart) return;
 
-        console.log(isFullRoom);
-        
+        const isGen = gameService.moveGen(true);
+        if (!isGen) return;
 
-        socket.emit("game:start", {
-            isStart: isFullRoom,
-            isFirstMove: true
-        });
+        socket.emit("game:start", isStart);
+        socket.broadcast.to(roomId).emit("game:start", isStart);
+    }
 
-        socket.broadcast.to(roomId).emit("game:start", {
-            isStart: isFullRoom,
-            isFirstMove: false
-        });
+
+    function initField(field: number[][]): void {
+        const myField = gameService.initMyField(field);
+        socket.emit("game:field:init", myField);
+    }
+
+
+    function getMyField(): void {
+        const field = gameService.getMyField();
+        socket.emit("game:field:my", field);
+    }
+
+
+    function getEnemyField(): void {
+        const field = gameService.getEnemyField();
+        socket.emit("game:field:enemy", field);
+    }
+
+    function getIsMove(): void {
+        const isMove = gameService.getIsMove();
+        socket.emit("game:move", isMove);
+    }
+
+    function shoot(coordinate: Coordinate): void {
+        const roomId = gameService.getRoomByPlayer()?.id;
+        const isMyMove = gameService.getIsMove();
+
+        if (!roomId || !isMyMove) return;
+
+        const isHit = gameService.shoot(coordinate);
+        io.to(roomId).emit("game:shoot", isHit);
+    }
+
+    function checkWin(): void {
+        const win = gameService.checkWin();
+        const roomId = gameService.getRoomByPlayer()?.id;
+
+        if (!roomId || !win) return;
+
+
+        socket.emit("game:check", true);
+        socket.broadcast.to(roomId).emit("game:check", false);
     }
 
 
     socket.on("game:start", start);
+    socket.on("game:field:init", initField);
+    socket.on("game:field:my", getMyField);
+    socket.on("game:field:enemy", getEnemyField);
+    socket.on("game:move", getIsMove);
+    socket.on("game:shoot", shoot);
+    socket.on("game:check", checkWin);
 }
 
 export default gameHandlers;

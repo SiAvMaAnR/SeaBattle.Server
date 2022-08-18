@@ -1,13 +1,10 @@
 import UserService from "../../../services/userService";
-import GameData from "./gameData";
 import Player from "./player";
 
 class Room {
     private _id: string;
     private _players: Player[] = [];
-    private _gameData: GameData = new GameData();
-
-
+    
     constructor(id: string) {
         this._id = id;
     }
@@ -22,10 +19,6 @@ class Room {
 
     public get players(): Player[] {
         return this._players;
-    }
-
-    public get gameData(): GameData {
-        return this._gameData;
     }
 
     public addPlayer(socketId: string): boolean {

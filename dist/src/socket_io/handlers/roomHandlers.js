@@ -46,6 +46,7 @@ const roomHandlers = ({ io, socket, gameService }) => {
     socket.on("room:get:all", getAll);
     socket.on("room:get:current", getCurrent);
     socket.on("room:users", getPlayers);
+    socket.on("disconnecting", leave);
 };
 exports.default = roomHandlers;
 //# sourceMappingURL=roomHandlers.js.map
