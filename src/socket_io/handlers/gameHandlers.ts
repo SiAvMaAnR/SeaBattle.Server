@@ -64,9 +64,8 @@ const gameHandlers = ({ io, socket, gameService }: {
     function checkWin(): void {
         const win = gameService.checkWin();
         const roomId = gameService.getRoomByPlayer()?.id;
-
+        
         if (!roomId || !win) return;
-
 
         socket.emit("game:check", true);
         socket.broadcast.to(roomId).emit("game:check", false);

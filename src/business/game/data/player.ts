@@ -4,7 +4,6 @@ import MyField from "../fields/myField";
 class Player {
 
     private _socketId: string;
-    private _name: string = "NO NAME";
     private _move: boolean = false;
     private _init: boolean = false;
     private _ready: boolean = false;

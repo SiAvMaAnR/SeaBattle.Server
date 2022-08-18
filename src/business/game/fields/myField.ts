@@ -12,8 +12,6 @@ class MyField extends Field {
         return super.field;
     }
 
-
-    
 }
 
 export default MyField;

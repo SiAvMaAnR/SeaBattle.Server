@@ -33,7 +33,7 @@ class Game {
         if (!room) return null;
 
         return {
-            my: room.getPlayer(socketId),
+            my: room.getMyPlayer(socketId),
             enemy: room.getEnemyPlayer(socketId)
         }
     }

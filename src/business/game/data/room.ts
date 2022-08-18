@@ -4,7 +4,7 @@ import Player from "./player";
 class Room {
     private _id: string;
     private _players: Player[] = [];
-    
+
     constructor(id: string) {
         this._id = id;
     }
@@ -30,7 +30,7 @@ class Room {
         return true;
     }
 
-    public getPlayer(socketId: string): Player {
+    public getMyPlayer(socketId: string): Player {
         return this._players.find(player => player.socketId == socketId);
     }
 
