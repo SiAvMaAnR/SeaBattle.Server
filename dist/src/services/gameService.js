@@ -40,8 +40,8 @@ class GameService extends baseService_1.default {
             count: room.count
         };
     }
-    getRoomByPlayer(socketId) {
-        const room = this.game.getRoomByPlayer(socketId);
+    getRoomByPlayer() {
+        const room = this.game.getRoomByPlayer(this.socketId);
         if (!room) {
             return null;
         }
@@ -49,6 +49,17 @@ class GameService extends baseService_1.default {
             id: room.id,
             count: room.count
         };
+    }
+    getPlayerNames() {
+        var _a, _b;
+        const players = this.game.getPlayers(this.socketId);
+        return {
+            my: (_a = players === null || players === void 0 ? void 0 : players.my) === null || _a === void 0 ? void 0 : _a.name,
+            enemy: (_b = players === null || players === void 0 ? void 0 : players.enemy) === null || _b === void 0 ? void 0 : _b.name
+        };
+    }
+    isFullRoom() {
+        return this.game.isFullRoom(this.socketId);
     }
 }
 exports.default = GameService;

@@ -51,8 +51,8 @@ class GameService extends BaseService implements IGameService {
         }
     }
 
-    public getRoomByPlayer(socketId: string): RoomResponse {
-        const room = this.game.getRoomByPlayer(socketId);
+    public getRoomByPlayer(): RoomResponse {
+        const room = this.game.getRoomByPlayer(this.socketId);
 
         if (!room) {
             return null;
@@ -64,13 +64,28 @@ class GameService extends BaseService implements IGameService {
         }
     }
 
-    public 
+    public getPlayerNames(): PlayersResponse {
+        const players = this.game.getPlayers(this.socketId);
+        return {
+            my: players?.my?.name,
+            enemy: players?.enemy?.name
+        }
+    }
+
+    public isFullRoom(): boolean {
+        return this.game.isFullRoom(this.socketId);
+    }
 }
 
 type RoomResponse = {
     index?: number,
     id: string,
     count: number
+}
+
+type PlayersResponse = {
+    my: string,
+    enemy: string
 }
 
 export { RoomResponse };

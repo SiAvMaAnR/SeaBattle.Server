@@ -14,6 +14,15 @@ class Game {
         this.core.removeEmptyRooms();
         return isSuccess;
     }
+    getPlayers(socketId) {
+        const room = this.core.getRoomByPlayer(socketId);
+        if (!room)
+            return null;
+        return {
+            my: room.getPlayer(socketId),
+            enemy: room.getEnemyPlayer(socketId)
+        };
+    }
     createRoom(roomId) {
         return this.core.addRoom(roomId);
     }
@@ -28,6 +37,9 @@ class Game {
     }
     getRoomByPlayer(socketId) {
         return this.core.getRoomByPlayer(socketId);
+    }
+    isFullRoom(socketId) {
+        return this.core.getRoomByPlayer(socketId).isFullRoom();
     }
 }
 exports.default = Game;

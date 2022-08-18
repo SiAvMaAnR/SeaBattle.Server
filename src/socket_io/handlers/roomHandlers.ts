@@ -11,8 +11,7 @@ const roomHandlers = ({ io, socket, gameService }: {
     const tool = new SocketTool(io, socket);
 
     function join(roomId: string): void {
-        const room = gameService.getRoomByPlayer(socket.id);
-
+        const room = gameService.getRoomByPlayer();
 
         if (room) {
             socket.emit("room:join", false, "You are already in this room!");
@@ -29,8 +28,8 @@ const roomHandlers = ({ io, socket, gameService }: {
     }
 
 
-    function leave() {
-        const room = gameService.getRoomByPlayer(socket.id);
+    function leave(): void {
+        const room = gameService.getRoomByPlayer();
 
         if (!room) {
             socket.emit("room:leave", false, "Room not found!");
@@ -48,10 +47,22 @@ const roomHandlers = ({ io, socket, gameService }: {
         socket.emit("room:get:all", rooms);
     }
 
+    function getCurrent(): void {
+        const room = gameService.getRoomByPlayer();
+        socket.emit("room:get:current", room);
+    }
+
+    function getPlayers(): void {
+        const players = gameService.getPlayerNames();
+        socket.emit("room:users", players);
+    }
+
 
     socket.on("room:join", join);
     socket.on("room:leave", leave);
     socket.on("room:get:all", getAll);
+    socket.on("room:get:current", getCurrent);
+    socket.on("room:users", getPlayers);
 }
 
 export default roomHandlers;

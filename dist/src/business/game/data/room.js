@@ -33,9 +33,15 @@ class Room {
     getPlayer(socketId) {
         return this._players.find(player => player.socketId == socketId);
     }
+    getEnemyPlayer(socketId) {
+        return this._players.find(player => player.socketId != socketId);
+    }
     removePlayer(sokcetId) {
         this._players = this._players.filter(player => player.socketId != sokcetId);
         return true;
+    }
+    isFullRoom() {
+        return this.count >= 2;
     }
 }
 exports.default = Room;

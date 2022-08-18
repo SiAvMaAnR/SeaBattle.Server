@@ -20,6 +20,17 @@ class Game {
         return isSuccess;
     }
 
+    public getPlayers(socketId: string): PairPlayers {
+        const room = this.core.getRoomByPlayer(socketId);
+
+        if (!room) return null;
+
+        return {
+            my: room.getPlayer(socketId),
+            enemy: room.getEnemyPlayer(socketId)
+        }
+    }
+
     public createRoom(roomId: string): boolean {
         return this.core.addRoom(roomId);
     }
@@ -40,6 +51,15 @@ class Game {
         return this.core.getRoomByPlayer(socketId);
     }
 
+    public isFullRoom(socketId: string): boolean {
+        return this.core.getRoomByPlayer(socketId).isFullRoom();
+    }
+
+}
+
+type PairPlayers = {
+    my: Player,
+    enemy: Player
 }
 
 export default Game;

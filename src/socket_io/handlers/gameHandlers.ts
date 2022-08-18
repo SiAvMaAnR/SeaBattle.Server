@@ -13,10 +13,29 @@ const gameHandlers = ({ io, socket, gameService }: {
 }) => {
     const tool = new SocketTool(io, socket);
 
-    
+    function start(): void {
+
+        const roomId = gameService.getRoomByPlayer().id;
+        if (!roomId) return;
+
+        const isFullRoom = gameService.isFullRoom();
+
+        console.log(isFullRoom);
+        
+
+        socket.emit("game:start", {
+            isStart: isFullRoom,
+            isFirstMove: true
+        });
+
+        socket.broadcast.to(roomId).emit("game:start", {
+            isStart: isFullRoom,
+            isFirstMove: false
+        });
+    }
 
 
-    // socket.on("",);
+    socket.on("game:start", start);
 }
 
 export default gameHandlers;
