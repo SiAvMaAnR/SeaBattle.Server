@@ -28,7 +28,6 @@ class Core {
         }
         return null;
     }
-    //БАГ
     getEnemyPlayer(socketId) {
         const room = this._rooms.find(room => room.players.some(player => player.socketId == socketId));
         return room.players.find(player => player.socketId != socketId);
