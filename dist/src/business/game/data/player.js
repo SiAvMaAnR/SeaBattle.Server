@@ -42,6 +42,13 @@ class Player {
     get enemyField() {
         return this._enemyField;
     }
+    restart() {
+        this._move = false;
+        this._init = false;
+        this._ready = false;
+        this._myField = new myField_1.default();
+        this._enemyField = new enemyField_1.default();
+    }
 }
 exports.default = Player;
 //# sourceMappingURL=player.js.map

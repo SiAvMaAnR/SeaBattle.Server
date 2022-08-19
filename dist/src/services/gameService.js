@@ -4,13 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const baseService_1 = __importDefault(require("./baseService"));
-const game_1 = __importDefault(require("../business/game/game"));
-const core_1 = __importDefault(require("../business/game/data/core"));
 class GameService extends baseService_1.default {
-    constructor(socketId) {
+    constructor(socketId, game) {
         super();
-        this.game = new game_1.default(core_1.default);
         this.socketId = socketId;
+        this.game = game;
     }
     joinRoom(roomId) {
         if (!this.game.isExistsRoom(roomId)) {
@@ -97,10 +95,6 @@ class GameService extends baseService_1.default {
     }
     shoot(coordinate) {
         return this.game.shoot(this.socketId, coordinate);
-    }
-    isStart() {
-        var _a;
-        return (_a = this.game.getRoomByPlayer(this.socketId)) === null || _a === void 0 ? void 0 : _a.gameData.isStart;
     }
     setIsStart(isStart) {
         const player = this.game.getRoomByPlayer(this.socketId);

@@ -16,17 +16,12 @@ const roomHandlers = ({ io, socket, gameService }: {
         }
 
         if (!gameService.joinRoom(roomId)) {
-            socket.emit("room:join", false, "Full room!");
-            return;
-        }
-
-        if (gameService.isStart()) {
-            socket.emit("room:join", false, "The game has already started!");
+            socket.emit("room:join", false, "The room is full or the game has already started!");
             return;
         }
 
         socket.join(roomId);
-        io.to(roomId).emit("room:join", true, `Success, ${socket.data['name']} join!`);
+        socket.emit("room:join", true, `Success, ${socket.data['name']} join!`);
     }
 
 

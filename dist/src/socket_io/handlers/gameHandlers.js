@@ -12,9 +12,8 @@ const gameHandlers = ({ io, socket, gameService }) => {
         const isGen = gameService.moveGen(true);
         if (!isGen)
             return;
-        gameService.setIsStart(true);
-        socket.emit("game:start", isStart);
-        socket.broadcast.to(roomId).emit("game:start", isStart);
+        gameService.setIsStart(isStart);
+        io.to(roomId).emit("game:start", isStart);
     }
     function initField(field) {
         const myField = gameService.initMyField(field);

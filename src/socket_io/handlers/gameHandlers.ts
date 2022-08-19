@@ -19,11 +19,9 @@ const gameHandlers = ({ io, socket, gameService }: {
         const isGen = gameService.moveGen(true);
         if (!isGen) return;
 
-        gameService.setIsStart(true);
-        socket.emit("game:start", isStart);
-        socket.broadcast.to(roomId).emit("game:start", isStart);
+        gameService.setIsStart(isStart);
+        io.to(roomId).emit("game:start", isStart);
     }
-
 
     function initField(field: number[][]): void {
         const myField = gameService.initMyField(field);
@@ -31,7 +29,6 @@ const gameHandlers = ({ io, socket, gameService }: {
         gameService.setIsInit(true);
         socket.emit("game:field:init", myField);
     }
-
 
     function ready(isReady: boolean): void {
         gameService.setIsReady(isReady);
@@ -42,7 +39,6 @@ const gameHandlers = ({ io, socket, gameService }: {
         const field = gameService.getMyField();
         socket.emit("game:field:my", field);
     }
-
 
     function getEnemyField(): void {
         const field = gameService.getEnemyField();

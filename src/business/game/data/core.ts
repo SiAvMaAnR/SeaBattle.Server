@@ -1,7 +1,9 @@
+import ICore from "../interfaces/ICore";
+import GameData from "./gameData";
 import Player from "./player";
 import Room from "./room";
 
-class Core {
+class Core implements ICore {
     private _rooms: Room[] = [];
 
     constructor() {
@@ -30,7 +32,7 @@ class Core {
         return null;
     }
 
-    public getEnemyPlayer(socketId: string): Player{
+    public getEnemyPlayer(socketId: string): Player {
         for (let room of this._rooms) {
             const player = room.players.find(player => player.socketId != socketId);
             if (player) {
@@ -47,7 +49,7 @@ class Core {
             return false;
         }
 
-        const room = new Room(roomId);
+        const room = new Room(roomId, new GameData());
         this._rooms.push(room);
         return true;
     }

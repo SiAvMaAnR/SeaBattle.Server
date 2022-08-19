@@ -1,22 +1,19 @@
 import BaseService from "./baseService";
 import Coordinate from "../types/coordinate";
 import IGameService from "./interfaces/IGameService";
-import { Cell } from "../business/game/fields/field";
-import Game from "../business/game/game";
-import core from "../business/game/data/core";
-import Room from "../business/game/data/room";
-import MyField from "../business/game/fields/myField";
 import PlayersResponse from "../business/game/types/PlayersResponse";
 import RoomResponse from "../business/game/types/RoomResponse";
+import IGame from "../business/game/interfaces/IGame";
 
 class GameService extends BaseService implements IGameService {
 
     private socketId: string;
-    private game: Game = new Game(core);
+    private game: IGame;
 
-    constructor(socketId: string) {
+    constructor(socketId: string, game: IGame) {
         super();
         this.socketId = socketId;
+        this.game = game;
     }
 
     public joinRoom(roomId: string): boolean {
@@ -119,10 +116,6 @@ class GameService extends BaseService implements IGameService {
         return this.game.shoot(this.socketId, coordinate);
     }
 
-    public isStart(): boolean {
-        return this.game.getRoomByPlayer(this.socketId)?.gameData.isStart;
-    }
-
     public setIsStart(isStart: boolean): void {
         const player = this.game.getRoomByPlayer(this.socketId);
         if (!player) return;
@@ -141,11 +134,11 @@ class GameService extends BaseService implements IGameService {
         player.gameData.isEnd = isEnd;
     }
 
-    public setIsReady(ready: boolean) {
+    public setIsReady(ready: boolean): void {
         this.game.setIsReady(this.socketId, ready);
     }
 
-    public setIsInit(init: boolean) {
+    public setIsInit(init: boolean): void {
         this.game.setIsInit(this.socketId, init);
     }
 }

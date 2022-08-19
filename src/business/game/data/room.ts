@@ -7,9 +7,9 @@ class Room {
     private _players: Player[] = [];
     private _gameData: GameData;
 
-    constructor(id: string) {
+    constructor(id: string, gameData: GameData) {
         this._id = id;
-        this._gameData = new GameData();
+        this._gameData = gameData;
     }
 
     public get gameData(): GameData {
@@ -29,7 +29,7 @@ class Room {
     }
 
     public addPlayer(socketId: string): boolean {
-        if (this.count >= 2) {
+        if (this.count >= 2 || this._gameData.isStart) {
             return false;
         }
 
@@ -54,6 +54,11 @@ class Room {
         return this.count >= 2;
     }
 
+    public restart(): void {
+        this._gameData.isEnd = false;
+        this._gameData.isStart = false;
+        this._players.forEach(player => player.restart());
+    }
 }
 
 export default Room;

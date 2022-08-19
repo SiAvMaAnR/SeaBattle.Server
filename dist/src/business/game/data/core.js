@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Core = void 0;
+const gameData_1 = __importDefault(require("./gameData"));
 const room_1 = __importDefault(require("./room"));
 class Core {
     constructor() {
@@ -41,7 +42,7 @@ class Core {
         if (isExists) {
             return false;
         }
-        const room = new room_1.default(roomId);
+        const room = new room_1.default(roomId, new gameData_1.default());
         this._rooms.push(room);
         return true;
     }

@@ -3,13 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const gameData_1 = __importDefault(require("./gameData"));
 const player_1 = __importDefault(require("./player"));
 class Room {
-    constructor(id) {
+    constructor(id, gameData) {
         this._players = [];
         this._id = id;
-        this._gameData = new gameData_1.default();
+        this._gameData = gameData;
     }
     get gameData() {
         return this._gameData;
@@ -24,7 +23,7 @@ class Room {
         return this._players;
     }
     addPlayer(socketId) {
-        if (this.count >= 2) {
+        if (this.count >= 2 || this._gameData.isStart) {
             return false;
         }
         this._players.push(new player_1.default(socketId));
@@ -42,6 +41,11 @@ class Room {
     }
     isFullRoom() {
         return this.count >= 2;
+    }
+    restart() {
+        this._gameData.isEnd = false;
+        this._gameData.isStart = false;
+        this._players.forEach(player => player.restart());
     }
 }
 exports.default = Room;

@@ -1,17 +1,17 @@
 import Coordinate from "../../types/coordinate";
-import { Core } from "./data/core";
-import Player from "./data/player";
 import Room from "./data/room";
 import EnemyField from "./fields/enemyField";
 import { Cell } from "./fields/field";
 import MyField from "./fields/myField";
+import ICore from "./interfaces/ICore";
+import IGame from "./interfaces/IGame";
 import PairPlayers from "./types/PairPlayers";
 
 
-class Game {
-    private core: Core;
+class Game implements IGame {
+    private core: ICore;
 
-    constructor(core: Core) {
+    constructor(core: ICore) {
         this.core = core;
     }
 
@@ -78,11 +78,11 @@ class Game {
         return this.core.getEnemyPlayer(socketId)?.myField.isDeadField();
     }
 
-    public setIsReady(socketId: string, isReady: boolean): void{
+    public setIsReady(socketId: string, isReady: boolean): void {
         this.core.getMyPlayer(socketId)?.setReady(isReady);
     }
 
-    public setIsInit(socketId: string, isInit: boolean): void{
+    public setIsInit(socketId: string, isInit: boolean): void {
         this.core.getMyPlayer(socketId)?.setInit(isInit);
     }
 

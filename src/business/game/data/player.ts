@@ -1,4 +1,5 @@
 import EnemyField from "../fields/enemyField";
+import Field from "../fields/field";
 import MyField from "../fields/myField";
 
 class Player {
@@ -31,7 +32,7 @@ class Player {
     public setInit(init: boolean) {
         this._init = init;
     }
-    
+
     public setReady(ready: boolean) {
         this._ready = ready;
     }
@@ -50,6 +51,14 @@ class Player {
 
     public get enemyField(): EnemyField {
         return this._enemyField;
+    }
+
+    public restart() {
+        this._move = false;
+        this._init = false;
+        this._ready = false;
+        this._myField = new MyField();
+        this._enemyField = new EnemyField();
     }
 }
 
