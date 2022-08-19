@@ -68,11 +68,19 @@ class GameService extends BaseService implements IGameService {
         }
     }
 
-    public getPlayerNames(): PlayersResponse {
+    public getPlayers(): PlayersResponse {
         const players = this.game.getPlayers(this.socketId);
         return {
-            my: players?.my?.socketId,
-            enemy: players?.enemy?.socketId
+            my: {
+                socket: players?.my?.socketId,
+                init: players?.my?.init,
+                ready: players?.my?.ready
+            },
+            enemy: {
+                socket: players?.enemy?.socketId,
+                init: players?.enemy?.init,
+                ready: players?.enemy?.ready
+            }
         }
     }
 
@@ -109,6 +117,36 @@ class GameService extends BaseService implements IGameService {
 
     public shoot(coordinate: Coordinate): boolean {
         return this.game.shoot(this.socketId, coordinate);
+    }
+
+    public isStart(): boolean {
+        return this.game.getRoomByPlayer(this.socketId)?.gameData.isStart;
+    }
+
+    public setIsStart(isStart: boolean): void {
+        const player = this.game.getRoomByPlayer(this.socketId);
+        if (!player) return;
+
+        player.gameData.isStart = isStart;
+    }
+
+    public isEnd(): boolean {
+        return this.game.getRoomByPlayer(this.socketId)?.gameData.isEnd;
+    }
+
+    public setIsEnd(isEnd: boolean): void {
+        const player = this.game.getRoomByPlayer(this.socketId);
+        if (!player) return;
+
+        player.gameData.isEnd = isEnd;
+    }
+
+    public setIsReady(ready: boolean) {
+        this.game.setIsReady(this.socketId, ready);
+    }
+
+    public setIsInit(init: boolean) {
+        this.game.setIsInit(this.socketId, init);
     }
 }
 

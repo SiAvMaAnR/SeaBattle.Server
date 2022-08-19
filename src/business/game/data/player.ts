@@ -28,11 +28,11 @@ class Player {
         return this._init;
     }
 
-    public set init(init: boolean) {
+    public setInit(init: boolean) {
         this._init = init;
     }
     
-    public set ready(ready: boolean) {
+    public setReady(ready: boolean) {
         this._ready = ready;
     }
 

@@ -1,12 +1,19 @@
 import UserService from "../../../services/userService";
+import GameData from "./gameData";
 import Player from "./player";
 
 class Room {
     private _id: string;
     private _players: Player[] = [];
+    private _gameData: GameData;
 
     constructor(id: string) {
         this._id = id;
+        this._gameData = new GameData();
+    }
+
+    public get gameData(): GameData {
+        return this._gameData;
     }
 
     public get count(): number {

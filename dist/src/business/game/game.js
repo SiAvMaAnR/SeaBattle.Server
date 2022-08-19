@@ -20,7 +20,7 @@ class Game {
         if (!room)
             return null;
         return {
-            my: room.getPlayer(socketId),
+            my: room.getMyPlayer(socketId),
             enemy: room.getEnemyPlayer(socketId)
         };
     }
@@ -58,6 +58,14 @@ class Game {
     checkWin(socketId) {
         var _a;
         return (_a = this.core.getEnemyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.myField.isDeadField();
+    }
+    setIsReady(socketId, isReady) {
+        var _a;
+        (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.setReady(isReady);
+    }
+    setIsInit(socketId, isInit) {
+        var _a;
+        (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.setInit(isInit);
     }
     shoot(socketId, coordinate) {
         const myPlayer = this.core.getMyPlayer(socketId);

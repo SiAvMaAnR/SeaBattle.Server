@@ -51,12 +51,20 @@ class GameService extends baseService_1.default {
             count: room.count
         };
     }
-    getPlayerNames() {
-        var _a, _b;
+    getPlayers() {
+        var _a, _b, _c, _d, _e, _f;
         const players = this.game.getPlayers(this.socketId);
         return {
-            my: (_a = players === null || players === void 0 ? void 0 : players.my) === null || _a === void 0 ? void 0 : _a.socketId,
-            enemy: (_b = players === null || players === void 0 ? void 0 : players.enemy) === null || _b === void 0 ? void 0 : _b.socketId
+            my: {
+                socket: (_a = players === null || players === void 0 ? void 0 : players.my) === null || _a === void 0 ? void 0 : _a.socketId,
+                init: (_b = players === null || players === void 0 ? void 0 : players.my) === null || _b === void 0 ? void 0 : _b.init,
+                ready: (_c = players === null || players === void 0 ? void 0 : players.my) === null || _c === void 0 ? void 0 : _c.ready
+            },
+            enemy: {
+                socket: (_d = players === null || players === void 0 ? void 0 : players.enemy) === null || _d === void 0 ? void 0 : _d.socketId,
+                init: (_e = players === null || players === void 0 ? void 0 : players.enemy) === null || _e === void 0 ? void 0 : _e.init,
+                ready: (_f = players === null || players === void 0 ? void 0 : players.enemy) === null || _f === void 0 ? void 0 : _f.ready
+            }
         };
     }
     isFullRoom() {
@@ -89,6 +97,32 @@ class GameService extends baseService_1.default {
     }
     shoot(coordinate) {
         return this.game.shoot(this.socketId, coordinate);
+    }
+    isStart() {
+        var _a;
+        return (_a = this.game.getRoomByPlayer(this.socketId)) === null || _a === void 0 ? void 0 : _a.gameData.isStart;
+    }
+    setIsStart(isStart) {
+        const player = this.game.getRoomByPlayer(this.socketId);
+        if (!player)
+            return;
+        player.gameData.isStart = isStart;
+    }
+    isEnd() {
+        var _a;
+        return (_a = this.game.getRoomByPlayer(this.socketId)) === null || _a === void 0 ? void 0 : _a.gameData.isEnd;
+    }
+    setIsEnd(isEnd) {
+        const player = this.game.getRoomByPlayer(this.socketId);
+        if (!player)
+            return;
+        player.gameData.isEnd = isEnd;
+    }
+    setIsReady(ready) {
+        this.game.setIsReady(this.socketId, ready);
+    }
+    setIsInit(init) {
+        this.game.setIsInit(this.socketId, init);
     }
 }
 exports.default = GameService;

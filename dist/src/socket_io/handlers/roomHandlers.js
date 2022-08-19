@@ -1,11 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const socketTool_1 = __importDefault(require("../socketTool"));
 const roomHandlers = ({ io, socket, gameService }) => {
-    const tool = new socketTool_1.default(io, socket);
     function join(roomId) {
         const room = gameService.getRoomByPlayer();
         if (room) {
@@ -16,18 +11,23 @@ const roomHandlers = ({ io, socket, gameService }) => {
             socket.emit("room:join", false, "Full room!");
             return;
         }
+        if (gameService.isStart()) {
+            socket.emit("room:join", false, "The game has already started!");
+            return;
+        }
         socket.join(roomId);
         io.to(roomId).emit("room:join", true, `Success, ${socket.data['name']} join!`);
     }
     function leave() {
-        const room = gameService.getRoomByPlayer();
-        if (!room) {
+        var _a;
+        const roomId = (_a = gameService.getRoomByPlayer()) === null || _a === void 0 ? void 0 : _a.id;
+        if (!roomId) {
             socket.emit("room:leave", false, "Room not found!");
             return;
         }
         gameService.leaveRoom();
-        io.to(room.id).emit("room:leave", true, `Success, ${socket.data['name']} left!`);
-        socket.leave(room.id);
+        socket.emit("room:leave", true, `Success, ${socket.data['name']} left!`);
+        socket.leave(roomId);
     }
     function getAll() {
         const rooms = gameService.getRooms();
@@ -37,15 +37,22 @@ const roomHandlers = ({ io, socket, gameService }) => {
         const room = gameService.getRoomByPlayer();
         socket.emit("room:get:current", room);
     }
-    function getPlayers() {
-        const players = gameService.getPlayerNames();
-        socket.emit("room:users", players);
+    function isReadyPLayers() {
+        var _a, _b, _c, _d, _e;
+        const roomId = (_a = gameService.getRoomByPlayer()) === null || _a === void 0 ? void 0 : _a.id;
+        if (!roomId)
+            return;
+        const players = gameService.getPlayers();
+        const initAll = ((_b = players === null || players === void 0 ? void 0 : players.my) === null || _b === void 0 ? void 0 : _b.init) && ((_c = players === null || players === void 0 ? void 0 : players.enemy) === null || _c === void 0 ? void 0 : _c.init);
+        const readyAll = ((_d = players === null || players === void 0 ? void 0 : players.my) === null || _d === void 0 ? void 0 : _d.ready) && ((_e = players === null || players === void 0 ? void 0 : players.enemy) === null || _e === void 0 ? void 0 : _e.ready);
+        const isAccess = initAll && readyAll;
+        io.to(roomId).emit("room:players:ready", isAccess);
     }
     socket.on("room:join", join);
     socket.on("room:leave", leave);
     socket.on("room:get:all", getAll);
     socket.on("room:get:current", getCurrent);
-    socket.on("room:users", getPlayers);
+    socket.on("room:players:ready", isReadyPLayers);
     socket.on("disconnecting", leave);
 };
 exports.default = roomHandlers;

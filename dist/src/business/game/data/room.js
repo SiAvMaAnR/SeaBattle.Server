@@ -3,11 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const gameData_1 = __importDefault(require("./gameData"));
 const player_1 = __importDefault(require("./player"));
 class Room {
     constructor(id) {
         this._players = [];
         this._id = id;
+        this._gameData = new gameData_1.default();
+    }
+    get gameData() {
+        return this._gameData;
     }
     get count() {
         return this._players.length;
@@ -25,7 +30,7 @@ class Room {
         this._players.push(new player_1.default(socketId));
         return true;
     }
-    getPlayer(socketId) {
+    getMyPlayer(socketId) {
         return this._players.find(player => player.socketId == socketId);
     }
     getEnemyPlayer(socketId) {

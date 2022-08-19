@@ -1,18 +1,13 @@
 import { Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import { Cell } from "../../business/game/fields/field";
 import GameService from "../../services/gameService";
 import Coordinate from "../../types/coordinate";
-import SocketTool from "../socketTool";
-import EvGame from "../types/evGame";
 
 const gameHandlers = ({ io, socket, gameService }: {
     io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>,
     socket: Socket,
     gameService: GameService
 }) => {
-    const tool = new SocketTool(io, socket);
-
     function start(): void {
 
         const roomId = gameService.getRoomByPlayer()?.id;
@@ -24,6 +19,7 @@ const gameHandlers = ({ io, socket, gameService }: {
         const isGen = gameService.moveGen(true);
         if (!isGen) return;
 
+        gameService.setIsStart(true);
         socket.emit("game:start", isStart);
         socket.broadcast.to(roomId).emit("game:start", isStart);
     }
@@ -31,9 +27,16 @@ const gameHandlers = ({ io, socket, gameService }: {
 
     function initField(field: number[][]): void {
         const myField = gameService.initMyField(field);
+        
+        gameService.setIsInit(true);
         socket.emit("game:field:init", myField);
     }
 
+
+    function ready(isReady: boolean): void {
+        gameService.setIsReady(isReady);
+        socket.emit("game:ready", isReady);
+    }
 
     function getMyField(): void {
         const field = gameService.getMyField();
@@ -64,13 +67,13 @@ const gameHandlers = ({ io, socket, gameService }: {
     function checkWin(): void {
         const win = gameService.checkWin();
         const roomId = gameService.getRoomByPlayer()?.id;
-        
+
         if (!roomId || !win) return;
 
+        gameService.setIsEnd(true);
         socket.emit("game:check", true);
         socket.broadcast.to(roomId).emit("game:check", false);
     }
-
 
     socket.on("game:start", start);
     socket.on("game:field:init", initField);
@@ -79,6 +82,7 @@ const gameHandlers = ({ io, socket, gameService }: {
     socket.on("game:move", getIsMove);
     socket.on("game:shoot", shoot);
     socket.on("game:check", checkWin);
+    socket.on("game:ready", ready);
 }
 
 export default gameHandlers;

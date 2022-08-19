@@ -1,11 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const socketTool_1 = __importDefault(require("../socketTool"));
 const gameHandlers = ({ io, socket, gameService }) => {
-    const tool = new socketTool_1.default(io, socket);
     function start() {
         var _a;
         const roomId = (_a = gameService.getRoomByPlayer()) === null || _a === void 0 ? void 0 : _a.id;
@@ -17,12 +12,18 @@ const gameHandlers = ({ io, socket, gameService }) => {
         const isGen = gameService.moveGen(true);
         if (!isGen)
             return;
+        gameService.setIsStart(true);
         socket.emit("game:start", isStart);
         socket.broadcast.to(roomId).emit("game:start", isStart);
     }
     function initField(field) {
         const myField = gameService.initMyField(field);
+        gameService.setIsInit(true);
         socket.emit("game:field:init", myField);
+    }
+    function ready(isReady) {
+        gameService.setIsReady(isReady);
+        socket.emit("game:ready", isReady);
     }
     function getMyField() {
         const field = gameService.getMyField();
@@ -51,6 +52,7 @@ const gameHandlers = ({ io, socket, gameService }) => {
         const roomId = (_a = gameService.getRoomByPlayer()) === null || _a === void 0 ? void 0 : _a.id;
         if (!roomId || !win)
             return;
+        gameService.setIsEnd(true);
         socket.emit("game:check", true);
         socket.broadcast.to(roomId).emit("game:check", false);
     }
@@ -61,6 +63,7 @@ const gameHandlers = ({ io, socket, gameService }) => {
     socket.on("game:move", getIsMove);
     socket.on("game:shoot", shoot);
     socket.on("game:check", checkWin);
+    socket.on("game:ready", ready);
 };
 exports.default = gameHandlers;
 //# sourceMappingURL=gameHandlers.js.map

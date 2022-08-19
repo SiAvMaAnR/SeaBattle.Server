@@ -78,6 +78,14 @@ class Game {
         return this.core.getEnemyPlayer(socketId)?.myField.isDeadField();
     }
 
+    public setIsReady(socketId: string, isReady: boolean): void{
+        this.core.getMyPlayer(socketId)?.setReady(isReady);
+    }
+
+    public setIsInit(socketId: string, isInit: boolean): void{
+        this.core.getMyPlayer(socketId)?.setInit(isInit);
+    }
+
     public shoot(socketId: string, coordinate: Coordinate): boolean {
         const myPlayer = this.core.getMyPlayer(socketId);
         const enemyPlayer = this.core.getEnemyPlayer(socketId);

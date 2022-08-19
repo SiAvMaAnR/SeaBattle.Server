@@ -1,15 +1,21 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const statistic_1 = __importDefault(require("./statistic"));
 class GameData {
     constructor() {
-        this._statistic = new statistic_1.default();
+        this._isStart = false;
+        this._isEnd = false;
     }
-    get statistic() {
-        return this._statistic;
+    get isStart() {
+        return this._isStart;
+    }
+    set isStart(isStart) {
+        this._isStart = isStart;
+    }
+    get isEnd() {
+        return this._isEnd;
+    }
+    set isEnd(isEnd) {
+        this._isEnd = isEnd;
     }
 }
 exports.default = GameData;

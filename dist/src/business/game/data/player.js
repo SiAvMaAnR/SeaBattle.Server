@@ -7,7 +7,6 @@ const enemyField_1 = __importDefault(require("../fields/enemyField"));
 const myField_1 = __importDefault(require("../fields/myField"));
 class Player {
     constructor(socketId) {
-        this._name = "NO NAME";
         this._move = false;
         this._init = false;
         this._ready = false;
@@ -25,10 +24,10 @@ class Player {
     get init() {
         return this._init;
     }
-    set init(init) {
+    setInit(init) {
         this._init = init;
     }
-    set ready(ready) {
+    setReady(ready) {
         this._ready = ready;
     }
     get ready() {

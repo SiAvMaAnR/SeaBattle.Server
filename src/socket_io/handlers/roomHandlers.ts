@@ -1,16 +1,12 @@
-import { disconnect } from "process";
 import { Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import GameService from "../../services/gameService";
-import SocketTool from "../socketTool";
 
 const roomHandlers = ({ io, socket, gameService }: {
     io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>,
     socket: Socket,
     gameService: GameService
 }) => {
-    const tool = new SocketTool(io, socket);
-
     function join(roomId: string): void {
         const room = gameService.getRoomByPlayer();
 
@@ -24,22 +20,27 @@ const roomHandlers = ({ io, socket, gameService }: {
             return;
         }
 
+        if (gameService.isStart()) {
+            socket.emit("room:join", false, "The game has already started!");
+            return;
+        }
+
         socket.join(roomId);
         io.to(roomId).emit("room:join", true, `Success, ${socket.data['name']} join!`);
     }
 
 
     function leave(): void {
-        const room = gameService.getRoomByPlayer();
+        const roomId = gameService.getRoomByPlayer()?.id;
 
-        if (!room) {
+        if (!roomId) {
             socket.emit("room:leave", false, "Room not found!");
             return;
         }
 
         gameService.leaveRoom();
-        io.to(room.id).emit("room:leave", true, `Success, ${socket.data['name']} left!`);
-        socket.leave(room.id);
+        socket.emit("room:leave", true, `Success, ${socket.data['name']} left!`);
+        socket.leave(roomId);
     }
 
 
@@ -53,17 +54,25 @@ const roomHandlers = ({ io, socket, gameService }: {
         socket.emit("room:get:current", room);
     }
 
-    function getPlayers(): void {
-        const players = gameService.getPlayerNames();
-        socket.emit("room:users", players);
-    }
+    function isReadyPLayers(): void {
+        const roomId = gameService.getRoomByPlayer()?.id;
 
+        if (!roomId) return;
+
+        const players = gameService.getPlayers();
+
+        const initAll: boolean = players?.my?.init && players?.enemy?.init;
+        const readyAll: boolean = players?.my?.ready && players?.enemy?.ready;
+        const isAccess: boolean = initAll && readyAll;
+
+        io.to(roomId).emit("room:players:ready", isAccess);
+    }
 
     socket.on("room:join", join);
     socket.on("room:leave", leave);
     socket.on("room:get:all", getAll);
     socket.on("room:get:current", getCurrent);
-    socket.on("room:users", getPlayers);
+    socket.on("room:players:ready", isReadyPLayers);
     socket.on("disconnecting", leave)
 }
 
