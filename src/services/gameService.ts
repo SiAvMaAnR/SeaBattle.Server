@@ -117,10 +117,7 @@ class GameService extends BaseService implements IGameService {
     }
 
     public setIsStart(isStart: boolean): void {
-        const player = this.game.getRoomByPlayer(this.socketId);
-        if (!player) return;
-
-        player.gameData.isStart = isStart;
+        return this.game.getRoomByPlayer(this.socketId).gameData.setIsStart(isStart);
     }
 
     public isEnd(): boolean {
@@ -128,10 +125,7 @@ class GameService extends BaseService implements IGameService {
     }
 
     public setIsEnd(isEnd: boolean): void {
-        const player = this.game.getRoomByPlayer(this.socketId);
-        if (!player) return;
-
-        player.gameData.isEnd = isEnd;
+        this.game.getRoomByPlayer(this.socketId).gameData.setIsEnd(isEnd);
     }
 
     public setIsReady(ready: boolean): void {
@@ -140,6 +134,10 @@ class GameService extends BaseService implements IGameService {
 
     public setIsInit(init: boolean): void {
         this.game.setIsInit(this.socketId, init);
+    }
+
+    public setIsAccess(access: boolean): void {
+        this.game.setIsAccess(this.socketId, access);
     }
 }
 

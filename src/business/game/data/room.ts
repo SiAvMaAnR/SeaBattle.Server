@@ -29,7 +29,7 @@ class Room {
     }
 
     public addPlayer(socketId: string): boolean {
-        if (this.count >= 2 || this._gameData.isStart) {
+        if (this.count >= 2 || this._gameData.isAccess) {
             return false;
         }
 
@@ -55,8 +55,9 @@ class Room {
     }
 
     public restart(): void {
-        this._gameData.isEnd = false;
-        this._gameData.isStart = false;
+        this._gameData.setIsEnd(false);
+        this._gameData.setIsStart(false);
+        this._gameData.setIsAccess(false);
         this._players.forEach(player => player.restart());
     }
 }

@@ -22,6 +22,7 @@ interface IGame{
     setIsReady(socketId: string, isReady: boolean): void;
     setIsInit(socketId: string, isInit: boolean): void;
     shoot(socketId: string, coordinate: Coordinate): boolean;
+    setIsAccess(socketId: string, isAccess: boolean);
 }
 
 export default IGame;

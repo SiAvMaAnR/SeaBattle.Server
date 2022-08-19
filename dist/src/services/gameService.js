@@ -97,26 +97,26 @@ class GameService extends baseService_1.default {
         return this.game.shoot(this.socketId, coordinate);
     }
     setIsStart(isStart) {
-        const player = this.game.getRoomByPlayer(this.socketId);
-        if (!player)
-            return;
-        player.gameData.isStart = isStart;
+        return this.game.getRoomByPlayer(this.socketId).gameData.setIsStart(isStart);
     }
     isEnd() {
         var _a;
         return (_a = this.game.getRoomByPlayer(this.socketId)) === null || _a === void 0 ? void 0 : _a.gameData.isEnd;
     }
     setIsEnd(isEnd) {
-        const player = this.game.getRoomByPlayer(this.socketId);
-        if (!player)
-            return;
-        player.gameData.isEnd = isEnd;
+        this.game.getRoomByPlayer(this.socketId).gameData.setIsEnd(isEnd);
     }
     setIsReady(ready) {
         this.game.setIsReady(this.socketId, ready);
     }
     setIsInit(init) {
         this.game.setIsInit(this.socketId, init);
+    }
+    setIsAccess(access) {
+        this.game.setIsAccess(this.socketId, access);
+    }
+    getIsAccess() {
+        return this.game.getIsAccess(this.socketId);
     }
 }
 exports.default = GameService;

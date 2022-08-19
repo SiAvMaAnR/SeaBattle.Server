@@ -42,6 +42,7 @@ const roomHandlers = ({ io, socket, gameService }) => {
         const initAll = ((_b = players === null || players === void 0 ? void 0 : players.my) === null || _b === void 0 ? void 0 : _b.init) && ((_c = players === null || players === void 0 ? void 0 : players.enemy) === null || _c === void 0 ? void 0 : _c.init);
         const readyAll = ((_d = players === null || players === void 0 ? void 0 : players.my) === null || _d === void 0 ? void 0 : _d.ready) && ((_e = players === null || players === void 0 ? void 0 : players.enemy) === null || _e === void 0 ? void 0 : _e.ready);
         const isAccess = initAll && readyAll;
+        gameService.setIsAccess(isAccess);
         io.to(roomId).emit("room:players:ready", isAccess);
     }
     socket.on("room:join", join);

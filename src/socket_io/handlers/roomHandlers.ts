@@ -60,6 +60,8 @@ const roomHandlers = ({ io, socket, gameService }: {
         const readyAll: boolean = players?.my?.ready && players?.enemy?.ready;
         const isAccess: boolean = initAll && readyAll;
 
+
+        gameService.setIsAccess(isAccess);
         io.to(roomId).emit("room:players:ready", isAccess);
     }
 

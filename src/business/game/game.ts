@@ -86,6 +86,10 @@ class Game implements IGame {
         this.core.getMyPlayer(socketId)?.setInit(isInit);
     }
 
+    public setIsAccess(socketId: string, isAccess: boolean): void {
+        this.core.getRoomByPlayer(socketId)?.gameData?.setIsAccess(isAccess);
+    }
+
     public shoot(socketId: string, coordinate: Coordinate): boolean {
         const myPlayer = this.core.getMyPlayer(socketId);
         const enemyPlayer = this.core.getEnemyPlayer(socketId);

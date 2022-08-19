@@ -4,17 +4,24 @@ class GameData {
     constructor() {
         this._isStart = false;
         this._isEnd = false;
+        this._isAccess = false;
+    }
+    get isAccess() {
+        return this._isAccess;
+    }
+    setIsAccess(isAccess) {
+        this._isAccess = isAccess;
     }
     get isStart() {
         return this._isStart;
     }
-    set isStart(isStart) {
+    setIsStart(isStart) {
         this._isStart = isStart;
     }
     get isEnd() {
         return this._isEnd;
     }
-    set isEnd(isEnd) {
+    setIsEnd(isEnd) {
         this._isEnd = isEnd;
     }
 }

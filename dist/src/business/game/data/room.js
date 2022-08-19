@@ -23,7 +23,7 @@ class Room {
         return this._players;
     }
     addPlayer(socketId) {
-        if (this.count >= 2 || this._gameData.isStart) {
+        if (this.count >= 2 || this._gameData.isAccess) {
             return false;
         }
         this._players.push(new player_1.default(socketId));
@@ -43,8 +43,9 @@ class Room {
         return this.count >= 2;
     }
     restart() {
-        this._gameData.isEnd = false;
-        this._gameData.isStart = false;
+        this._gameData.setIsEnd(false);
+        this._gameData.setIsStart(false);
+        this._gameData.setIsAccess(false);
         this._players.forEach(player => player.restart());
     }
 }
