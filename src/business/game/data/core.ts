@@ -32,14 +32,10 @@ class Core implements ICore {
         return null;
     }
 
+
     public getEnemyPlayer(socketId: string): Player {
-        for (let room of this._rooms) {
-            const player = room.players.find(player => player.socketId != socketId);
-            if (player) {
-                return player;
-            }
-        }
-        return null;
+        const room = this._rooms.find(room => room.players.some(player => player.socketId == socketId));
+        return room.players.find(player => player.socketId != socketId);
     }
 
     public addRoom(roomId: string): boolean {

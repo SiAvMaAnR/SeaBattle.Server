@@ -115,9 +115,6 @@ class GameService extends baseService_1.default {
     setIsAccess(access) {
         this.game.setIsAccess(this.socketId, access);
     }
-    getIsAccess() {
-        return this.game.getIsAccess(this.socketId);
-    }
 }
 exports.default = GameService;
 //# sourceMappingURL=gameService.js.map

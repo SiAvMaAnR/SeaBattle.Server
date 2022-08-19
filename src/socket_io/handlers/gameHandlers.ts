@@ -25,7 +25,7 @@ const gameHandlers = ({ io, socket, gameService }: {
 
     function initField(field: number[][]): void {
         const myField = gameService.initMyField(field);
-        
+
         gameService.setIsInit(true);
         socket.emit("game:field:init", myField);
     }
