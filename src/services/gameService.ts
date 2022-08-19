@@ -4,6 +4,7 @@ import IGameService from "./interfaces/IGameService";
 import PlayersResponse from "../business/game/types/PlayersResponse";
 import RoomResponse from "../business/game/types/RoomResponse";
 import IGame from "../business/game/interfaces/IGame";
+import { Statistic } from "../models";
 
 class GameService extends BaseService implements IGameService {
 
@@ -70,13 +71,13 @@ class GameService extends BaseService implements IGameService {
         return {
             my: {
                 socket: players?.my?.socketId,
-                init: players?.my?.init,
-                ready: players?.my?.ready
+                init: players?.my?.isInit,
+                ready: players?.my?.isReady
             },
             enemy: {
                 socket: players?.enemy?.socketId,
-                init: players?.enemy?.init,
-                ready: players?.enemy?.ready
+                init: players?.enemy?.isInit,
+                ready: players?.enemy?.isReady
             }
         }
     }
@@ -103,8 +104,8 @@ class GameService extends BaseService implements IGameService {
 
     public moveGen(condition: boolean): boolean {
         const players = this.game.getPlayers(this.socketId);
-        const myMove = players?.my?.setMove(condition);
-        const enemyMove = players?.enemy?.setMove(!condition);
+        const myMove = players?.my?.setIsMove(condition);
+        const enemyMove = players?.enemy?.setIsMove(!condition);
         return myMove != enemyMove;
     }
 
@@ -138,6 +139,14 @@ class GameService extends BaseService implements IGameService {
 
     public setIsAccess(access: boolean): void {
         this.game.setIsAccess(this.socketId, access);
+    }
+
+    public getStatistic(): Statistic {
+        return new Statistic();
+    }
+
+    public iWon(isWon: boolean): void {
+        this.game.iWon(this.socketId, isWon);
     }
 }
 

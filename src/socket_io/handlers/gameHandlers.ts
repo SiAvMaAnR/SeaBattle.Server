@@ -1,12 +1,12 @@
 import { Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import GameService from "../../services/gameService";
+import IGameService from "../../services/interfaces/IGameService";
 import Coordinate from "../../types/coordinate";
 
 const gameHandlers = ({ io, socket, gameService }: {
     io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>,
     socket: Socket,
-    gameService: GameService
+    gameService: IGameService
 }) => {
     function start(): void {
 
@@ -66,9 +66,10 @@ const gameHandlers = ({ io, socket, gameService }: {
 
         if (!roomId || !win) return;
 
-        gameService.setIsEnd(true);
-        socket.emit("game:check", true);
-        socket.broadcast.to(roomId).emit("game:check", false);
+
+        gameService.iWon(win);
+        socket.emit("game:check", win);
+        socket.broadcast.to(roomId).emit("game:check", !win);
     }
 
     socket.on("game:start", start);

@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const baseService_1 = __importDefault(require("./baseService"));
+const models_1 = require("../models");
 class GameService extends baseService_1.default {
     constructor(socketId, game) {
         super();
@@ -55,13 +56,13 @@ class GameService extends baseService_1.default {
         return {
             my: {
                 socket: (_a = players === null || players === void 0 ? void 0 : players.my) === null || _a === void 0 ? void 0 : _a.socketId,
-                init: (_b = players === null || players === void 0 ? void 0 : players.my) === null || _b === void 0 ? void 0 : _b.init,
-                ready: (_c = players === null || players === void 0 ? void 0 : players.my) === null || _c === void 0 ? void 0 : _c.ready
+                init: (_b = players === null || players === void 0 ? void 0 : players.my) === null || _b === void 0 ? void 0 : _b.isInit,
+                ready: (_c = players === null || players === void 0 ? void 0 : players.my) === null || _c === void 0 ? void 0 : _c.isReady
             },
             enemy: {
                 socket: (_d = players === null || players === void 0 ? void 0 : players.enemy) === null || _d === void 0 ? void 0 : _d.socketId,
-                init: (_e = players === null || players === void 0 ? void 0 : players.enemy) === null || _e === void 0 ? void 0 : _e.init,
-                ready: (_f = players === null || players === void 0 ? void 0 : players.enemy) === null || _f === void 0 ? void 0 : _f.ready
+                init: (_e = players === null || players === void 0 ? void 0 : players.enemy) === null || _e === void 0 ? void 0 : _e.isInit,
+                ready: (_f = players === null || players === void 0 ? void 0 : players.enemy) === null || _f === void 0 ? void 0 : _f.isReady
             }
         };
     }
@@ -86,8 +87,8 @@ class GameService extends baseService_1.default {
     moveGen(condition) {
         var _a, _b;
         const players = this.game.getPlayers(this.socketId);
-        const myMove = (_a = players === null || players === void 0 ? void 0 : players.my) === null || _a === void 0 ? void 0 : _a.setMove(condition);
-        const enemyMove = (_b = players === null || players === void 0 ? void 0 : players.enemy) === null || _b === void 0 ? void 0 : _b.setMove(!condition);
+        const myMove = (_a = players === null || players === void 0 ? void 0 : players.my) === null || _a === void 0 ? void 0 : _a.setIsMove(condition);
+        const enemyMove = (_b = players === null || players === void 0 ? void 0 : players.enemy) === null || _b === void 0 ? void 0 : _b.setIsMove(!condition);
         return myMove != enemyMove;
     }
     checkWin() {
@@ -114,6 +115,12 @@ class GameService extends baseService_1.default {
     }
     setIsAccess(access) {
         this.game.setIsAccess(this.socketId, access);
+    }
+    getStatistic() {
+        return new models_1.Statistic();
+    }
+    iWon(isWon) {
+        this.game.iWon(this.socketId, isWon);
     }
 }
 exports.default = GameService;

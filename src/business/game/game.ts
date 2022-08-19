@@ -71,7 +71,7 @@ class Game implements IGame {
     }
 
     public getIsMove(socketId: string): boolean {
-        return this.core.getMyPlayer(socketId)?.move;
+        return this.core.getMyPlayer(socketId)?.isMove;
     }
 
     public checkWin(socketId: string): boolean {
@@ -79,11 +79,11 @@ class Game implements IGame {
     }
 
     public setIsReady(socketId: string, isReady: boolean): void {
-        this.core.getMyPlayer(socketId)?.setReady(isReady);
+        this.core.getMyPlayer(socketId)?.setIsReady(isReady);
     }
 
     public setIsInit(socketId: string, isInit: boolean): void {
-        this.core.getMyPlayer(socketId)?.setInit(isInit);
+        this.core.getMyPlayer(socketId)?.setIsInit(isInit);
     }
 
     public setIsAccess(socketId: string, isAccess: boolean): void {
@@ -110,10 +110,24 @@ class Game implements IGame {
         myPlayer.enemyField.edit(cell, coordinate.y, coordinate.x);
         enemyPlayer.myField.edit(cell, coordinate.y, coordinate.x);
 
-        myPlayer.setMove(isHit);
-        enemyPlayer.setMove(!isHit);
+        myPlayer.setIsMove(isHit);
+        enemyPlayer.setIsMove(!isHit);
 
         return isHit;
+    }
+
+    public iWon(socketId: string, isWon: boolean): void {
+        const room = this.getRoomByPlayer(socketId);
+        const myPlayer = this.core.getMyPlayer(socketId);
+        const enemyPlayer = this.core.getEnemyPlayer(socketId);
+
+        if (!room || !myPlayer || !enemyPlayer) {
+            return;
+        }
+
+        myPlayer.setIsWin(isWon);
+        enemyPlayer.setIsWin(!isWon);
+        room.gameData.setIsEnd(true);
     }
 }
 

@@ -1,11 +1,11 @@
 import { Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import GameService from "../../services/gameService";
+import IGameService from "../../services/interfaces/IGameService";
 
 const roomHandlers = ({ io, socket, gameService }: {
     io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>,
     socket: Socket,
-    gameService: GameService
+    gameService: IGameService
 }) => {
     function join(roomId: string): void {
         const room = gameService.getRoomByPlayer();
@@ -33,11 +33,11 @@ const roomHandlers = ({ io, socket, gameService }: {
             return;
         }
 
+        // gameService.iWon(false);
         gameService.leaveRoom();
         socket.emit("room:leave", true, `Success, ${socket.data['name']} left!`);
         socket.leave(roomId);
     }
-
 
     function getAll(): void {
         const rooms = gameService.getRooms();

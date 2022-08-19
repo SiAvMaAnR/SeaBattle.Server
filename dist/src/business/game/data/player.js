@@ -7,31 +7,38 @@ const enemyField_1 = __importDefault(require("../fields/enemyField"));
 const myField_1 = __importDefault(require("../fields/myField"));
 class Player {
     constructor(socketId) {
-        this._move = false;
-        this._init = false;
-        this._ready = false;
+        this._isMove = false;
+        this._isInit = false;
+        this._isReady = false;
+        this._isWin = false;
         this._myField = new myField_1.default();
         this._enemyField = new enemyField_1.default();
         this._socketId = socketId;
     }
-    get move() {
-        return this._move;
+    get isMove() {
+        return this._isMove;
     }
-    setMove(move) {
-        this._move = move;
-        return this._move;
+    setIsMove(isMove) {
+        this._isMove = isMove;
+        return this._isMove;
     }
-    get init() {
-        return this._init;
+    get isWin() {
+        return this._isWin;
     }
-    setInit(init) {
-        this._init = init;
+    setIsWin(isWin) {
+        this._isWin = isWin;
     }
-    setReady(ready) {
-        this._ready = ready;
+    get isInit() {
+        return this._isInit;
     }
-    get ready() {
-        return this._ready;
+    setIsInit(isInit) {
+        this._isInit = isInit;
+    }
+    get isReady() {
+        return this._isReady;
+    }
+    setIsReady(isReady) {
+        this._isReady = isReady;
     }
     get socketId() {
         return this._socketId;
@@ -43,9 +50,9 @@ class Player {
         return this._enemyField;
     }
     restart() {
-        this._move = false;
-        this._init = false;
-        this._ready = false;
+        this._isMove = false;
+        this._isInit = false;
+        this._isReady = false;
         this._myField = new myField_1.default();
         this._enemyField = new enemyField_1.default();
     }

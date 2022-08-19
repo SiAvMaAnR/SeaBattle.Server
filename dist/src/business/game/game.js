@@ -53,7 +53,7 @@ class Game {
     }
     getIsMove(socketId) {
         var _a;
-        return (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.move;
+        return (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.isMove;
     }
     checkWin(socketId) {
         var _a;
@@ -61,11 +61,11 @@ class Game {
     }
     setIsReady(socketId, isReady) {
         var _a;
-        (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.setReady(isReady);
+        (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.setIsReady(isReady);
     }
     setIsInit(socketId, isInit) {
         var _a;
-        (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.setInit(isInit);
+        (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.setIsInit(isInit);
     }
     setIsAccess(socketId, isAccess) {
         var _a, _b;
@@ -85,9 +85,20 @@ class Game {
         const cell = isHit ? 3 /* Cell.Killed */ : 2 /* Cell.Missed */;
         myPlayer.enemyField.edit(cell, coordinate.y, coordinate.x);
         enemyPlayer.myField.edit(cell, coordinate.y, coordinate.x);
-        myPlayer.setMove(isHit);
-        enemyPlayer.setMove(!isHit);
+        myPlayer.setIsMove(isHit);
+        enemyPlayer.setIsMove(!isHit);
         return isHit;
+    }
+    iWon(socketId, isWon) {
+        const room = this.getRoomByPlayer(socketId);
+        const myPlayer = this.core.getMyPlayer(socketId);
+        const enemyPlayer = this.core.getEnemyPlayer(socketId);
+        if (!room || !myPlayer || !enemyPlayer) {
+            return;
+        }
+        myPlayer.setIsWin(isWon);
+        enemyPlayer.setIsWin(!isWon);
+        room.gameData.setIsEnd(true);
     }
 }
 exports.default = Game;

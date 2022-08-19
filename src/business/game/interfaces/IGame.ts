@@ -4,7 +4,7 @@ import EnemyField from "../fields/enemyField";
 import MyField from "../fields/myField";
 import PairPlayers from "../types/PairPlayers";
 
-interface IGame{
+interface IGame {
     joinRoom(roomId: string, socketId: string): boolean;
     leaveRoom(socketId: string): boolean;
     removeEmptyRooms(): void;
@@ -23,6 +23,7 @@ interface IGame{
     setIsInit(socketId: string, isInit: boolean): void;
     shoot(socketId: string, coordinate: Coordinate): boolean;
     setIsAccess(socketId: string, isAccess: boolean);
+    iWon(socketId: string, isWon: boolean): void
 }
 
 export default IGame;

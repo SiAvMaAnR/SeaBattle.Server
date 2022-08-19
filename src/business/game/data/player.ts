@@ -5,9 +5,10 @@ import MyField from "../fields/myField";
 class Player {
 
     private _socketId: string;
-    private _move: boolean = false;
-    private _init: boolean = false;
-    private _ready: boolean = false;
+    private _isMove: boolean = false;
+    private _isInit: boolean = false;
+    private _isReady: boolean = false;
+    private _isWin: boolean = false;
     private _myField: MyField = new MyField();
     private _enemyField: EnemyField = new EnemyField();
 
@@ -16,29 +17,37 @@ class Player {
         this._socketId = socketId;
     }
 
-    public get move() {
-        return this._move;
+    public get isMove() {
+        return this._isMove;
     }
 
-    public setMove(move: boolean): boolean {
-        this._move = move;
-        return this._move;
+    public setIsMove(isMove: boolean): boolean {
+        this._isMove = isMove;
+        return this._isMove;
     }
 
-    public get init(): boolean {
-        return this._init;
+    public get isWin() {
+        return this._isWin;
     }
 
-    public setInit(init: boolean) {
-        this._init = init;
+    public setIsWin(isWin: boolean) {
+        this._isWin = isWin;
     }
 
-    public setReady(ready: boolean) {
-        this._ready = ready;
+    public get isInit(): boolean {
+        return this._isInit;
     }
 
-    public get ready(): boolean {
-        return this._ready;
+    public setIsInit(isInit: boolean) {
+        this._isInit = isInit;
+    }
+
+    public get isReady(): boolean {
+        return this._isReady;
+    }
+
+    public setIsReady(isReady: boolean) {
+        this._isReady = isReady;
     }
 
     public get socketId(): string {
@@ -54,9 +63,9 @@ class Player {
     }
 
     public restart() {
-        this._move = false;
-        this._init = false;
-        this._ready = false;
+        this._isMove = false;
+        this._isInit = false;
+        this._isReady = false;
         this._myField = new MyField();
         this._enemyField = new EnemyField();
     }

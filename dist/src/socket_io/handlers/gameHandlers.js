@@ -51,9 +51,9 @@ const gameHandlers = ({ io, socket, gameService }) => {
         const roomId = (_a = gameService.getRoomByPlayer()) === null || _a === void 0 ? void 0 : _a.id;
         if (!roomId || !win)
             return;
-        gameService.setIsEnd(true);
-        socket.emit("game:check", true);
-        socket.broadcast.to(roomId).emit("game:check", false);
+        gameService.iWon(win);
+        socket.emit("game:check", win);
+        socket.broadcast.to(roomId).emit("game:check", !win);
     }
     socket.on("game:start", start);
     socket.on("game:field:init", initField);
