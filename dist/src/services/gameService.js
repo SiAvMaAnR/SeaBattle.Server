@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const baseService_1 = __importDefault(require("./baseService"));
-const models_1 = require("../models");
 class GameService extends baseService_1.default {
     constructor(socketId, game) {
         super();
@@ -117,7 +116,7 @@ class GameService extends baseService_1.default {
         this.game.setIsAccess(this.socketId, access);
     }
     getStatistic() {
-        return new models_1.Statistic();
+        return this.game.getStatistic(this.socketId);
     }
     saveResult(isWon) {
         this.game.saveResult(this.socketId, isWon);

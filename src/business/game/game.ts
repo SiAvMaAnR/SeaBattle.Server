@@ -1,5 +1,6 @@
 import Coordinate from "../../types/coordinate";
 import Room from "./data/room";
+import { IStatisticRes } from "./data/statistic";
 import EnemyField from "./fields/enemyField";
 import { Cell } from "./fields/field";
 import MyField from "./fields/myField";
@@ -113,6 +114,12 @@ class Game implements IGame {
         myPlayer.setIsMove(isHit);
         enemyPlayer.setIsMove(!isHit);
 
+        myPlayer.statistic.addMyMoves();
+
+        (isHit)
+            ? myPlayer.statistic.addHits()
+            : myPlayer.statistic.addMisses();
+
         return isHit;
     }
 
@@ -128,6 +135,13 @@ class Game implements IGame {
         myPlayer.setIsWin(isWon);
         enemyPlayer.setIsWin(!isWon);
         room.states.setIsEnd(true);
+
+        myPlayer.statistic.setIsWin(isWon);
+        enemyPlayer.statistic.setIsWin(!isWon);
+    }
+
+    public getStatistic(socketId: string): IStatisticRes {
+        return this.core.getMyPlayer(socketId).statistic.get();
     }
 }
 

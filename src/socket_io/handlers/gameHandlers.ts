@@ -72,6 +72,11 @@ const gameHandlers = ({ io, socket, gameService }: {
         socket.broadcast.to(roomId).emit("game:check", !win);
     }
 
+    function getStatistic(): void {
+        const statistic = gameService.getStatistic();
+        socket.emit("game:statistic", statistic);
+    }
+
     socket.on("game:start", start);
     socket.on("game:field:init", initField);
     socket.on("game:field:my", getMyField);
@@ -80,6 +85,7 @@ const gameHandlers = ({ io, socket, gameService }: {
     socket.on("game:shoot", shoot);
     socket.on("game:check", checkWin);
     socket.on("game:ready", ready);
+    socket.on("game:statistic", getStatistic);
 }
 
 export default gameHandlers;

@@ -1,6 +1,7 @@
 import EnemyField from "../fields/enemyField";
 import Field from "../fields/field";
 import MyField from "../fields/myField";
+import Statistic from "./statistic";
 
 class Player {
 
@@ -11,10 +12,14 @@ class Player {
     private _isWin: boolean = false;
     private _myField: MyField = new MyField();
     private _enemyField: EnemyField = new EnemyField();
-
+    private _statistic: Statistic = new Statistic();
 
     constructor(socketId: string) {
         this._socketId = socketId;
+    }
+
+    public get statistic(): Statistic {
+        return this._statistic;
     }
 
     public get isMove() {
@@ -68,6 +73,7 @@ class Player {
         this._isReady = false;
         this._myField = new MyField();
         this._enemyField = new EnemyField();
+        this._statistic = new Statistic();
     }
 }
 

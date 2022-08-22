@@ -5,6 +5,7 @@ import PlayersResponse from "../business/game/types/PlayersResponse";
 import RoomResponse from "../business/game/types/RoomResponse";
 import IGame from "../business/game/interfaces/IGame";
 import { Statistic } from "../models";
+import { IStatisticRes } from "../business/game/data/statistic";
 
 class GameService extends BaseService implements IGameService {
 
@@ -141,8 +142,8 @@ class GameService extends BaseService implements IGameService {
         this.game.setIsAccess(this.socketId, access);
     }
 
-    public getStatistic(): Statistic {
-        return new Statistic();
+    public getStatistic(): IStatisticRes {
+        return this.game.getStatistic(this.socketId);
     }
 
     public saveResult(isWon: boolean): void {

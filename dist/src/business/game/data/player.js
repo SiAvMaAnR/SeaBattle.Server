@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const enemyField_1 = __importDefault(require("../fields/enemyField"));
 const myField_1 = __importDefault(require("../fields/myField"));
+const statistic_1 = __importDefault(require("./statistic"));
 class Player {
     constructor(socketId) {
         this._isMove = false;
@@ -13,7 +14,11 @@ class Player {
         this._isWin = false;
         this._myField = new myField_1.default();
         this._enemyField = new enemyField_1.default();
+        this._statistic = new statistic_1.default();
         this._socketId = socketId;
+    }
+    get statistic() {
+        return this._statistic;
     }
     get isMove() {
         return this._isMove;
@@ -55,6 +60,7 @@ class Player {
         this._isReady = false;
         this._myField = new myField_1.default();
         this._enemyField = new enemyField_1.default();
+        this._statistic = new statistic_1.default();
     }
 }
 exports.default = Player;

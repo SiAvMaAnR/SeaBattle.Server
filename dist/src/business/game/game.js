@@ -87,6 +87,10 @@ class Game {
         enemyPlayer.myField.edit(cell, coordinate.y, coordinate.x);
         myPlayer.setIsMove(isHit);
         enemyPlayer.setIsMove(!isHit);
+        myPlayer.statistic.addMyMoves();
+        (isHit)
+            ? myPlayer.statistic.addHits()
+            : myPlayer.statistic.addMisses();
         return isHit;
     }
     saveResult(socketId, isWon) {
@@ -99,6 +103,11 @@ class Game {
         myPlayer.setIsWin(isWon);
         enemyPlayer.setIsWin(!isWon);
         room.states.setIsEnd(true);
+        myPlayer.statistic.setIsWin(isWon);
+        enemyPlayer.statistic.setIsWin(!isWon);
+    }
+    getStatistic(socketId) {
+        return this.core.getMyPlayer(socketId).statistic.get();
     }
 }
 exports.default = Game;

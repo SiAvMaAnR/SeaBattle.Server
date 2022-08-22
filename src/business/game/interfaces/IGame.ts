@@ -1,5 +1,6 @@
 import Coordinate from "../../../types/coordinate";
 import Room from "../data/room";
+import { IStatisticRes } from "../data/statistic";
 import EnemyField from "../fields/enemyField";
 import MyField from "../fields/myField";
 import PairPlayers from "../types/PairPlayers";
@@ -23,7 +24,8 @@ interface IGame {
     setIsInit(socketId: string, isInit: boolean): void;
     shoot(socketId: string, coordinate: Coordinate): boolean;
     setIsAccess(socketId: string, isAccess: boolean);
-    saveResult(socketId: string, isWon: boolean): void
+    saveResult(socketId: string, isWon: boolean): void;
+    getStatistic(socketId: string): IStatisticRes;
 }
 
 export default IGame;

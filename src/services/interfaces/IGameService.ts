@@ -1,4 +1,4 @@
-import Statistic from "../../business/game/data/statistic";
+import Statistic, { IStatisticRes } from "../../business/game/data/statistic";
 import { Cell } from "../../business/game/fields/field";
 import PlayersResponse from "../../business/game/types/PlayersResponse";
 import RoomResponse from "../../business/game/types/RoomResponse";
@@ -25,8 +25,8 @@ interface IGameService {
     setIsReady(ready: boolean): void;
     setIsInit(init: boolean): void;
     setIsAccess(access: boolean): void;
-    getStatistic(): Statistic;
-    saveResult(isWon: boolean): void
+    getStatistic(): IStatisticRes;
+    saveResult(isWon: boolean): void;
 }
 
 export default IGameService;
