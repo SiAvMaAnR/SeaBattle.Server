@@ -46,7 +46,7 @@ const socket_1 = __importDefault(require("./src/socket_io/socket"));
 require("dotenv/config");
 const app = (0, express_1.default)();
 const server = (0, http_1.createServer)(app);
-const port = parseInt(process.env.PORT) || 3000;
+const port = parseInt(process.env.PORT, 10) || 3000;
 const io = (0, socket_1.default)(server);
 app.use((0, cors_2.default)(cors_1.default));
 app.use(express_1.default.static(`${__dirname}/assets`));
@@ -57,7 +57,7 @@ app.use('/api', index_1.default);
     .then(() => __awaiter(void 0, void 0, void 0, function* () { return console.log("open connection!"); }))
     .catch((err) => console.error(err.message));
 io.on("connection", (socket) => (0, onConnection_1.default)(io, socket));
-(0, sequelize_1.sync)(sequelize_1.default).then((sequelize) => {
+(0, sequelize_1.sync)(sequelize_1.default).then(() => {
     server.listen(port, () => {
         console.log(`Server is listening port ${port}`);
     });

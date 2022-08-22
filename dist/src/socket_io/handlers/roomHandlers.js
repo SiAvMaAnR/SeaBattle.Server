@@ -21,7 +21,9 @@ const roomHandlers = ({ io, socket, gameService }) => {
             socket.emit("room:leave", false, "Room not found!");
             return;
         }
-        // gameService.iWon(false);
+        gameService.saveResult(false);
+        socket.emit("game:check", false);
+        socket.broadcast.to(roomId).emit("game:check", true);
         gameService.leaveRoom();
         socket.emit("room:leave", true, `Success, ${socket.data['name']} left!`);
         socket.leave(roomId);

@@ -9,11 +9,9 @@ import cors from 'cors';
 import ioInit from './src/socket_io/socket';
 import "dotenv/config";
 
-
-
 const app = express();
 const server = createServer(app);
-const port: number = parseInt(process.env.PORT) || 3000;
+const port: number = parseInt(process.env.PORT, 10) || 3000;
 
 const io = ioInit(server);
 
@@ -31,7 +29,7 @@ openConnection()
 
 io.on("connection", (socket) => onConnection(io, socket));
 
-sync(sequelize).then((sequelize: Sequelize) => {
+sync(sequelize).then(() => {
 
   server.listen(port, () => {
     console.log(`Server is listening port ${port}`);

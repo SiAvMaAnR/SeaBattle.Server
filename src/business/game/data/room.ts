@@ -1,19 +1,19 @@
 import UserService from "../../../services/userService";
-import GameData from "./gameData";
 import Player from "./player";
+import States from "./states";
 
 class Room {
     private _id: string;
     private _players: Player[] = [];
-    private _gameData: GameData;
+    private _states: States;
 
-    constructor(id: string, gameData: GameData) {
+    constructor(id: string, gameData: States) {
         this._id = id;
-        this._gameData = gameData;
+        this._states = gameData;
     }
 
-    public get gameData(): GameData {
-        return this._gameData;
+    public get states(): States {
+        return this._states;
     }
 
     public get count(): number {
@@ -29,7 +29,7 @@ class Room {
     }
 
     public addPlayer(socketId: string): boolean {
-        if (this.count >= 2 || this._gameData.isAccess) {
+        if (this.count >= 2 || this._states.isAccess) {
             return false;
         }
 
@@ -55,9 +55,8 @@ class Room {
     }
 
     public restart(): void {
-        this._gameData.setIsEnd(false);
-        this._gameData.setIsStart(false);
-        this._gameData.setIsAccess(false);
+        
+        this._states = new States();
         this._players.forEach(player => player.restart());
     }
 }

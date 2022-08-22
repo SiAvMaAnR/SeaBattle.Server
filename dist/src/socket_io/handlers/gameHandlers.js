@@ -51,7 +51,7 @@ const gameHandlers = ({ io, socket, gameService }) => {
         const roomId = (_a = gameService.getRoomByPlayer()) === null || _a === void 0 ? void 0 : _a.id;
         if (!roomId || !win)
             return;
-        gameService.iWon(win);
+        gameService.saveResult(win);
         socket.emit("game:check", win);
         socket.broadcast.to(roomId).emit("game:check", !win);
     }

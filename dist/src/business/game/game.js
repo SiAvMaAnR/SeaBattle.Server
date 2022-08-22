@@ -69,7 +69,7 @@ class Game {
     }
     setIsAccess(socketId, isAccess) {
         var _a, _b;
-        (_b = (_a = this.core.getRoomByPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.gameData) === null || _b === void 0 ? void 0 : _b.setIsAccess(isAccess);
+        (_b = (_a = this.core.getRoomByPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.states) === null || _b === void 0 ? void 0 : _b.setIsAccess(isAccess);
     }
     shoot(socketId, coordinate) {
         const myPlayer = this.core.getMyPlayer(socketId);
@@ -89,7 +89,7 @@ class Game {
         enemyPlayer.setIsMove(!isHit);
         return isHit;
     }
-    iWon(socketId, isWon) {
+    saveResult(socketId, isWon) {
         const room = this.getRoomByPlayer(socketId);
         const myPlayer = this.core.getMyPlayer(socketId);
         const enemyPlayer = this.core.getEnemyPlayer(socketId);
@@ -98,7 +98,7 @@ class Game {
         }
         myPlayer.setIsWin(isWon);
         enemyPlayer.setIsWin(!isWon);
-        room.gameData.setIsEnd(true);
+        room.states.setIsEnd(true);
     }
 }
 exports.default = Game;

@@ -98,14 +98,14 @@ class GameService extends baseService_1.default {
         return this.game.shoot(this.socketId, coordinate);
     }
     setIsStart(isStart) {
-        return this.game.getRoomByPlayer(this.socketId).gameData.setIsStart(isStart);
+        return this.game.getRoomByPlayer(this.socketId).states.setIsStart(isStart);
     }
     isEnd() {
         var _a;
-        return (_a = this.game.getRoomByPlayer(this.socketId)) === null || _a === void 0 ? void 0 : _a.gameData.isEnd;
+        return (_a = this.game.getRoomByPlayer(this.socketId)) === null || _a === void 0 ? void 0 : _a.states.isEnd;
     }
     setIsEnd(isEnd) {
-        this.game.getRoomByPlayer(this.socketId).gameData.setIsEnd(isEnd);
+        this.game.getRoomByPlayer(this.socketId).states.setIsEnd(isEnd);
     }
     setIsReady(ready) {
         this.game.setIsReady(this.socketId, ready);
@@ -119,8 +119,8 @@ class GameService extends baseService_1.default {
     getStatistic() {
         return new models_1.Statistic();
     }
-    iWon(isWon) {
-        this.game.iWon(this.socketId, isWon);
+    saveResult(isWon) {
+        this.game.saveResult(this.socketId, isWon);
     }
 }
 exports.default = GameService;

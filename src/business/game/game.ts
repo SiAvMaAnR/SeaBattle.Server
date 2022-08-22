@@ -87,7 +87,7 @@ class Game implements IGame {
     }
 
     public setIsAccess(socketId: string, isAccess: boolean): void {
-        this.core.getRoomByPlayer(socketId)?.gameData?.setIsAccess(isAccess);
+        this.core.getRoomByPlayer(socketId)?.states?.setIsAccess(isAccess);
     }
 
     public shoot(socketId: string, coordinate: Coordinate): boolean {
@@ -116,7 +116,7 @@ class Game implements IGame {
         return isHit;
     }
 
-    public iWon(socketId: string, isWon: boolean): void {
+    public saveResult(socketId: string, isWon: boolean): void {
         const room = this.getRoomByPlayer(socketId);
         const myPlayer = this.core.getMyPlayer(socketId);
         const enemyPlayer = this.core.getEnemyPlayer(socketId);
@@ -127,7 +127,7 @@ class Game implements IGame {
 
         myPlayer.setIsWin(isWon);
         enemyPlayer.setIsWin(!isWon);
-        room.gameData.setIsEnd(true);
+        room.states.setIsEnd(true);
     }
 }
 

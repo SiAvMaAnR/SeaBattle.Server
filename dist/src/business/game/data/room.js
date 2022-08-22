@@ -4,14 +4,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const player_1 = __importDefault(require("./player"));
+const states_1 = __importDefault(require("./states"));
 class Room {
     constructor(id, gameData) {
         this._players = [];
         this._id = id;
-        this._gameData = gameData;
+        this._states = gameData;
     }
-    get gameData() {
-        return this._gameData;
+    get states() {
+        return this._states;
     }
     get count() {
         return this._players.length;
@@ -23,7 +24,7 @@ class Room {
         return this._players;
     }
     addPlayer(socketId) {
-        if (this.count >= 2 || this._gameData.isAccess) {
+        if (this.count >= 2 || this._states.isAccess) {
             return false;
         }
         this._players.push(new player_1.default(socketId));
@@ -43,9 +44,7 @@ class Room {
         return this.count >= 2;
     }
     restart() {
-        this._gameData.setIsEnd(false);
-        this._gameData.setIsStart(false);
-        this._gameData.setIsAccess(false);
+        this._states = new states_1.default();
         this._players.forEach(player => player.restart());
     }
 }

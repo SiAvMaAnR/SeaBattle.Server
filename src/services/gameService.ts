@@ -118,15 +118,15 @@ class GameService extends BaseService implements IGameService {
     }
 
     public setIsStart(isStart: boolean): void {
-        return this.game.getRoomByPlayer(this.socketId).gameData.setIsStart(isStart);
+        return this.game.getRoomByPlayer(this.socketId).states.setIsStart(isStart);
     }
 
     public isEnd(): boolean {
-        return this.game.getRoomByPlayer(this.socketId)?.gameData.isEnd;
+        return this.game.getRoomByPlayer(this.socketId)?.states.isEnd;
     }
 
     public setIsEnd(isEnd: boolean): void {
-        this.game.getRoomByPlayer(this.socketId).gameData.setIsEnd(isEnd);
+        this.game.getRoomByPlayer(this.socketId).states.setIsEnd(isEnd);
     }
 
     public setIsReady(ready: boolean): void {
@@ -145,8 +145,8 @@ class GameService extends BaseService implements IGameService {
         return new Statistic();
     }
 
-    public iWon(isWon: boolean): void {
-        this.game.iWon(this.socketId, isWon);
+    public saveResult(isWon: boolean): void {
+        this.game.saveResult(this.socketId, isWon);
     }
 }
 

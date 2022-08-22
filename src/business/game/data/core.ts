@@ -1,5 +1,5 @@
 import ICore from "../interfaces/ICore";
-import GameData from "./gameData";
+import States from "./states";
 import Player from "./player";
 import Room from "./room";
 
@@ -45,7 +45,7 @@ class Core implements ICore {
             return false;
         }
 
-        const room = new Room(roomId, new GameData());
+        const room = new Room(roomId, new States());
         this._rooms.push(room);
         return true;
     }

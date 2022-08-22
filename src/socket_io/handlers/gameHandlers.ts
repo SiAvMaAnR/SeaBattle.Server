@@ -67,7 +67,7 @@ const gameHandlers = ({ io, socket, gameService }: {
         if (!roomId || !win) return;
 
 
-        gameService.iWon(win);
+        gameService.saveResult(win);
         socket.emit("game:check", win);
         socket.broadcast.to(roomId).emit("game:check", !win);
     }

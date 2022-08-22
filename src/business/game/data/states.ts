@@ -1,4 +1,4 @@
-class GameData {
+class States {
 
     private _isStart: boolean = false;
     private _isEnd: boolean = false;
@@ -33,4 +33,4 @@ class GameData {
     }
 }
 
-export default GameData;
+export default States;

@@ -26,7 +26,7 @@ interface IGameService {
     setIsInit(init: boolean): void;
     setIsAccess(access: boolean): void;
     getStatistic(): Statistic;
-    iWon(isWon: boolean): void
+    saveResult(isWon: boolean): void
 }
 
 export default IGameService;
