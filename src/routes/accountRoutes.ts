@@ -1,6 +1,5 @@
 import express from 'express';
 import AccountController from '../controllers/accountController';
-import StatisticController from '../controllers/statisticController';
 import JWT from '../helpers/jwt';
 
 const router = express.Router();

@@ -32,7 +32,7 @@ class UserController extends baseController_1.default {
                 res.status(200).json({ data: users, message: "Success!" });
             }
             catch (err) {
-                return res.status(err.status).json({
+                return res.status(err.status || 400).json({
                     message: err.message
                 });
             }
@@ -59,7 +59,7 @@ class UserController extends baseController_1.default {
                 res.status(200).json({ data: user, message: "Success!" });
             }
             catch (err) {
-                return res.status(err.status).json({
+                return res.status(err.status || 400).json({
                     message: err.message
                 });
             }
@@ -82,7 +82,7 @@ class UserController extends baseController_1.default {
                 res.status(200).json({ data: user, message: "Success!" });
             }
             catch (err) {
-                return res.status(err.status).json({
+                return res.status(err.status || 400).json({
                     message: err.message
                 });
             }
@@ -109,7 +109,7 @@ class UserController extends baseController_1.default {
                 res.status(200).json({ message: "Success!" });
             }
             catch (err) {
-                return res.status(err.status).json({
+                return res.status(err.status || 400).json({
                     message: err.message
                 });
             }

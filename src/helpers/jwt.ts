@@ -4,9 +4,13 @@ import { Request, Response } from "express";
 import "dotenv/config";
 
 class JWT {
-    public static generateAccessToken(login: string): string {
+    public static generateAccessToken({ id, login }: {
+        id: number,
+        login: string
+    }): string {
         return jwt.sign({
             user: {
+                id: id,
                 login: login,
             }
         }, process.env.TOKEN_SECRET_JWT, { expiresIn: process.env.LIFETIME_JWT });
@@ -26,7 +30,6 @@ class JWT {
             }
 
             req["user"] = user;
-
             next();
         })
     }

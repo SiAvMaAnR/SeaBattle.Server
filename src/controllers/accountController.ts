@@ -20,24 +20,27 @@ class AccountController extends BaseController {
             if (!user) {
                 throw {
                     status: 404,
-                    message: "User not found"
+                    message: "User not found!"
                 }
             }
 
             if (user?.password != password) {
                 throw {
                     status: 400,
-                    message: "Invalid password"
+                    message: "Invalid password!"
                 }
             }
 
             return res.status(200).json({
                 type: "Bearer",
-                token: JWT.generateAccessToken(login),
+                token: JWT.generateAccessToken({
+                    id: user.id,
+                    login: login
+                }),
             });
         }
         catch (err) {
-            return res.status(err.status).json({
+            return res.status(err.status || 400).json({
                 message: err.message
             });
         }
@@ -54,21 +57,21 @@ class AccountController extends BaseController {
             if (user) {
                 throw {
                     status: 409,
-                    message: "User already exists"
+                    message: "User already exists!"
                 }
             }
 
             if (!(/^[a-zA-Z0-9]{4,}$/).test(login)) {
                 throw {
                     status: 400,
-                    message: "Incorrect login"
+                    message: "Incorrect login!"
                 }
             }
 
             if (!(/^[a-zA-Z0-9]{6,20}$/).test(password)) {
                 throw {
                     status: 400,
-                    message: "Incorrect password"
+                    message: "Incorrect password!"
                 }
             }
 
@@ -79,11 +82,11 @@ class AccountController extends BaseController {
 
             return res.status(200).json({
                 data: newUser,
-                message: "Success"
+                message: "Success!"
             });
         }
         catch (err) {
-            return res.status(err.status).json({
+            return res.status(err.status || 400).json({
                 message: err.message
             });
         }
@@ -94,10 +97,11 @@ class AccountController extends BaseController {
     public async info(req: Request, res: Response) {
         try {
             return res.status(200).json({
-                data: req['user']
+                data: req['user'],
+                message: "Success!"
             });
         } catch (err) {
-            return res.status(err.status).json({
+            return res.status(err.status || 400).json({
                 message: err.message
             });
         }

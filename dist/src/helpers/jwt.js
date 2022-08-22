@@ -6,9 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require("dotenv/config");
 class JWT {
-    static generateAccessToken(login) {
+    static generateAccessToken({ id, login }) {
         return jsonwebtoken_1.default.sign({
             user: {
+                id: id,
                 login: login,
             }
         }, process.env.TOKEN_SECRET_JWT, { expiresIn: process.env.LIFETIME_JWT });
