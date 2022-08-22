@@ -1,0 +1,14 @@
+import express from 'express';
+import AccountController from '../controllers/accountController';
+import StatisticController from '../controllers/statisticController';
+import JWT from '../helpers/jwt';
+
+const router = express.Router();
+const accountController = new AccountController()
+
+router.post('/login', (req, res) => accountController.login(req, res));
+router.post('/register', (req, res) => accountController.register(req, res));
+router.get('/info', JWT.authenticateToken, (req, res) => accountController.info(req, res));
+
+
+export default router;

@@ -27,7 +27,7 @@ class UserService extends baseService_1.default {
     }
     getUserById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.getOne(id);
+            return yield this.repository.getOneByPk(id);
         });
     }
     getUsers(fn) {
@@ -42,7 +42,7 @@ class UserService extends baseService_1.default {
     }
     deleteUserById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.delete(id);
+            return yield this.repository.deleteByPk(id);
         });
     }
     deleteUser(entity) {

@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sequelize_typescript_1 = require("sequelize-typescript");
 class BaseRepository {
     constructor(repository) {
         this.repository = repository;
@@ -24,10 +23,20 @@ class BaseRepository {
             }
         });
     }
-    getOne(id) {
+    getOneByPk(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 return yield this.repository.findByPk(id);
+            }
+            catch (err) {
+                return null;
+            }
+        });
+    }
+    getOne(where) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield this.repository.findOne(where);
             }
             catch (err) {
                 return null;
@@ -56,16 +65,22 @@ class BaseRepository {
             }
         });
     }
-    delete(arg) {
+    delete(entity) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                if (arg instanceof (sequelize_typescript_1.Model)) {
-                    yield arg.destroy();
-                }
-                else if (typeof arg == "number") {
-                    const item = yield this.getOne(arg);
-                    yield item.destroy();
-                }
+                yield entity.destroy();
+                return true;
+            }
+            catch (err) {
+                return false;
+            }
+        });
+    }
+    deleteByPk(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const item = yield this.getOneByPk(id);
+                yield item.destroy();
                 return true;
             }
             catch (err) {

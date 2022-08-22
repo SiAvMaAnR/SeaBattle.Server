@@ -22,9 +22,20 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
         }
     }
 
-    public async getOne(id: number): Promise<TEntity> {
+    public async getOneByPk(id: number): Promise<TEntity> {
         try {
+
             return await this.repository.findByPk(id);
+        }
+        catch (err) {
+            return null;
+        }
+    }
+
+
+    public async getOne(where?: Record<string, any>) {
+        try {
+            return await this.repository.findOne(where);
         }
         catch (err) {
             return null;
@@ -52,17 +63,22 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
     }
 
 
-    public async delete(entity: TEntity): Promise<boolean>;
-    public async delete(id: number): Promise<boolean>;
-    public async delete(arg: unknown): Promise<boolean> {
+    public async delete(entity: TEntity): Promise<boolean> {
         try {
-            if (arg instanceof Model<IEntity>) {
-                await arg.destroy();
-            }
-            else if (typeof arg == "number") {
-                const item = await this.getOne(arg);
-                await item.destroy();
-            }
+            await entity.destroy();
+            return true;
+        }
+        catch (err) {
+            return false;
+        }
+    }
+
+
+    public async deleteByPk(id: number): Promise<boolean> {
+        try {
+
+            const item = await this.getOneByPk(id);
+            await item.destroy();
             return true;
         }
         catch (err) {

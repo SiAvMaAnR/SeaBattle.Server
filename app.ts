@@ -8,6 +8,7 @@ import corsConfig from './src/config/cors';
 import cors from 'cors';
 import ioInit from './src/socket_io/socket';
 import "dotenv/config";
+import JWT from './src/helpers/jwt';
 
 const app = express();
 const server = createServer(app);
@@ -20,8 +21,15 @@ app.use(express.static(`${__dirname}/assets`));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api', indexRouter);
+// app.use((req, res, next) => {
+//   JWT.authenticateToken({
+//     req: req,
+//     res: res,
+//     next: next
+//   });
+// });
 
+app.use('/api', indexRouter);
 
 openConnection()
   .then(async () => console.log("open connection!"))

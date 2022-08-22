@@ -1,4 +1,4 @@
-import { Table, Column, AutoIncrement, PrimaryKey, NotEmpty, ForeignKey, BelongsTo, Model, NotNull, BelongsToMany, HasMany, AllowNull } from "sequelize-typescript";
+import { Table, Column, AutoIncrement, PrimaryKey, NotEmpty, ForeignKey, BelongsTo, Model, NotNull, BelongsToMany, HasMany, AllowNull, Unique } from "sequelize-typescript";
 import GameStat from "./gameStat";
 import { Statistic } from "./index";
 import IUser from "./interfaces/IUser";
@@ -17,8 +17,8 @@ class User extends Model<IUser> implements IUser {
     id: number
 
     @NotEmpty
-
     @AllowNull(false)
+    @Unique
     @Column
     login: string
 

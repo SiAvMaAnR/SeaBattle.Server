@@ -6,9 +6,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require("dotenv/config");
 class JWT {
-    generateAccessToken(username) {
-        return jsonwebtoken_1.default.sign(username, process.env.TOKEN_SECRET_JWT, { expiresIn: process.env.LIFETIME_JWT });
+    static generateAccessToken(login) {
+        return jsonwebtoken_1.default.sign({
+            user: {
+                login: login,
+            }
+        }, process.env.TOKEN_SECRET_JWT, { expiresIn: process.env.LIFETIME_JWT });
+    }
+    static authenticateToken(req, res, next) {
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+        if (!token) {
+            return res.sendStatus(401);
+        }
+        jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET_JWT, (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+            req["user"] = user;
+            next();
+        });
     }
 }
-exports.default = new JWT();
+exports.default = JWT;
 //# sourceMappingURL=jwt.js.map

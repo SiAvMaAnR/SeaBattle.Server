@@ -57,7 +57,6 @@ const gameHandlers = ({ io, socket, gameService }) => {
     }
     function getStatistic() {
         const statistic = gameService.getStatistic();
-        console.log(statistic);
         socket.emit("game:statistic", statistic);
     }
     socket.on("game:start", start);

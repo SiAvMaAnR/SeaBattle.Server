@@ -25,6 +25,7 @@ __decorate([
 __decorate([
     sequelize_typescript_1.NotEmpty,
     (0, sequelize_typescript_1.AllowNull)(false),
+    sequelize_typescript_1.Unique,
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], User.prototype, "login", void 0);

@@ -19,7 +19,7 @@ class UserService extends BaseService implements IUserService {
         return await this.repository.create(user);
     }
     public async getUserById(id: number): Promise<User> {
-        return await this.repository.getOne(id);
+        return await this.repository.getOneByPk(id);
     }
     public async getUsers(fn: Function): Promise<User[]> {
         return await this.repository.get(fn);
@@ -28,7 +28,7 @@ class UserService extends BaseService implements IUserService {
         return await this.repository.getAll();
     }
     public async deleteUserById(id: number): Promise<boolean> {
-        return await this.repository.delete(id);
+        return await this.repository.deleteByPk(id);
     }
     public async deleteUser(entity: User): Promise<boolean> {
         return await this.repository.delete(entity);

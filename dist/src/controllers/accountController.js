@@ -13,23 +13,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const baseController_1 = __importDefault(require("./baseController"));
-const userService_1 = __importDefault(require("../services/userService"));
-class UserController extends baseController_1.default {
+const jwt_1 = __importDefault(require("../helpers/jwt"));
+const accountService_1 = __importDefault(require("../services/accountService"));
+class AccountController extends baseController_1.default {
     constructor() {
         super();
-        this.userService = new userService_1.default();
+        this.accountService = new accountService_1.default();
     }
-    getUsers(req, res) {
+    login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const users = yield this.userService.getUsersAll();
-                if (!users) {
+                const login = req.body["login"];
+                const password = req.body["password"];
+                const user = yield this.accountService.getUserByLogin(login);
+                if (!user) {
                     throw {
                         status: 404,
-                        message: "Users is not found!"
+                        message: "User not found"
                     };
                 }
-                res.status(200).json({ data: users, message: "Success!" });
+                if ((user === null || user === void 0 ? void 0 : user.password) != password) {
+                    throw {
+                        status: 400,
+                        message: "Invalid password"
+                    };
+                }
+                return res.status(200).json({
+                    type: "Bearer",
+                    token: jwt_1.default.generateAccessToken(login),
+                });
             }
             catch (err) {
                 return res.status(err.status).json({
@@ -38,25 +50,38 @@ class UserController extends baseController_1.default {
             }
         });
     }
-    ;
-    getUser(req, res) {
+    register(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const id = Number(req.params.id);
-                if (!id) {
+                const login = req.body["login"];
+                const password = req.body["password"];
+                const user = yield this.accountService.getUserByLogin(login);
+                if (user) {
                     throw {
-                        status: 400,
-                        message: "Id incorrect!"
+                        status: 409,
+                        message: "User already exists"
                     };
                 }
-                const user = yield this.userService.getUserById(id);
-                if (!user) {
+                if (!(/^[a-zA-Z0-9]{4,}$/).test(login)) {
                     throw {
                         status: 400,
-                        message: "User is not found!"
+                        message: "Incorrect login"
                     };
                 }
-                res.status(200).json({ data: user, message: "Success!" });
+                if (!(/^[a-zA-Z0-9]{6,20}$/).test(password)) {
+                    throw {
+                        status: 400,
+                        message: "Incorrect password"
+                    };
+                }
+                const newUser = yield this.accountService.createUser({
+                    login: login,
+                    password: password
+                });
+                return res.status(200).json({
+                    data: newUser,
+                    message: "Success"
+                });
             }
             catch (err) {
                 return res.status(err.status).json({
@@ -65,21 +90,12 @@ class UserController extends baseController_1.default {
             }
         });
     }
-    ;
-    addUser(req, res) {
+    info(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const user = yield this.userService.addUser({
-                    login: req.body.login,
-                    password: req.body.password
+                return res.status(200).json({
+                    data: req['user']
                 });
-                if (!user) {
-                    throw {
-                        status: 400,
-                        message: "User not added!"
-                    };
-                }
-                res.status(200).json({ data: user, message: "Success!" });
             }
             catch (err) {
                 return res.status(err.status).json({
@@ -88,34 +104,6 @@ class UserController extends baseController_1.default {
             }
         });
     }
-    ;
-    deleteUser(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const id = Number(req.params.id);
-                if (!id) {
-                    throw {
-                        status: 400,
-                        message: "Id incorrect!"
-                    };
-                }
-                const isDeleted = this.userService.deleteUserById(id);
-                if (!isDeleted) {
-                    throw {
-                        status: 400,
-                        message: "User not deleted!"
-                    };
-                }
-                res.status(200).json({ message: "Success!" });
-            }
-            catch (err) {
-                return res.status(err.status).json({
-                    message: err.message
-                });
-            }
-        });
-    }
-    ;
 }
-exports.default = UserController;
-//# sourceMappingURL=userController.js.map
+exports.default = AccountController;
+//# sourceMappingURL=accountController.js.map
