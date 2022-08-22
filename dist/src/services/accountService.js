@@ -24,7 +24,7 @@ class AccountService extends baseService_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.repository.getOne({
                 where: {
-                    login: login
+                    login
                 }
             });
         });

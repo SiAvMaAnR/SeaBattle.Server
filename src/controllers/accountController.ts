@@ -12,8 +12,8 @@ class AccountController extends BaseController {
 
     public async login(req: Request, res: Response) {
         try {
-            const login = req.body["login"];
-            const password = req.body["password"];
+            const login = req.body.login;
+            const password = req.body.password;
 
             const user = await this.accountService.getUserByLogin(login);
 
@@ -24,7 +24,7 @@ class AccountController extends BaseController {
                 }
             }
 
-            if (user?.password != password) {
+            if (user?.password !== password) {
                 throw {
                     status: 400,
                     message: "Invalid password!"
@@ -35,7 +35,7 @@ class AccountController extends BaseController {
                 type: "Bearer",
                 token: JWT.generateAccessToken({
                     id: user.id,
-                    login: login
+                    login
                 }),
             });
         }
@@ -49,10 +49,18 @@ class AccountController extends BaseController {
 
     public async register(req: Request, res: Response) {
         try {
-            const login = req.body["login"];
-            const password = req.body["password"];
+            const login = req.body.login;
+            const password = req.body.password;
 
             const user = await this.accountService.getUserByLogin(login);
+
+
+            if (!login || !password) {
+                throw {
+                    status: 400,
+                    message: "Incorrect login or password!"
+                }
+            }
 
             if (user) {
                 throw {
@@ -61,7 +69,7 @@ class AccountController extends BaseController {
                 }
             }
 
-            if (!(/^[a-zA-Z0-9]{4,}$/).test(login)) {
+            if (!(/^[a-zA-Z0-9]{6,25}$/).test(login)) {
                 throw {
                     status: 400,
                     message: "Incorrect login!"
@@ -76,8 +84,7 @@ class AccountController extends BaseController {
             }
 
             const newUser = await this.accountService.createUser({
-                login: login,
-                password: password
+                login, password
             });
 
             return res.status(200).json({

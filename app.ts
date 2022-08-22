@@ -1,14 +1,12 @@
 import express from 'express';
 import indexRouter from "./src/routes/index";
 import sequelize, { openConnection, sync } from './src/database/sequelize';
-import { Sequelize } from 'sequelize-typescript';
 import { createServer } from 'http';
 import onConnection from './src/socket_io/onConnection';
 import corsConfig from './src/config/cors';
 import cors from 'cors';
 import ioInit from './src/socket_io/socket';
 import "dotenv/config";
-import JWT from './src/helpers/jwt';
 
 const app = express();
 const server = createServer(app);

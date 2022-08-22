@@ -8,10 +8,7 @@ require("dotenv/config");
 class JWT {
     static generateAccessToken({ id, login }) {
         return jsonwebtoken_1.default.sign({
-            user: {
-                id: id,
-                login: login,
-            }
+            user: { id, login }
         }, process.env.TOKEN_SECRET_JWT, { expiresIn: process.env.LIFETIME_JWT });
     }
     static authenticateToken(req, res, next) {

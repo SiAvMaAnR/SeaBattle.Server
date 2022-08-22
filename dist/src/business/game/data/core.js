@@ -14,14 +14,14 @@ class Core {
         return this._rooms;
     }
     getRoomById(roomId) {
-        return this._rooms.find(room => room.id == roomId);
+        return this._rooms.find(room => room.id === roomId);
     }
     getRoomByPlayer(socketId) {
-        return this._rooms.find(room => room.players.some(player => player.socketId == socketId));
+        return this._rooms.find(room => room.players.some(player => player.socketId === socketId));
     }
     getMyPlayer(socketId) {
-        for (let room of this._rooms) {
-            const player = room.players.find(player => player.socketId == socketId);
+        for (const room of this._rooms) {
+            const player = room.players.find(_player => _player.socketId === socketId);
             if (player) {
                 return player;
             }
@@ -29,11 +29,11 @@ class Core {
         return null;
     }
     getEnemyPlayer(socketId) {
-        const room = this._rooms.find(room => room.players.some(player => player.socketId == socketId));
-        return room.players.find(player => player.socketId != socketId);
+        const room = this._rooms.find(_room => _room.players.some(_player => _player.socketId === socketId));
+        return room.players.find(player => player.socketId !== socketId);
     }
     addRoom(roomId) {
-        const isExists = this._rooms.find(room => room.id == roomId);
+        const isExists = this._rooms.find(_room => _room.id === roomId);
         if (isExists) {
             return false;
         }
@@ -42,13 +42,13 @@ class Core {
         return true;
     }
     removeRoom(roomId) {
-        this._rooms = this._rooms.filter(room => room.id != roomId);
+        this._rooms = this._rooms.filter(room => room.id !== roomId);
     }
     removeEmptyRooms() {
-        this._rooms = this._rooms.filter(room => room.count != 0);
+        this._rooms = this._rooms.filter(room => room.count !== 0);
     }
     isExistsRoom(roomId) {
-        return this._rooms.findIndex(room => room.id == roomId) !== -1;
+        return this._rooms.findIndex(room => room.id === roomId) !== -1;
     }
 }
 exports.Core = Core;

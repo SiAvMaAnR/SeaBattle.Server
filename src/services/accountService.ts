@@ -17,7 +17,7 @@ class AccountService extends BaseService implements IAccountService {
     public async getUserByLogin(login: string): Promise<User> {
         return await this.repository.getOne({
             where: {
-                login: login
+                login
             }
         });
     }
