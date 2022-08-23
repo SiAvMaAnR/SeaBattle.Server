@@ -3,11 +3,13 @@ import IEntity from "./IEntity";
 
 interface IGameStat extends IEntity {
     id: number
-    moveCount: number
+    countMyMoves: number
+    countHits: number
+    countMisses: number
     isWin: boolean
-    killed: number
-    lost: number
+    enemy: string
     user: User
+    userId: number
 }
 
 export default IGameStat;

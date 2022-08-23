@@ -40,7 +40,7 @@ class AccountController extends baseController_1.default {
                 }
                 return res.status(200).json({
                     type: "Bearer",
-                    token: jwt_1.default.generateAccessToken({
+                    token: jwt_1.default.generateToken({
                         id: user.id,
                         login: login
                     }),

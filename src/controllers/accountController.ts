@@ -33,7 +33,7 @@ class AccountController extends BaseController {
 
             return res.status(200).json({
                 type: "Bearer",
-                token: JWT.generateAccessToken({
+                token: JWT.generateToken({
                     id: user.id,
                     login: login
                 }),

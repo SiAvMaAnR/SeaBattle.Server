@@ -1,8 +1,8 @@
-import Statistic, { IStatisticRes } from "../../business/game/data/statistic";
-import { Cell } from "../../business/game/fields/field";
+import { IStatisticRes } from "../../business/game/data/statistic";
+import { Cell, Coordinate } from "../../business/game/fields/field";
 import PlayersResponse from "../../business/game/types/PlayersResponse";
 import RoomResponse from "../../business/game/types/RoomResponse";
-import Coordinate from "../../types/coordinate";
+import { IJwtUser } from "../baseService";
 
 interface IGameService {
     joinRoom(roomId: string): boolean;
@@ -27,6 +27,8 @@ interface IGameService {
     setIsAccess(access: boolean): void;
     getStatistic(): IStatisticRes;
     saveResult(isWon: boolean): void;
+    setUser(user: IJwtUser);
+    get user(): IJwtUser;
 }
 
 export default IGameService;

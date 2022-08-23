@@ -1,8 +1,8 @@
 import { Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
+import { Coordinate } from "../../business/game/fields/field";
 import IGameService from "../../services/interfaces/IGameService";
 import StatisticService from "../../services/statisticService";
-import Coordinate from "../../types/coordinate";
 
 const gameHandlers = ({ io, socket, gameService }: {
     io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>,
@@ -69,18 +69,22 @@ const gameHandlers = ({ io, socket, gameService }: {
 
         if (!roomId || !win) return;
 
-
         gameService.saveResult(win);
-        const statistic = gameService.getStatistic();
-
 
         socket.emit("game:check", win);
         socket.broadcast.to(roomId).emit("game:check", !win);
     }
 
-    function getStatistic(): void {
-        const statistic = gameService.getStatistic();
-        socket.emit("game:statistic", statistic);
+
+    function saveStatistic(): void {
+        const userId = gameService.user?.id;
+
+
+        if (userId) {
+            const statistic = gameService.getStatistic();
+            statistic.enemy = gameService.user?.login ?? "none";
+            statisticService.addGame(userId, statistic);
+        }
     }
 
     socket.on("game:start", start);
@@ -91,7 +95,7 @@ const gameHandlers = ({ io, socket, gameService }: {
     socket.on("game:shoot", shoot);
     socket.on("game:check", checkWin);
     socket.on("game:ready", ready);
-    socket.on("game:statistic", getStatistic);
+    socket.on("game:statistic", saveStatistic);
 }
 
 export default gameHandlers;

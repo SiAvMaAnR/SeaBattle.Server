@@ -18,7 +18,17 @@ class StatisticService {
     constructor() {
         this.repository = new statisticRepository_1.default(sequelize_1.default);
     }
-    addGame({}) {
+    addGame(userId, props) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const gameStat = yield this.repository.create({
+                countMyMoves: props.countMyMoves,
+                countHits: props.countHits,
+                countMisses: props.countMisses,
+                isWin: props.isWin,
+                enemy: props.enemy,
+                userId: userId
+            });
+        });
     }
     getGameById(id) {
         return __awaiter(this, void 0, void 0, function* () {

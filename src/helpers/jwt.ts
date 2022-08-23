@@ -2,12 +2,10 @@ import jwt from "jsonwebtoken";
 import { NextFunction } from "express";
 import { Request, Response } from "express";
 import "dotenv/config";
+import { IJwtUser } from "../services/baseService";
 
 class JWT {
-    public static generateAccessToken({ id, login }: {
-        id: number,
-        login: string
-    }): string {
+    public static generateToken({ id, login }: IJwtUser): string {
         return jwt.sign({
             user: { id, login }
         }, process.env.TOKEN_SECRET_JWT, { expiresIn: process.env.LIFETIME_JWT });
@@ -28,7 +26,24 @@ class JWT {
 
             req["user"] = user;
             next();
-        })
+        });
+    }
+
+
+    public static tokenData(token: string): IJwtUser {
+
+        if (!token) {
+            return null;
+        }
+
+        const payloadB64 = token.split('.')[1];
+        const payload = Buffer.from(payloadB64, 'base64');
+        const data = JSON.parse(payload.toString('binary'));
+
+        return {
+            id: data?.user?.id,
+            login: data?.user?.login
+        }
     }
 }
 

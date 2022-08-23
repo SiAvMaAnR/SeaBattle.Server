@@ -58,7 +58,12 @@ const enum Cell {
     Killed = 3
 }
 
+type Coordinate = {
+    y: number
+    x: number
+}
 
-export { Cell };
+
+export { Cell, Coordinate };
 
 export default Field;

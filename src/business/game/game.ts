@@ -1,8 +1,7 @@
-import Coordinate from "../../types/coordinate";
 import Room from "./data/room";
 import { IStatisticRes } from "./data/statistic";
 import EnemyField from "./fields/enemyField";
-import { Cell } from "./fields/field";
+import { Cell, Coordinate } from "./fields/field";
 import MyField from "./fields/myField";
 import ICore from "./interfaces/ICore";
 import IGame from "./interfaces/IGame";

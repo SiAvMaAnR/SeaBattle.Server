@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const roomHandlers = ({ io, socket, gameService }) => {
     function join(roomId) {
+        var _a, _b;
         const room = gameService.getRoomByPlayer();
         if (room) {
             socket.emit("room:join", false, "You are already in this room!");
@@ -12,10 +13,10 @@ const roomHandlers = ({ io, socket, gameService }) => {
             return;
         }
         socket.join(roomId);
-        socket.emit("room:join", true, `Success, ${socket.data['login']} join!`);
+        socket.emit("room:join", true, `Success, ${(_b = (_a = gameService.user) === null || _a === void 0 ? void 0 : _a.login) !== null && _b !== void 0 ? _b : "user"} join!`);
     }
     function leave() {
-        var _a;
+        var _a, _b, _c;
         const roomId = (_a = gameService.getRoomByPlayer()) === null || _a === void 0 ? void 0 : _a.id;
         if (!roomId) {
             socket.emit("room:leave", false, "Room not found!");
@@ -25,7 +26,7 @@ const roomHandlers = ({ io, socket, gameService }) => {
         socket.emit("game:check", false);
         socket.broadcast.to(roomId).emit("game:check", true);
         gameService.leaveRoom();
-        socket.emit("room:leave", true, `Success, ${socket.data['login']} left!`);
+        socket.emit("room:leave", true, `Success, ${(_c = (_b = gameService.user) === null || _b === void 0 ? void 0 : _b.login) !== null && _c !== void 0 ? _c : "user"} left!`);
         socket.leave(roomId);
     }
     function getAll() {

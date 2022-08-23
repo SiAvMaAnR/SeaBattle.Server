@@ -2,6 +2,7 @@ import { Server, Socket } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import core from "../business/game/data/core";
 import Game from "../business/game/game";
+import JWT from "../helpers/jwt";
 import GameService from "../services/gameService";
 import IGameService from "../services/interfaces/IGameService";
 import gameHandlers from "./handlers/gameHandlers";
@@ -13,10 +14,12 @@ const onConnection = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEven
 
     socket.on("jwt", (jwt: string) => {
 
-        console.log(jwt);
-        
-        socket.data.login = "login";
-        socket.data.userId = "id";
+        const tokenData = JWT.tokenData(jwt);
+
+        gameService.setUser({
+            id: tokenData?.id,
+            login: tokenData?.login
+        });
     });
 
     gameHandlers({ io, socket, gameService });

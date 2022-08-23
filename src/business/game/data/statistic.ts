@@ -3,7 +3,6 @@ class Statistic {
     private _countHits: number = 0;
     private _countMisses: number = 0;
     private _isWin: boolean = false;
-    private _enemy: string = "none";
 
     constructor() {
 
@@ -15,14 +14,11 @@ class Statistic {
             countHits: this._countHits,
             countMisses: this._countMisses,
             isWin: this._isWin,
-            enemy: this._enemy
         }
     }
 
 
-    public setEnemy(enemy: string): void {
-        this._enemy = enemy;
-    }
+   
 
     public addMyMoves(): number {
         return ++this._countMyMoves;
@@ -46,7 +42,7 @@ interface IStatisticRes {
     countHits: number,
     countMisses: number,
     isWin: boolean,
-    enemy: string
+    enemy?: string
 }
 
 export { IStatisticRes };

@@ -27,7 +27,7 @@ __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
     sequelize_typescript_1.Column,
     __metadata("design:type", Number)
-], GameStat.prototype, "moveCount", void 0);
+], GameStat.prototype, "countMyMoves", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
     sequelize_typescript_1.Column,
@@ -37,12 +37,17 @@ __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
     sequelize_typescript_1.Column,
     __metadata("design:type", Number)
-], GameStat.prototype, "killed", void 0);
+], GameStat.prototype, "countHits", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
     sequelize_typescript_1.Column,
     __metadata("design:type", Number)
-], GameStat.prototype, "lost", void 0);
+], GameStat.prototype, "countMisses", void 0);
+__decorate([
+    (0, sequelize_typescript_1.AllowNull)(false),
+    sequelize_typescript_1.Column,
+    __metadata("design:type", String)
+], GameStat.prototype, "enemy", void 0);
 __decorate([
     (0, sequelize_typescript_1.ForeignKey)(() => user_1.default),
     (0, sequelize_typescript_1.AllowNull)(false),

@@ -57,13 +57,17 @@ const gameHandlers = ({ io, socket, gameService }) => {
         if (!roomId || !win)
             return;
         gameService.saveResult(win);
-        const statistic = gameService.getStatistic();
         socket.emit("game:check", win);
         socket.broadcast.to(roomId).emit("game:check", !win);
     }
-    function getStatistic() {
-        const statistic = gameService.getStatistic();
-        socket.emit("game:statistic", statistic);
+    function saveStatistic() {
+        var _a, _b, _c;
+        const userId = (_a = gameService.user) === null || _a === void 0 ? void 0 : _a.id;
+        if (userId) {
+            const statistic = gameService.getStatistic();
+            statistic.enemy = (_c = (_b = gameService.user) === null || _b === void 0 ? void 0 : _b.login) !== null && _c !== void 0 ? _c : "none";
+            statisticService.addGame(userId, statistic);
+        }
     }
     socket.on("game:start", start);
     socket.on("game:field:init", initField);
@@ -73,7 +77,7 @@ const gameHandlers = ({ io, socket, gameService }) => {
     socket.on("game:shoot", shoot);
     socket.on("game:check", checkWin);
     socket.on("game:ready", ready);
-    socket.on("game:statistic", getStatistic);
+    socket.on("game:statistic", saveStatistic);
 };
 exports.default = gameHandlers;
 //# sourceMappingURL=gameHandlers.js.map

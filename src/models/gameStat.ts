@@ -16,7 +16,7 @@ class GameStat extends Model<IGameStat> implements IGameStat {
     @NotEmpty
     @AllowNull(false)
     @Column
-    moveCount: number
+    countMyMoves: number
 
     @AllowNull(false)
     @Column
@@ -24,11 +24,15 @@ class GameStat extends Model<IGameStat> implements IGameStat {
 
     @AllowNull(false)
     @Column
-    killed: number;
+    countHits: number;
 
     @AllowNull(false)
     @Column
-    lost: number;
+    countMisses: number;
+
+    @AllowNull(false)
+    @Column
+    enemy: string;
 
     @ForeignKey(() => User)
     @AllowNull(false)

@@ -55,7 +55,6 @@ class Room {
     }
 
     public restart(): void {
-        
         this._states = new States();
         this._players.forEach(player => player.restart());
     }

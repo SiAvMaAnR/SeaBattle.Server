@@ -1,17 +1,19 @@
-import Coordinate from "../types/coordinate";
 import IGameService from "./interfaces/IGameService";
 import PlayersResponse from "../business/game/types/PlayersResponse";
 import RoomResponse from "../business/game/types/RoomResponse";
 import IGame from "../business/game/interfaces/IGame";
 import { Statistic } from "../models";
 import { IStatisticRes } from "../business/game/data/statistic";
+import { Coordinate } from "../business/game/fields/field";
+import BaseService, { IJwtUser } from "./baseService";
 
-class GameService implements IGameService {
+class GameService extends BaseService implements IGameService {
 
     private socketId: string;
     private game: IGame;
 
     constructor(socketId: string, game: IGame) {
+        super();
         this.socketId = socketId;
         this.game = game;
     }

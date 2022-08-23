@@ -6,7 +6,6 @@ class Statistic {
         this._countHits = 0;
         this._countMisses = 0;
         this._isWin = false;
-        this._enemy = "none";
     }
     get() {
         return {
@@ -14,11 +13,7 @@ class Statistic {
             countHits: this._countHits,
             countMisses: this._countMisses,
             isWin: this._isWin,
-            enemy: this._enemy
         };
-    }
-    setEnemy(enemy) {
-        this._enemy = enemy;
     }
     addMyMoves() {
         return ++this._countMyMoves;
