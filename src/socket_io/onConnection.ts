@@ -11,12 +11,16 @@ import roomHandlers from "./handlers/roomHandlers";
 const onConnection = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>, socket: Socket) => {
     const gameService: IGameService = new GameService(socket.id, new Game(core));
 
-    const rand = Math.floor(Math.random() * 100);
-    socket.data.name = rand.toString();
+    socket.on("jwt", (jwt: string) => {
+
+        console.log(jwt);
+        
+        socket.data.login = "login";
+        socket.data.userId = "id";
+    });
 
     gameHandlers({ io, socket, gameService });
     roomHandlers({ io, socket, gameService });
-
 }
 
 export default onConnection;

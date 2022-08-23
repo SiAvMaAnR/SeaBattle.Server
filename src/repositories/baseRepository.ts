@@ -33,7 +33,7 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
     }
 
 
-    public async getOne(where?: Record<string, any>) {
+    public async getOne(where?: Record<string, any>): Promise<TEntity> {
         try {
             return await this.repository.findOne(where);
         }

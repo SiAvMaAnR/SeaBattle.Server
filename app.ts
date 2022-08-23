@@ -19,14 +19,6 @@ app.use(express.static(`${__dirname}/assets`));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.use((req, res, next) => {
-//   JWT.authenticateToken({
-//     req: req,
-//     res: res,
-//     next: next
-//   });
-// });
-
 app.use('/api', indexRouter);
 
 openConnection()

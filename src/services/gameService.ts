@@ -1,4 +1,3 @@
-import BaseService from "./baseService";
 import Coordinate from "../types/coordinate";
 import IGameService from "./interfaces/IGameService";
 import PlayersResponse from "../business/game/types/PlayersResponse";
@@ -7,13 +6,12 @@ import IGame from "../business/game/interfaces/IGame";
 import { Statistic } from "../models";
 import { IStatisticRes } from "../business/game/data/statistic";
 
-class GameService extends BaseService implements IGameService {
+class GameService implements IGameService {
 
     private socketId: string;
     private game: IGame;
 
     constructor(socketId: string, game: IGame) {
-        super();
         this.socketId = socketId;
         this.game = game;
     }

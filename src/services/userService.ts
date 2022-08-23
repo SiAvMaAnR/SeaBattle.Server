@@ -4,16 +4,11 @@ import { User } from "../models";
 import IUser from "../models/interfaces/IUser";
 import UserRepository from "../repositories/userRepository";
 import sequelize from "../database/sequelize";
-import BaseService from "./baseService";
 import IUserService from "./interfaces/IUserService";
 
 
-class UserService extends BaseService implements IUserService {
+class UserService implements IUserService {
     private repository = new UserRepository(sequelize);
-
-    constructor() {
-        super();
-    }
 
     public async addUser(user: Optional<IUser, NullishPropertiesOf<IUser>>): Promise<User> {
         return await this.repository.create(user);

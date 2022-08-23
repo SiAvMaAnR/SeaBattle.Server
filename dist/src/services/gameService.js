@@ -1,12 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const baseService_1 = __importDefault(require("./baseService"));
-class GameService extends baseService_1.default {
+class GameService {
     constructor(socketId, game) {
-        super();
         this.socketId = socketId;
         this.game = game;
     }

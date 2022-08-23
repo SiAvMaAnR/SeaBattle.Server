@@ -15,7 +15,7 @@ class UserController extends BaseController {
 
             if (!users) {
                 throw {
-                    status: 404,
+                    status: 401,
                     message: "Users is not found!"
                 }
             }

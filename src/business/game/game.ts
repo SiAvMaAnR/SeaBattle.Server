@@ -141,7 +141,7 @@ class Game implements IGame {
     }
 
     public getStatistic(socketId: string): IStatisticRes {
-        return this.core.getMyPlayer(socketId).statistic.get();
+        return this.core.getMyPlayer(socketId)?.statistic.get();
     }
 }
 

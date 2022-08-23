@@ -107,7 +107,8 @@ class Game {
         enemyPlayer.statistic.setIsWin(!isWon);
     }
     getStatistic(socketId) {
-        return this.core.getMyPlayer(socketId).statistic.get();
+        var _a;
+        return (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.statistic.get();
     }
 }
 exports.default = Game;

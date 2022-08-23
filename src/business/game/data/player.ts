@@ -1,5 +1,4 @@
 import EnemyField from "../fields/enemyField";
-import Field from "../fields/field";
 import MyField from "../fields/myField";
 import Statistic from "./statistic";
 

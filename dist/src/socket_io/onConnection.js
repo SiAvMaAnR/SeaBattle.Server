@@ -10,8 +10,11 @@ const gameHandlers_1 = __importDefault(require("./handlers/gameHandlers"));
 const roomHandlers_1 = __importDefault(require("./handlers/roomHandlers"));
 const onConnection = (io, socket) => {
     const gameService = new gameService_1.default(socket.id, new game_1.default(core_1.default));
-    const rand = Math.floor(Math.random() * 100);
-    socket.data.name = rand.toString();
+    socket.on("jwt", (jwt) => {
+        console.log(jwt);
+        socket.data.login = "login";
+        socket.data.userId = "id";
+    });
     (0, gameHandlers_1.default)({ io, socket, gameService });
     (0, roomHandlers_1.default)({ io, socket, gameService });
 };

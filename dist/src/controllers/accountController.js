@@ -28,7 +28,7 @@ class AccountController extends baseController_1.default {
                 const user = yield this.accountService.getUserByLogin(login);
                 if (!user) {
                     throw {
-                        status: 404,
+                        status: 401,
                         message: "User not found!"
                     };
                 }
@@ -42,7 +42,7 @@ class AccountController extends baseController_1.default {
                     type: "Bearer",
                     token: jwt_1.default.generateAccessToken({
                         id: user.id,
-                        login
+                        login: login
                     }),
                 });
             }
@@ -61,25 +61,21 @@ class AccountController extends baseController_1.default {
                 const user = yield this.accountService.getUserByLogin(login);
                 if (!login || !password) {
                     throw {
-                        status: 400,
                         message: "Incorrect login or password!"
                     };
                 }
                 if (user) {
                     throw {
-                        status: 409,
                         message: "User already exists!"
                     };
                 }
                 if (!(/^[a-zA-Z0-9]{6,25}$/).test(login)) {
                     throw {
-                        status: 400,
                         message: "Incorrect login!"
                     };
                 }
                 if (!(/^[a-zA-Z0-9]{6,20}$/).test(password)) {
                     throw {
-                        status: 400,
                         message: "Incorrect password!"
                     };
                 }

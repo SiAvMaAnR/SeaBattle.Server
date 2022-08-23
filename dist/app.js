@@ -52,13 +52,6 @@ app.use((0, cors_2.default)(cors_1.default));
 app.use(express_1.default.static(`${__dirname}/assets`));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
-// app.use((req, res, next) => {
-//   JWT.authenticateToken({
-//     req: req,
-//     res: res,
-//     next: next
-//   });
-// });
 app.use('/api', index_1.default);
 (0, sequelize_1.openConnection)()
     .then(() => __awaiter(void 0, void 0, void 0, function* () { return console.log("open connection!"); }))

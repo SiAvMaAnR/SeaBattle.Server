@@ -25,7 +25,7 @@ class UserController extends baseController_1.default {
                 const users = yield this.userService.getUsersAll();
                 if (!users) {
                     throw {
-                        status: 404,
+                        status: 401,
                         message: "Users is not found!"
                     };
                 }

@@ -12,7 +12,7 @@ const roomHandlers = ({ io, socket, gameService }) => {
             return;
         }
         socket.join(roomId);
-        socket.emit("room:join", true, `Success, ${socket.data['name']} join!`);
+        socket.emit("room:join", true, `Success, ${socket.data['login']} join!`);
     }
     function leave() {
         var _a;
@@ -25,7 +25,7 @@ const roomHandlers = ({ io, socket, gameService }) => {
         socket.emit("game:check", false);
         socket.broadcast.to(roomId).emit("game:check", true);
         gameService.leaveRoom();
-        socket.emit("room:leave", true, `Success, ${socket.data['name']} left!`);
+        socket.emit("room:leave", true, `Success, ${socket.data['login']} left!`);
         socket.leave(roomId);
     }
     function getAll() {

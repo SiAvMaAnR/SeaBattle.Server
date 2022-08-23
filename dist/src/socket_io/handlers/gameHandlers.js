@@ -1,6 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const statisticService_1 = __importDefault(require("../../services/statisticService"));
 const gameHandlers = ({ io, socket, gameService }) => {
+    const statisticService = new statisticService_1.default();
     function start() {
         var _a;
         const roomId = (_a = gameService.getRoomByPlayer()) === null || _a === void 0 ? void 0 : _a.id;
@@ -52,6 +57,7 @@ const gameHandlers = ({ io, socket, gameService }) => {
         if (!roomId || !win)
             return;
         gameService.saveResult(win);
+        const statistic = gameService.getStatistic();
         socket.emit("game:check", win);
         socket.broadcast.to(roomId).emit("game:check", !win);
     }
