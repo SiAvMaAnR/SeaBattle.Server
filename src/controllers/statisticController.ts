@@ -2,9 +2,11 @@ import sequelize from "../database/sequelize";
 import BaseController from "./baseController";
 import StatisticRepository from "../repositories/gameStatRepository";
 import { Request, Response } from "express";
+import IStatisticService from "../services/interfaces/IStatisticService";
+import StatisticService from "../services/statisticService";
 
 class StatisticController extends BaseController {
-    private statisticRepository: StatisticRepository = new StatisticRepository(sequelize);
+    private statisticService : IStatisticService = new StatisticService();
 
     constructor() {
         super();
@@ -12,10 +14,7 @@ class StatisticController extends BaseController {
 
     public async getStatistics(req: Request, res: Response) {
 
-        const statistics = await this.statisticRepository.getAll();
-
-
-        return res.status(200).send({ data: "getStatistics", statistics: statistics });
+        
     };
 
 }

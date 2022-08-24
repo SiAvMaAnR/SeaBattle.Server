@@ -12,18 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sequelize_1 = __importDefault(require("../database/sequelize"));
 const baseController_1 = __importDefault(require("./baseController"));
-const gameStatRepository_1 = __importDefault(require("../repositories/gameStatRepository"));
+const statisticService_1 = __importDefault(require("../services/statisticService"));
 class StatisticController extends baseController_1.default {
     constructor() {
         super();
-        this.statisticRepository = new gameStatRepository_1.default(sequelize_1.default);
+        this.statisticService = new statisticService_1.default();
     }
     getStatistics(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const statistics = yield this.statisticRepository.getAll();
-            return res.status(200).send({ data: "getStatistics", statistics: statistics });
         });
     }
     ;

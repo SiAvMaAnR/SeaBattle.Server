@@ -140,6 +140,10 @@ class Game implements IGame {
     }
 
     public getStatistic(socketId: string): IStatisticRes {
+
+        console.log(`socket: ${socketId}`);
+        console.log(`player: ${this.core.getMyPlayer(socketId)}`);
+
         return this.core.getMyPlayer(socketId)?.statistic.get();
     }
 }

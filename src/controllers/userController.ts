@@ -1,9 +1,10 @@
 import BaseController from "./baseController";
 import UserService from "../services/userService";
 import { Request, Response } from 'express';
+import IUserService from "../services/interfaces/IUserService";
 
 class UserController extends BaseController {
-    private userService = new UserService();
+    private userService: IUserService = new UserService();
 
     constructor() {
         super();

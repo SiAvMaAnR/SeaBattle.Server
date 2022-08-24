@@ -18,8 +18,6 @@ class Statistic {
     }
 
 
-   
-
     public addMyMoves(): number {
         return ++this._countMyMoves;
     }
@@ -42,7 +40,7 @@ interface IStatisticRes {
     countHits: number,
     countMisses: number,
     isWin: boolean,
-    enemy?: string
+    enemy?: string,
 }
 
 export { IStatisticRes };

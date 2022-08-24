@@ -2,22 +2,16 @@ import { IStatisticRes } from "../business/game/data/statistic";
 import sequelize from "../database/sequelize";
 import GameStat from "../models/gameStat";
 import StatisticRepository from "../repositories/statisticRepository";
+import BaseService from "./baseService";
 import IStatisticService from "./interfaces/IStatisticService";
 
 
-interface IGameStat {
-    countMyMoves: number,
-    countHits: number,
-    countMisses: number,
-    isWin: boolean,
-    enemy: string
-}
+class StatisticService extends BaseService implements IStatisticService {
 
-class StatisticService implements IStatisticService {
     private repository = new StatisticRepository(sequelize);
 
-    public async addGame(userId: number, props: IStatisticRes) {
-        const gameStat = await this.repository.create({
+    public async addGame(userId: number, props: IStatisticRes): Promise<void> {
+        await this.repository.create({
             countMyMoves: props.countMyMoves,
             countHits: props.countHits,
             countMisses: props.countMisses,
@@ -27,13 +21,27 @@ class StatisticService implements IStatisticService {
         });
     }
 
-    public async getGameById(id: number): Promise<GameStat> {
-        return await this.repository.getOneByPk(id);
+    public async getGameById(userId: number, id: number): Promise<GameStat> {
+
+
+        return await this.repository.getOne({
+            where: {
+                userId: userId,
+                id: id
+            }
+        });
     }
 
-    public async getGames(): Promise<GameStat[]> {
-        return await this.repository.getAll();
+    public async getGames(userId: number): Promise<GameStat[]> {
+        return await this.repository.get({
+            where: {
+                userId: userId
+            }
+        });
     }
+
+
+
 }
 
 export default StatisticService;

@@ -2,9 +2,10 @@ import BaseController from "./baseController";
 import { Request, Response } from "express";
 import JWT from "../helpers/jwt";
 import AccountService from "../services/accountService";
+import IAccountService from "../services/interfaces/IAccountService";
 
 class AccountController extends BaseController {
-    private accountService: AccountService = new AccountService();
+    private accountService: IAccountService = new AccountService();
 
     constructor() {
         super();

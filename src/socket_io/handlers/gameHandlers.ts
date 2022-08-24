@@ -79,10 +79,14 @@ const gameHandlers = ({ io, socket, gameService }: {
     function saveStatistic(): void {
         const userId = gameService.user?.id;
 
-
         if (userId) {
             const statistic = gameService.getStatistic();
-            statistic.enemy = gameService.user?.login ?? "none";
+
+            if (!statistic) {
+                return;
+            }
+
+            statistic.enemy = gameService.user?.login || "none";
             statisticService.addGame(userId, statistic);
         }
     }

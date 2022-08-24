@@ -61,11 +61,14 @@ const gameHandlers = ({ io, socket, gameService }) => {
         socket.broadcast.to(roomId).emit("game:check", !win);
     }
     function saveStatistic() {
-        var _a, _b, _c;
+        var _a, _b;
         const userId = (_a = gameService.user) === null || _a === void 0 ? void 0 : _a.id;
         if (userId) {
             const statistic = gameService.getStatistic();
-            statistic.enemy = (_c = (_b = gameService.user) === null || _b === void 0 ? void 0 : _b.login) !== null && _c !== void 0 ? _c : "none";
+            if (!statistic) {
+                return;
+            }
+            statistic.enemy = ((_b = gameService.user) === null || _b === void 0 ? void 0 : _b.login) || "none";
             statisticService.addGame(userId, statistic);
         }
     }

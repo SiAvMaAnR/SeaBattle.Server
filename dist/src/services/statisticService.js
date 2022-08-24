@@ -14,13 +14,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importDefault(require("../database/sequelize"));
 const statisticRepository_1 = __importDefault(require("../repositories/statisticRepository"));
-class StatisticService {
+const baseService_1 = __importDefault(require("./baseService"));
+class StatisticService extends baseService_1.default {
     constructor() {
+        super(...arguments);
         this.repository = new statisticRepository_1.default(sequelize_1.default);
     }
     addGame(userId, props) {
         return __awaiter(this, void 0, void 0, function* () {
-            const gameStat = yield this.repository.create({
+            yield this.repository.create({
                 countMyMoves: props.countMyMoves,
                 countHits: props.countHits,
                 countMisses: props.countMisses,

@@ -4,9 +4,10 @@ import sequelize from "../database/sequelize";
 import IUser from "../models/interfaces/IUser";
 import User from "../models/user";
 import UserRepository from "../repositories/userRepository";
+import BaseService from "./baseService";
 import IAccountService from "./interfaces/IAccountService";
 
-class AccountService implements IAccountService {
+class AccountService extends BaseService implements IAccountService {
     private repository = new UserRepository(sequelize);
 
     public async getUserByLogin(login: string): Promise<User> {
