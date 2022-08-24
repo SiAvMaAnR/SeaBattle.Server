@@ -2,13 +2,14 @@ import { IStatisticRes } from "../business/game/data/statistic";
 import sequelize from "../database/sequelize";
 import GameStat from "../models/gameStat";
 import StatisticRepository from "../repositories/statisticRepository";
-import BaseService from "./baseService";
+import BaseService, { IJwtUser } from "./baseService";
 import IStatisticService from "./interfaces/IStatisticService";
 
 
 class StatisticService extends BaseService implements IStatisticService {
 
     private repository = new StatisticRepository(sequelize);
+
 
     public async addGame(userId: number, props: IStatisticRes): Promise<void> {
         await this.repository.create({
@@ -21,13 +22,11 @@ class StatisticService extends BaseService implements IStatisticService {
         });
     }
 
-    public async getGameById(userId: number, id: number): Promise<GameStat> {
-
-
+    public async getGameById(userId: number, gameId: number): Promise<GameStat> {
         return await this.repository.getOne({
             where: {
                 userId: userId,
-                id: id
+                id: gameId
             }
         });
     }

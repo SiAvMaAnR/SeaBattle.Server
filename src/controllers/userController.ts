@@ -21,7 +21,6 @@ class UserController extends BaseController {
                 }
             }
 
-
             res.status(200).json({ data: users, message: "Success!" })
         }
         catch (err) {

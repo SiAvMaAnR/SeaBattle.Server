@@ -16,14 +16,65 @@ const baseController_1 = __importDefault(require("./baseController"));
 const statisticService_1 = __importDefault(require("../services/statisticService"));
 class StatisticController extends baseController_1.default {
     constructor() {
-        super();
+        super(...arguments);
         this.statisticService = new statisticService_1.default();
     }
-    getStatistics(req, res) {
+    getGames(req, res) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userId = (_b = (_a = req['user']) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.id;
+                if (!userId) {
+                    throw {
+                        status: 401,
+                        message: "User not found!"
+                    };
+                }
+                const games = yield this.statisticService.getGames(userId);
+                res.status(200).json({
+                    data: games,
+                    message: "Success!"
+                });
+            }
+            catch (err) {
+                return res.status(err.status || 400).json({
+                    message: err.message
+                });
+            }
         });
     }
     ;
+    getGameById(req, res) {
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userId = (_b = (_a = req['user']) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.id;
+                if (!userId) {
+                    throw {
+                        status: 401,
+                        message: "User not found!"
+                    };
+                }
+                const gameId = Number(req.params.id);
+                if (!gameId) {
+                    throw {
+                        status: 400,
+                        message: "Game not found!"
+                    };
+                }
+                const game = yield this.statisticService.getGameById(userId, gameId);
+                res.status(200).json({
+                    data: game,
+                    message: "Success!"
+                });
+            }
+            catch (err) {
+                return res.status(err.status || 400).json({
+                    message: err.message
+                });
+            }
+        });
+    }
 }
 exports.default = StatisticController;
 //# sourceMappingURL=statisticController.js.map

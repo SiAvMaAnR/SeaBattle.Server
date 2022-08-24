@@ -1,22 +1,78 @@
-import sequelize from "../database/sequelize";
 import BaseController from "./baseController";
-import StatisticRepository from "../repositories/gameStatRepository";
 import { Request, Response } from "express";
 import IStatisticService from "../services/interfaces/IStatisticService";
 import StatisticService from "../services/statisticService";
+import { IJwtUser } from "../services/baseService";
+
 
 class StatisticController extends BaseController {
-    private statisticService : IStatisticService = new StatisticService();
+    private statisticService: IStatisticService = new StatisticService();
 
-    constructor() {
-        super();
-    }
+    public async getGames(req: Request, res: Response) {
+        try {
 
-    public async getStatistics(req: Request, res: Response) {
+            const userId: number = req['user']?.data?.id;
 
-        
+            if (!userId) {
+                throw {
+                    status: 401,
+                    message: "User not found!"
+                }
+            }
+
+            const games = await this.statisticService.getGames(userId);
+
+            res.status(200).json({
+                data: games,
+                message: "Success!"
+            });
+
+        }
+        catch (err) {
+            return res.status(err.status || 400).json({
+                message: err.message
+            });
+        }
+
     };
 
+    public async getGameById(req: Request, res: Response) {
+        try {
+
+            const userId: number = req['user']?.data?.id;
+
+            if (!userId) {
+                throw {
+                    status: 401,
+                    message: "User not found!"
+                }
+            }
+
+            const gameId = Number(req.params.id);
+
+            if (!gameId) {
+                throw {
+                    status: 400,
+                    message: "Game not found!"
+                }
+            }
+
+            const game = await this.statisticService.getGameById(userId, gameId);
+
+            res.status(200).json({
+                data: game,
+                message: "Success!"
+            });
+
+        }
+        catch (err) {
+            return res.status(err.status || 400).json({
+                message: err.message
+            });
+        }
+    }
+
 }
+
 
 export default StatisticController;

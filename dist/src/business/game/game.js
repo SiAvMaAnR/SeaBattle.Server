@@ -108,8 +108,6 @@ class Game {
     }
     getStatistic(socketId) {
         var _a;
-        console.log(`socket: ${socketId}`);
-        console.log(`player: ${this.core.getMyPlayer(socketId)}`);
         return (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.statistic.get();
     }
 }

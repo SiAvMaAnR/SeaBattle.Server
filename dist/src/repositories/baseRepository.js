@@ -46,9 +46,7 @@ class BaseRepository {
     get(where) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return yield this.repository.findAll({
-                    where
-                });
+                return yield this.repository.findAll(where);
             }
             catch (err) {
                 return null;

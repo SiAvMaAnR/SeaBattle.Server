@@ -3,7 +3,6 @@ interface IJwtUser {
     login: string
 }
 
-
 abstract class BaseService {
     private _user: IJwtUser;
 

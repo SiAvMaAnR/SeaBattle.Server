@@ -8,7 +8,7 @@ require("dotenv/config");
 class JWT {
     static generateToken({ id, login }) {
         return jsonwebtoken_1.default.sign({
-            user: { id, login }
+            data: { id, login }
         }, process.env.TOKEN_SECRET_JWT, { expiresIn: process.env.LIFETIME_JWT });
     }
     static authenticateToken(req, res, next) {
@@ -32,10 +32,10 @@ class JWT {
         }
         const payloadB64 = token.split('.')[1];
         const payload = Buffer.from(payloadB64, 'base64');
-        const data = JSON.parse(payload.toString('binary'));
+        const user = JSON.parse(payload.toString('binary'));
         return {
-            id: (_a = data === null || data === void 0 ? void 0 : data.user) === null || _a === void 0 ? void 0 : _a.id,
-            login: (_b = data === null || data === void 0 ? void 0 : data.user) === null || _b === void 0 ? void 0 : _b.login
+            id: (_a = user === null || user === void 0 ? void 0 : user.data) === null || _a === void 0 ? void 0 : _a.id,
+            login: (_b = user === null || user === void 0 ? void 0 : user.data) === null || _b === void 0 ? void 0 : _b.login
         };
     }
 }

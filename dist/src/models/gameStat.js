@@ -49,6 +49,12 @@ __decorate([
     __metadata("design:type", String)
 ], GameStat.prototype, "enemy", void 0);
 __decorate([
+    (0, sequelize_typescript_1.AllowNull)(false),
+    (0, sequelize_typescript_1.Default)(() => Date.now()),
+    sequelize_typescript_1.Column,
+    __metadata("design:type", Date)
+], GameStat.prototype, "datetime", void 0);
+__decorate([
     (0, sequelize_typescript_1.ForeignKey)(() => user_1.default),
     (0, sequelize_typescript_1.AllowNull)(false),
     sequelize_typescript_1.Column,

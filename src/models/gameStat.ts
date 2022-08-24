@@ -1,4 +1,4 @@
-import { Model, Table, Column, AutoIncrement, PrimaryKey, NotEmpty, HasOne, ForeignKey, BelongsTo, AllowNull } from "sequelize-typescript";
+import { Model, Table, Column, AutoIncrement, PrimaryKey, NotEmpty, HasOne, ForeignKey, BelongsTo, AllowNull, Default, DefaultScope, DataType } from "sequelize-typescript";
 import IGameStat from "./interfaces/IGameStat";
 import User from "./user";
 
@@ -33,6 +33,11 @@ class GameStat extends Model<IGameStat> implements IGameStat {
     @AllowNull(false)
     @Column
     enemy: string;
+
+    @AllowNull(false)
+    @Default(() => Date.now())
+    @Column
+    datetime: Date
 
     @ForeignKey(() => User)
     @AllowNull(false)

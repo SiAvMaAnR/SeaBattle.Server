@@ -7,9 +7,6 @@ import IAccountService from "../services/interfaces/IAccountService";
 class AccountController extends BaseController {
     private accountService: IAccountService = new AccountService();
 
-    constructor() {
-        super();
-    }
 
     public async login(req: Request, res: Response) {
         try {

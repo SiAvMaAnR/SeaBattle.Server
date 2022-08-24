@@ -32,14 +32,23 @@ class StatisticService extends baseService_1.default {
             });
         });
     }
-    getGameById(id) {
+    getGameById(userId, gameId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.getOneByPk(id);
+            return yield this.repository.getOne({
+                where: {
+                    userId: userId,
+                    id: gameId
+                }
+            });
         });
     }
-    getGames() {
+    getGames(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.repository.getAll();
+            return yield this.repository.get({
+                where: {
+                    userId: userId
+                }
+            });
         });
     }
 }

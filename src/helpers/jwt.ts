@@ -7,7 +7,7 @@ import { IJwtUser } from "../services/baseService";
 class JWT {
     public static generateToken({ id, login }: IJwtUser): string {
         return jwt.sign({
-            user: { id, login }
+            data: { id, login }
         }, process.env.TOKEN_SECRET_JWT, { expiresIn: process.env.LIFETIME_JWT });
     }
 
@@ -38,11 +38,11 @@ class JWT {
 
         const payloadB64 = token.split('.')[1];
         const payload = Buffer.from(payloadB64, 'base64');
-        const data = JSON.parse(payload.toString('binary'));
+        const user = JSON.parse(payload.toString('binary'));
 
         return {
-            id: data?.user?.id,
-            login: data?.user?.login
+            id: user?.data?.id,
+            login: user?.data?.login
         }
     }
 }

@@ -17,7 +17,7 @@ const jwt_1 = __importDefault(require("../helpers/jwt"));
 const accountService_1 = __importDefault(require("../services/accountService"));
 class AccountController extends baseController_1.default {
     constructor() {
-        super();
+        super(...arguments);
         this.accountService = new accountService_1.default();
     }
     login(req, res) {
