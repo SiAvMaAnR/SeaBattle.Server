@@ -33,18 +33,18 @@ abstract class BaseRepository<TEntity extends Model<IEntity>> implements IWrite<
     }
 
 
-    public async getOne(where?: Record<string, any>): Promise<TEntity> {
+    public async getOne(findOptions?: Record<string, any>): Promise<TEntity> {
         try {
-            return await this.repository.findOne(where);
+            return await this.repository.findOne(findOptions);
         }
         catch (err) {
             return null;
         }
     }
 
-    public async get(where?: Record<string, any>): Promise<TEntity[]> {
+    public async get(findOptions?: Record<string, any>): Promise<TEntity[]> {
         try {
-            return await this.repository.findAll(where);
+            return await this.repository.findAll(findOptions);
         }
         catch (err) {
             return null;

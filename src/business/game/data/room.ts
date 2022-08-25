@@ -28,12 +28,12 @@ class Room {
         return this._players;
     }
 
-    public addPlayer(socketId: string): boolean {
+    public addPlayer(socketId: string, login: string): boolean {
         if (this.count >= 2 || this._states.isAccess) {
             return false;
         }
 
-        this._players.push(new Player(socketId));
+        this._players.push(new Player(socketId, login));
         return true;
     }
 

@@ -7,7 +7,7 @@ const enemyField_1 = __importDefault(require("../fields/enemyField"));
 const myField_1 = __importDefault(require("../fields/myField"));
 const statistic_1 = __importDefault(require("./statistic"));
 class Player {
-    constructor(socketId) {
+    constructor(socketId, login) {
         this._isMove = false;
         this._isInit = false;
         this._isReady = false;
@@ -16,9 +16,13 @@ class Player {
         this._enemyField = new enemyField_1.default();
         this._statistic = new statistic_1.default();
         this._socketId = socketId;
+        this._login = login;
     }
     get statistic() {
         return this._statistic;
+    }
+    get login() {
+        return this._login;
     }
     get isMove() {
         return this._isMove;

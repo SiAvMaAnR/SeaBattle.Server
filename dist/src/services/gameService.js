@@ -10,11 +10,11 @@ class GameService extends baseService_1.default {
         this.socketId = socketId;
         this.game = game;
     }
-    joinRoom(roomId) {
+    joinRoom(roomId, login) {
         if (!this.game.isExistsRoom(roomId)) {
             this.game.createRoom(roomId);
         }
-        return this.game.joinRoom(roomId, this.socketId);
+        return this.game.joinRoom(roomId, login, this.socketId);
     }
     leaveRoom() {
         this.game.leaveRoom(this.socketId);
@@ -114,6 +114,9 @@ class GameService extends baseService_1.default {
     }
     setIsAccess(access) {
         this.game.setIsAccess(this.socketId, access);
+    }
+    getEnemy() {
+        return this.game.getPlayers(this.socketId).enemy;
     }
     getStatistic() {
         return this.game.getStatistic(this.socketId);

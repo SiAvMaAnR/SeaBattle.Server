@@ -6,11 +6,13 @@ import { Statistic } from "../models";
 import { IStatisticRes } from "../business/game/data/statistic";
 import { Coordinate } from "../business/game/fields/field";
 import BaseService, { IJwtUser } from "./baseService";
+import Player from "../business/game/data/player";
 
 class GameService extends BaseService implements IGameService {
 
     private socketId: string;
     private game: IGame;
+
 
     constructor(socketId: string, game: IGame) {
         super();
@@ -18,12 +20,12 @@ class GameService extends BaseService implements IGameService {
         this.game = game;
     }
 
-    public joinRoom(roomId: string): boolean {
+    public joinRoom(roomId: string, login: string): boolean {
         if (!this.game.isExistsRoom(roomId)) {
             this.game.createRoom(roomId);
         }
 
-        return this.game.joinRoom(roomId, this.socketId);
+        return this.game.joinRoom(roomId, login, this.socketId);
     }
 
     public leaveRoom(): void {
@@ -140,6 +142,10 @@ class GameService extends BaseService implements IGameService {
 
     public setIsAccess(access: boolean): void {
         this.game.setIsAccess(this.socketId, access);
+    }
+
+    public getEnemy(): Player {
+        return this.game.getPlayers(this.socketId).enemy;
     }
 
     public getStatistic(): IStatisticRes {

@@ -5,7 +5,8 @@ import { IJwtUser } from "../baseService";
 interface IStatisticService {
     addGame(userId: number, props: IStatisticRes): Promise<void>;
     getGameById(userId: number, gameId: number): Promise<GameStat>;
-    getGames(userId: number): Promise<GameStat[]> 
+    getGames(userId: number): Promise<GameStat[]>;
+    getCommonStat(userId: number): Promise<any>; 
 }
 
 

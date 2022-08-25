@@ -47,8 +47,39 @@ class StatisticService extends baseService_1.default {
             return yield this.repository.get({
                 where: {
                     userId: userId
+                },
+            });
+        });
+    }
+    getCommonStat(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sumMoves = yield this.repository.sum('countMyMoves', {
+                where: {
+                    userId: userId,
+                },
+            });
+            const countWins = yield this.repository.count({
+                where: {
+                    userId: userId,
+                    isWin: true
                 }
             });
+            const countGames = yield this.repository.count({
+                where: {
+                    userId: userId,
+                }
+            });
+            const sumHits = yield this.repository.sum('countHits', {
+                where: {
+                    userId: userId,
+                }
+            });
+            return {
+                sumMoves: sumMoves,
+                countWins: countWins,
+                countGames: countGames,
+                sumHits: sumHits
+            };
         });
     }
 }

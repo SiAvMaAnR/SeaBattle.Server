@@ -23,11 +23,11 @@ class Room {
     get players() {
         return this._players;
     }
-    addPlayer(socketId) {
+    addPlayer(socketId, login) {
         if (this.count >= 2 || this._states.isAccess) {
             return false;
         }
-        this._players.push(new player_1.default(socketId));
+        this._players.push(new player_1.default(socketId, login));
         return true;
     }
     getMyPlayer(socketId) {

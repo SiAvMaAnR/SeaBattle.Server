@@ -4,11 +4,12 @@ const roomHandlers = ({ io, socket, gameService }) => {
     function join(roomId) {
         var _a, _b;
         const room = gameService.getRoomByPlayer();
+        const user = gameService.user;
         if (room) {
             socket.emit("room:join", false, "You are already in this room!");
             return;
         }
-        if (!gameService.joinRoom(roomId)) {
+        if (!gameService.joinRoom(roomId, user === null || user === void 0 ? void 0 : user.login)) {
             socket.emit("room:join", false, "The room is full or the game has already started!");
             return;
         }

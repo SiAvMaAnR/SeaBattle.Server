@@ -20,22 +20,22 @@ class GameStat extends Model<IGameStat> implements IGameStat {
 
     @AllowNull(false)
     @Column
-    isWin: boolean;
+    isWin: boolean
 
     @AllowNull(false)
     @Column
-    countHits: number;
+    countHits: number
 
     @AllowNull(false)
     @Column
-    countMisses: number;
+    countMisses: number
 
     @AllowNull(false)
     @Column
-    enemy: string;
+    enemy: string
 
     @AllowNull(false)
-    @Default(() => Date.now())
+    @Default(() => new Date())
     @Column
     datetime: Date
 

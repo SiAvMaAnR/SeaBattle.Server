@@ -8,6 +8,7 @@ interface IGameStat extends IEntity {
     countMisses: number
     isWin: boolean
     enemy: string
+    datetime: Date
     user: User
     userId: number
 }

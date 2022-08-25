@@ -4,9 +4,9 @@ class Game {
     constructor(core) {
         this.core = core;
     }
-    joinRoom(roomId, socketId) {
+    joinRoom(roomId, login, socketId) {
         var _a;
-        return (_a = this.core.getRoomById(roomId)) === null || _a === void 0 ? void 0 : _a.addPlayer(socketId);
+        return (_a = this.core.getRoomById(roomId)) === null || _a === void 0 ? void 0 : _a.addPlayer(socketId, login);
     }
     leaveRoom(socketId) {
         var _a;

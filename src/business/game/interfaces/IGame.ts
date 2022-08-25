@@ -6,7 +6,7 @@ import MyField from "../fields/myField";
 import PairPlayers from "../types/PairPlayers";
 
 interface IGame {
-    joinRoom(roomId: string, socketId: string): boolean;
+    joinRoom(roomId: string, login: string, socketId: string): boolean;
     leaveRoom(socketId: string): boolean;
     removeEmptyRooms(): void;
     getPlayers(socketId: string): PairPlayers;

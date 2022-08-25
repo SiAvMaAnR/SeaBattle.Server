@@ -33,20 +33,20 @@ class BaseRepository {
             }
         });
     }
-    getOne(where) {
+    getOne(findOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return yield this.repository.findOne(where);
+                return yield this.repository.findOne(findOptions);
             }
             catch (err) {
                 return null;
             }
         });
     }
-    get(where) {
+    get(findOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return yield this.repository.findAll(where);
+                return yield this.repository.findAll(findOptions);
             }
             catch (err) {
                 return null;

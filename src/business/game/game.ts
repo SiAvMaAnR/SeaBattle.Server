@@ -15,8 +15,8 @@ class Game implements IGame {
         this.core = core;
     }
 
-    public joinRoom(roomId: string, socketId: string): boolean {
-        return this.core.getRoomById(roomId)?.addPlayer(socketId);
+    public joinRoom(roomId: string, login: string, socketId: string): boolean {
+        return this.core.getRoomById(roomId)?.addPlayer(socketId, login);
     }
 
     public leaveRoom(socketId: string): boolean {

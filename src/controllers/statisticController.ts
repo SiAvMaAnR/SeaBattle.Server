@@ -20,10 +20,9 @@ class StatisticController extends BaseController {
                 }
             }
 
-            const games = await this.statisticService.getGames(userId);
 
-            res.status(200).json({
-                data: games,
+            return res.status(200).json({
+                data: await this.statisticService.getGames(userId),
                 message: "Success!"
             });
 
@@ -38,7 +37,6 @@ class StatisticController extends BaseController {
 
     public async getGameById(req: Request, res: Response) {
         try {
-
             const userId: number = req['user']?.data?.id;
 
             if (!userId) {
@@ -59,7 +57,7 @@ class StatisticController extends BaseController {
 
             const game = await this.statisticService.getGameById(userId, gameId);
 
-            res.status(200).json({
+            return res.status(200).json({
                 data: game,
                 message: "Success!"
             });
@@ -72,6 +70,33 @@ class StatisticController extends BaseController {
         }
     }
 
+
+
+    public async getCommonStat(req: Request, res: Response) {
+        try {
+
+            const userId: number = req['user']?.data?.id;
+
+            if (!userId) {
+                throw {
+                    status: 401,
+                    message: "User not found!"
+                }
+            }
+
+            return res.status(200).json({
+                data: await this.statisticService.getCommonStat(userId),
+                message: "Success!"
+            });
+
+        }
+        catch (err) {
+            return res.status(err.status || 400).json({
+                message: err.message
+            });
+        }
+
+    };
 }
 
 

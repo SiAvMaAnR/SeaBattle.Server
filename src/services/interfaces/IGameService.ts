@@ -1,3 +1,4 @@
+import Player from "../../business/game/data/player";
 import { IStatisticRes } from "../../business/game/data/statistic";
 import { Cell, Coordinate } from "../../business/game/fields/field";
 import PlayersResponse from "../../business/game/types/PlayersResponse";
@@ -5,7 +6,7 @@ import RoomResponse from "../../business/game/types/RoomResponse";
 import { IJwtUser } from "../baseService";
 
 interface IGameService {
-    joinRoom(roomId: string): boolean;
+    joinRoom(roomId: string, login: string): boolean;
     leaveRoom(): void;
     getRooms(): RoomResponse[];
     getRoomById(roomId: string): RoomResponse;
@@ -28,6 +29,7 @@ interface IGameService {
     getStatistic(): IStatisticRes;
     saveResult(isWon: boolean): void;
     setUser(user: IJwtUser);
+    getEnemy(): Player;
     get user(): IJwtUser;
 }
 

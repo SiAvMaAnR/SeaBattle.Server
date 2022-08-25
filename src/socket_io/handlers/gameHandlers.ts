@@ -86,7 +86,7 @@ const gameHandlers = ({ io, socket, gameService }: {
                 return;
             }
 
-            statistic.enemy = gameService.user?.login || "none";
+            statistic.enemy = gameService.getEnemy()?.login || "none";
             statisticService.addGame(userId, statistic);
         }
     }

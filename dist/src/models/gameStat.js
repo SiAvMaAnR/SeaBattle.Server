@@ -50,7 +50,7 @@ __decorate([
 ], GameStat.prototype, "enemy", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
-    (0, sequelize_typescript_1.Default)(() => Date.now()),
+    (0, sequelize_typescript_1.Default)(() => new Date()),
     sequelize_typescript_1.Column,
     __metadata("design:type", Date)
 ], GameStat.prototype, "datetime", void 0);

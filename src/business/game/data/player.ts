@@ -5,6 +5,7 @@ import Statistic from "./statistic";
 class Player {
 
     private _socketId: string;
+    private _login: string;
     private _isMove: boolean = false;
     private _isInit: boolean = false;
     private _isReady: boolean = false;
@@ -13,15 +14,20 @@ class Player {
     private _enemyField: EnemyField = new EnemyField();
     private _statistic: Statistic = new Statistic();
 
-    constructor(socketId: string) {
+    constructor(socketId: string, login: string) {
         this._socketId = socketId;
+        this._login = login;
     }
 
     public get statistic(): Statistic {
         return this._statistic;
     }
 
-    public get isMove() {
+    public get login(): string {
+        return this._login;
+    }
+
+    public get isMove(): boolean {
         return this._isMove;
     }
 
@@ -30,7 +36,7 @@ class Player {
         return this._isMove;
     }
 
-    public get isWin() {
+    public get isWin(): boolean {
         return this._isWin;
     }
 
