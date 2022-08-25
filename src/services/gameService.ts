@@ -7,6 +7,7 @@ import { IStatisticRes } from "../business/game/data/statistic";
 import { Coordinate } from "../business/game/fields/field";
 import BaseService, { IJwtUser } from "./baseService";
 import Player from "../business/game/data/player";
+import { IShipCoord } from "../business/game/game";
 
 class GameService extends BaseService implements IGameService {
 
@@ -154,6 +155,10 @@ class GameService extends BaseService implements IGameService {
 
     public saveResult(isWon: boolean): void {
         this.game.saveResult(this.socketId, isWon);
+    }
+
+    public getShips(field: number[][]): any {
+        return this.game.getShips(this.socketId, field);
     }
 }
 

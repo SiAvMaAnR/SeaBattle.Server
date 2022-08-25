@@ -3,6 +3,7 @@ import { IStatisticRes } from "../data/statistic";
 import EnemyField from "../fields/enemyField";
 import { Coordinate } from "../fields/field";
 import MyField from "../fields/myField";
+import { IShipCoord } from "../game";
 import PairPlayers from "../types/PairPlayers";
 
 interface IGame {
@@ -26,6 +27,7 @@ interface IGame {
     setIsAccess(socketId: string, isAccess: boolean);
     saveResult(socketId: string, isWon: boolean): void;
     getStatistic(socketId: string): IStatisticRes;
+    getShips(socketId: string, field: number[][]): any;
 }
 
 export default IGame;

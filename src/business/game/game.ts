@@ -142,6 +142,28 @@ class Game implements IGame {
     public getStatistic(socketId: string): IStatisticRes {
         return this.core.getMyPlayer(socketId)?.statistic.get();
     }
+
+    public getShips(socketId: string, field: number[][]): IShipCoord[] {
+
+        const ships = field.map((row, iY) => {
+            return row.map((cell, iX) => {
+                if (cell == Cell.Exists) {
+                    return { iY, iX }
+                }
+            });
+        }).flat().filter(cell => cell);
+
+
+        
+        console.log(ships);
+
+        return ships;
+    }
+}
+
+export interface IShipCoord {
+    iY: number
+    iX: number
 }
 
 

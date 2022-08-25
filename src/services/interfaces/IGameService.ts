@@ -1,6 +1,7 @@
 import Player from "../../business/game/data/player";
 import { IStatisticRes } from "../../business/game/data/statistic";
 import { Cell, Coordinate } from "../../business/game/fields/field";
+import { IShipCoord } from "../../business/game/game";
 import PlayersResponse from "../../business/game/types/PlayersResponse";
 import RoomResponse from "../../business/game/types/RoomResponse";
 import { IJwtUser } from "../baseService";
@@ -30,6 +31,7 @@ interface IGameService {
     saveResult(isWon: boolean): void;
     setUser(user: IJwtUser);
     getEnemy(): Player;
+    getShips(ships:number[][]): any;
     get user(): IJwtUser;
 }
 

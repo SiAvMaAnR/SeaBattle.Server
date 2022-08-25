@@ -91,6 +91,11 @@ const gameHandlers = ({ io, socket, gameService }: {
         }
     }
 
+    function getShips(field: number[][]): void {
+        const ships = gameService.getShips(field);
+        socket.emit("game:ships", ships);
+    }
+
     socket.on("game:start", start);
     socket.on("game:field:init", initField);
     socket.on("game:field:my", getMyField);
@@ -100,6 +105,7 @@ const gameHandlers = ({ io, socket, gameService }: {
     socket.on("game:check", checkWin);
     socket.on("game:ready", ready);
     socket.on("game:statistic", saveStatistic);
+    socket.on("game:ships", getShips);
 }
 
 export default gameHandlers;
