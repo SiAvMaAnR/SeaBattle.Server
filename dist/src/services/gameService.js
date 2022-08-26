@@ -124,9 +124,6 @@ class GameService extends baseService_1.default {
     saveResult(isWon) {
         this.game.saveResult(this.socketId, isWon);
     }
-    getShips(field) {
-        return this.game.getShips(this.socketId, field);
-    }
 }
 exports.default = GameService;
 //# sourceMappingURL=gameService.js.map

@@ -2,12 +2,10 @@ import IGameService from "./interfaces/IGameService";
 import PlayersResponse from "../business/game/types/PlayersResponse";
 import RoomResponse from "../business/game/types/RoomResponse";
 import IGame from "../business/game/interfaces/IGame";
-import { Statistic } from "../models";
 import { IStatisticRes } from "../business/game/data/statistic";
 import { Coordinate } from "../business/game/fields/field";
 import BaseService, { IJwtUser } from "./baseService";
 import Player from "../business/game/data/player";
-import { IShipCoord } from "../business/game/game";
 
 class GameService extends BaseService implements IGameService {
 
@@ -157,9 +155,6 @@ class GameService extends BaseService implements IGameService {
         this.game.saveResult(this.socketId, isWon);
     }
 
-    public getShips(field: number[][]): any {
-        return this.game.getShips(this.socketId, field);
-    }
 }
 
 

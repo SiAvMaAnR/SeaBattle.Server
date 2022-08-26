@@ -72,10 +72,6 @@ const gameHandlers = ({ io, socket, gameService }) => {
             statisticService.addGame(userId, statistic);
         }
     }
-    function getShips(field) {
-        const ships = gameService.getShips(field);
-        socket.emit("game:ships", ships);
-    }
     socket.on("game:start", start);
     socket.on("game:field:init", initField);
     socket.on("game:field:my", getMyField);
@@ -85,7 +81,6 @@ const gameHandlers = ({ io, socket, gameService }) => {
     socket.on("game:check", checkWin);
     socket.on("game:ready", ready);
     socket.on("game:statistic", saveStatistic);
-    socket.on("game:ships", getShips);
 };
 exports.default = gameHandlers;
 //# sourceMappingURL=gameHandlers.js.map

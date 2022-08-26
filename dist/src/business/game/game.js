@@ -110,17 +110,6 @@ class Game {
         var _a;
         return (_a = this.core.getMyPlayer(socketId)) === null || _a === void 0 ? void 0 : _a.statistic.get();
     }
-    getShips(socketId, field) {
-        const ships = field.map((row, iY) => {
-            return row.map((cell, iX) => {
-                if (cell == 1 /* Cell.Exists */) {
-                    return { iY, iX };
-                }
-            });
-        }).flat().filter(cell => cell);
-        console.log(ships);
-        return ships;
-    }
 }
 exports.default = Game;
 //# sourceMappingURL=game.js.map
