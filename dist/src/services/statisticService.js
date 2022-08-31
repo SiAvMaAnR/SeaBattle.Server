@@ -61,7 +61,7 @@ class StatisticService extends baseService_1.default {
                         sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countMyMoves'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
                         sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countHits'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
                         sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countMisses'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
-                        // sequelize.where(sequelize.literal('to_char(("GameStat"."datetime"::timestamp at time zone \"Europe/Moscow\") , \'DD.MM.YYYY, HH24:MI:SS\')'), { [Op.like]: `%${field}%` },)
+                        sequelize_2.default.where(sequelize_2.default.literal('to_char(("GameStat"."datetime"::timestamptz") , \'DD.MM.YYYY, HH24:MI:SS\')'), { [sequelize_1.Op.like]: `%${field}%` })
                         // sequelize.where(sequelize.cast(sequelize.col('GameStat.datetime'), 'varchar'), { [Op.iLike]: `%${field}%` }),
                     ],
                     userId: userId

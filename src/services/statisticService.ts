@@ -54,7 +54,7 @@ class StatisticService extends BaseService implements IStatisticService {
                     sequelize.where(sequelize.cast(sequelize.col('GameStat.countMyMoves'), 'varchar'), { [Op.iLike]: `%${field}%` }),
                     sequelize.where(sequelize.cast(sequelize.col('GameStat.countHits'), 'varchar'), { [Op.iLike]: `%${field}%` }),
                     sequelize.where(sequelize.cast(sequelize.col('GameStat.countMisses'), 'varchar'), { [Op.iLike]: `%${field}%` }),
-                    // sequelize.where(sequelize.literal('to_char(("GameStat"."datetime"::timestamp at time zone \"Europe/Moscow\") , \'DD.MM.YYYY, HH24:MI:SS\')'), { [Op.like]: `%${field}%` },)
+                    sequelize.where(sequelize.literal('to_char(("GameStat"."datetime"::timestamptz") , \'DD.MM.YYYY, HH24:MI:SS\')'), { [Op.like]: `%${field}%` },)
                     // sequelize.where(sequelize.cast(sequelize.col('GameStat.datetime'), 'varchar'), { [Op.iLike]: `%${field}%` }),
                 ],
 
