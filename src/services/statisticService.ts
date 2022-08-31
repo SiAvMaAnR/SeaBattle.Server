@@ -54,6 +54,8 @@ class StatisticService extends BaseService implements IStatisticService {
                     sequelize.where(sequelize.cast(sequelize.col('GameStat.countMyMoves'), 'varchar'), { [Op.iLike]: `%${field}%` }),
                     sequelize.where(sequelize.cast(sequelize.col('GameStat.countHits'), 'varchar'), { [Op.iLike]: `%${field}%` }),
                     sequelize.where(sequelize.cast(sequelize.col('GameStat.countMisses'), 'varchar'), { [Op.iLike]: `%${field}%` }),
+                    // sequelize.where(sequelize.literal('to_char(("GameStat"."datetime"::timestamp at time zone \"Europe/Moscow\") , \'DD.MM.YYYY, HH24:MI:SS\')'), { [Op.like]: `%${field}%` },)
+                    // sequelize.where(sequelize.cast(sequelize.col('GameStat.datetime'), 'varchar'), { [Op.iLike]: `%${field}%` }),
                 ],
 
                 userId: userId
@@ -66,16 +68,29 @@ class StatisticService extends BaseService implements IStatisticService {
         });
     }
 
-    public async getCommonStat(userId: number): Promise<any> {
+    public async getCommonStat(userId: number, field?: string): Promise<ICommonStat> {
+
+        const search = ([
+            {
+                enemy: {
+                    [Op.iLike]: `%${field}%`
+                }
+            },
+            sequelize.where(sequelize.cast(sequelize.col('GameStat.countMyMoves'), 'varchar'), { [Op.iLike]: `%${field}%` }),
+            sequelize.where(sequelize.cast(sequelize.col('GameStat.countHits'), 'varchar'), { [Op.iLike]: `%${field}%` }),
+            sequelize.where(sequelize.cast(sequelize.col('GameStat.countMisses'), 'varchar'), { [Op.iLike]: `%${field}%` }),
+        ]);
 
         const sumMoves = await this.repository.sum('countMyMoves', {
             where: {
+                [Op.or]: search,
                 userId: userId,
             },
         });
 
         const countWins = await this.repository.count({
             where: {
+                [Op.or]: search,
                 userId: userId,
                 isWin: true
             }
@@ -83,12 +98,14 @@ class StatisticService extends BaseService implements IStatisticService {
 
         const countGames = await this.repository.count({
             where: {
+                [Op.or]: search,
                 userId: userId,
             }
         });
 
         const sumHits = await this.repository.sum('countHits', {
             where: {
+                [Op.or]: search,
                 userId: userId,
             }
         });
@@ -102,4 +119,12 @@ class StatisticService extends BaseService implements IStatisticService {
     }
 }
 
+interface ICommonStat {
+    sumMoves: number,
+    countWins: number,
+    countGames: number,
+    sumHits: number
+}
+
+export { ICommonStat };
 export default StatisticService;

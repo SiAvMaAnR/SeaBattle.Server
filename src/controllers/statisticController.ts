@@ -86,8 +86,11 @@ class StatisticController extends BaseController {
                 }
             }
 
+            const findField = req.query.find?.toString();
+
+
             return res.status(200).json({
-                data: await this.statisticService.getCommonStat(userId),
+                data: await this.statisticService.getCommonStat(userId, findField),
                 message: "Success!"
             });
 

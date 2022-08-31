@@ -33,9 +33,6 @@ class StatisticController extends baseController_1.default {
                 const findField = (_c = req.query.find) === null || _c === void 0 ? void 0 : _c.toString();
                 const page = req.query.page && parseInt(req.query.page.toString());
                 const size = req.query.size && parseInt(req.query.size.toString());
-                console.log("pre:find", findField);
-                console.log("pre:size", size);
-                console.log("pre:page", page);
                 return res.status(200).json({
                     data: yield this.statisticService.getGames(userId, findField, page, size),
                     message: "Success!"
@@ -81,7 +78,7 @@ class StatisticController extends baseController_1.default {
         });
     }
     getCommonStat(req, res) {
-        var _a, _b;
+        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const userId = (_b = (_a = req['user']) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.id;
@@ -91,8 +88,9 @@ class StatisticController extends baseController_1.default {
                         message: "User not found!"
                     };
                 }
+                const findField = (_c = req.query.find) === null || _c === void 0 ? void 0 : _c.toString();
                 return res.status(200).json({
-                    data: yield this.statisticService.getCommonStat(userId),
+                    data: yield this.statisticService.getCommonStat(userId, findField),
                     message: "Success!"
                 });
             }

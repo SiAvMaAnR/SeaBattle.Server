@@ -61,6 +61,8 @@ class StatisticService extends baseService_1.default {
                         sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countMyMoves'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
                         sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countHits'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
                         sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countMisses'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
+                        // sequelize.where(sequelize.literal('to_char(("GameStat"."datetime"::timestamp at time zone \"Europe/Moscow\") , \'DD.MM.YYYY, HH24:MI:SS\')'), { [Op.like]: `%${field}%` },)
+                        // sequelize.where(sequelize.cast(sequelize.col('GameStat.datetime'), 'varchar'), { [Op.iLike]: `%${field}%` }),
                     ],
                     userId: userId
                 },
@@ -72,26 +74,40 @@ class StatisticService extends baseService_1.default {
             });
         });
     }
-    getCommonStat(userId) {
+    getCommonStat(userId, field) {
         return __awaiter(this, void 0, void 0, function* () {
+            const search = ([
+                {
+                    enemy: {
+                        [sequelize_1.Op.iLike]: `%${field}%`
+                    }
+                },
+                sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countMyMoves'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
+                sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countHits'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
+                sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countMisses'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
+            ]);
             const sumMoves = yield this.repository.sum('countMyMoves', {
                 where: {
+                    [sequelize_1.Op.or]: search,
                     userId: userId,
                 },
             });
             const countWins = yield this.repository.count({
                 where: {
+                    [sequelize_1.Op.or]: search,
                     userId: userId,
                     isWin: true
                 }
             });
             const countGames = yield this.repository.count({
                 where: {
+                    [sequelize_1.Op.or]: search,
                     userId: userId,
                 }
             });
             const sumHits = yield this.repository.sum('countHits', {
                 where: {
+                    [sequelize_1.Op.or]: search,
                     userId: userId,
                 }
             });
