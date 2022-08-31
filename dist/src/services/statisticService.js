@@ -12,13 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sequelize_1 = __importDefault(require("../database/sequelize"));
+const sequelize_1 = require("sequelize");
+const sequelize_2 = __importDefault(require("../database/sequelize"));
 const statisticRepository_1 = __importDefault(require("../repositories/statisticRepository"));
 const baseService_1 = __importDefault(require("./baseService"));
 class StatisticService extends baseService_1.default {
     constructor() {
         super(...arguments);
-        this.repository = new statisticRepository_1.default(sequelize_1.default);
+        this.repository = new statisticRepository_1.default(sequelize_2.default);
     }
     addGame(userId, props) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -42,12 +43,32 @@ class StatisticService extends baseService_1.default {
             });
         });
     }
-    getGames(userId) {
+    getGames(userId, findField, page, size) {
         return __awaiter(this, void 0, void 0, function* () {
+            const field = findField !== null && findField !== void 0 ? findField : "";
+            const limit = size !== null && size !== void 0 ? size : 1000;
+            const offset = limit * (page !== null && page !== void 0 ? page : 0);
+            console.log("limit", limit);
+            console.log("offset", offset);
             return yield this.repository.get({
                 where: {
+                    [sequelize_1.Op.or]: [
+                        {
+                            enemy: {
+                                [sequelize_1.Op.iLike]: `%${field}%`
+                            }
+                        },
+                        sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countMyMoves'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
+                        sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countHits'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
+                        sequelize_2.default.where(sequelize_2.default.cast(sequelize_2.default.col('GameStat.countMisses'), 'varchar'), { [sequelize_1.Op.iLike]: `%${field}%` }),
+                    ],
                     userId: userId
                 },
+                order: [
+                    ['datetime', 'DESC'],
+                ],
+                offset: offset,
+                limit: limit
             });
         });
     }

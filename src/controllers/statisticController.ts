@@ -20,12 +20,14 @@ class StatisticController extends BaseController {
                 }
             }
 
+            const findField = req.query.find?.toString();
+            const page = req.query.page && parseInt(req.query.page.toString());
+            const size = req.query.size && parseInt(req.query.size.toString());
 
             return res.status(200).json({
-                data: await this.statisticService.getGames(userId),
+                data: await this.statisticService.getGames(userId, findField, page, size),
                 message: "Success!"
             });
-
         }
         catch (err) {
             return res.status(err.status || 400).json({
