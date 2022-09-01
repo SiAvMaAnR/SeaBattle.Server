@@ -39,9 +39,6 @@ class StatisticService extends BaseService implements IStatisticService {
         const limit = size ?? 1000;
         const offset = limit * (page ?? 0);
 
-        console.log("limit", limit);
-        console.log("offset", offset);
-
         const search = ([
             {
                 enemy: {

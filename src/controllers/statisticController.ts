@@ -2,9 +2,7 @@ import BaseController from "./baseController";
 import { Request, Response } from "express";
 import IStatisticService from "../services/interfaces/IStatisticService";
 import StatisticService from "../services/statisticService";
-import { IJwtUser } from "../services/baseService";
 import { IStatisticRes } from "../business/game/data/statistic";
-
 
 class StatisticController extends BaseController {
     private statisticService: IStatisticService = new StatisticService();
@@ -72,7 +70,6 @@ class StatisticController extends BaseController {
             });
         }
     }
-
 
 
     public async getCommonStat(req: Request, res: Response) {

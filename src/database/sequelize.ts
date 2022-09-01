@@ -12,13 +12,12 @@ import "dotenv/config";
 // }
 
 
-
 const sequelize = new Sequelize({
-    database: process.env.DATABASE,
-    dialect: process.env.DIALECT as Dialect,
-    username: process.env.NAME,
-    password: process.env.PASSWORD,
-    host: process.env.HOST_DB,
+    database: process.env.DB_TYPE,
+    dialect: process.env.DB_DIALECT as Dialect,
+    username: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
     repositoryMode: process.env.REPOSITORY_MODE == "true"
 })
 
