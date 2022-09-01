@@ -1,119 +1,111 @@
-import BaseController from "./baseController";
-import UserService from "../services/userService";
+import BaseController from './baseController';
+import UserService from '../services/userService';
 import { Request, Response } from 'express';
-import IUserService from "../services/interfaces/IUserService";
+import IUserService from '../services/interfaces/IUserService';
 
 class UserController extends BaseController {
-    private userService: IUserService = new UserService();
+  private userService: IUserService = new UserService();
 
-    constructor() {
-        super();
+  constructor() {
+    super();
+  }
+
+  public async getUsers(req: Request, res: Response) {
+    try {
+      const users = await this.userService.getUsersAll();
+
+      if (!users) {
+        throw {
+          status: 401,
+          message: 'Users is not found!'
+        };
+      }
+
+      res.status(200).json({ data: users, message: 'Success!' });
+    } catch (err) {
+      return res.status(err.status || 400).json({
+        message: err.message
+      });
     }
+  }
 
-    public async getUsers(req: Request, res: Response) {
-        try {
-            const users = await this.userService.getUsersAll();
+  public async getUser(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
 
-            if (!users) {
-                throw {
-                    status: 401,
-                    message: "Users is not found!"
-                }
-            }
+      if (!id) {
+        throw {
+          status: 400,
+          message: 'Id incorrect!'
+        };
+      }
 
-            res.status(200).json({ data: users, message: "Success!" })
-        }
-        catch (err) {
-            return res.status(err.status || 400).json({
-                message: err.message
-            });
-        }
-    };
+      const user = await this.userService.getUserById(id);
 
-    public async getUser(req: Request, res: Response) {
+      if (!user) {
+        throw {
+          status: 400,
+          message: 'User is not found!'
+        };
+      }
 
-        try {
-            const id = Number(req.params.id);
+      res.status(200).json({ data: user, message: 'Success!' });
+    } catch (err) {
+      return res.status(err.status || 400).json({
+        message: err.message
+      });
+    }
+  }
 
-            if (!id) {
-                throw {
-                    status: 400,
-                    message: "Id incorrect!"
-                }
-            }
+  public async addUser(req: Request, res: Response) {
+    try {
+      const user = await this.userService.addUser({
+        login: req.body.login,
+        password: req.body.password
+      });
 
-            const user = await this.userService.getUserById(id);
+      if (!user) {
+        throw {
+          status: 400,
+          message: 'User not added!'
+        };
+      }
 
-            if (!user) {
-                throw {
-                    status: 400,
-                    message: "User is not found!"
-                }
-            }
+      res.status(200).json({ data: user, message: 'Success!' });
+    } catch (err) {
+      return res.status(err.status || 400).json({
+        message: err.message
+      });
+    }
+  }
 
-            res.status(200).json({ data: user, message: "Success!" })
-        } catch (err) {
+  public async deleteUser(req: Request, res: Response) {
+    try {
+      const id = Number(req.params.id);
 
-            return res.status(err.status || 400).json({
-                message: err.message
-            });
-        }
-    };
+      if (!id) {
+        throw {
+          status: 400,
+          message: 'Id incorrect!'
+        };
+      }
 
-    public async addUser(req: Request, res: Response) {
-        try {
-            const user = await this.userService.addUser({
-                login: req.body.login,
-                password: req.body.password
-            });
+      const isDeleted = this.userService.deleteUserById(id);
 
-            if (!user) {
-                throw {
-                    status: 400,
-                    message: "User not added!"
-                }
-            }
+      if (!isDeleted) {
+        throw {
+          status: 400,
+          message: 'User not deleted!'
+        };
+      }
 
-            res.status(200).json({ data: user, message: "Success!" })
-        } catch (err) {
-
-            return res.status(err.status || 400).json({
-                message: err.message
-            });
-        }
-
-    };
-
-    public async deleteUser(req: Request, res: Response) {
-        try {
-            const id = Number(req.params.id);
-
-            if (!id) {
-                throw {
-                    status: 400,
-                    message: "Id incorrect!"
-                }
-            }
-
-            const isDeleted = this.userService.deleteUserById(id);
-
-            if (!isDeleted) {
-                throw {
-                    status: 400,
-                    message: "User not deleted!"
-                }
-            }
-
-            res.status(200).json({ message: "Success!" })
-
-        } catch (err) {
-
-            return res.status(err.status || 400).json({
-                message: err.message
-            });
-        }
-
-    };
+      res.status(200).json({ message: 'Success!' });
+    } catch (err) {
+      return res.status(err.status || 400).json({
+        message: err.message
+      });
+    }
+  }
 }
 
 export default UserController;

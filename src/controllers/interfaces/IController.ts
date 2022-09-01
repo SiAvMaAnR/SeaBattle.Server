@@ -1,7 +1,3 @@
-
-interface IController{
-
-    
-}
+interface IController {}
 
 export default IController;

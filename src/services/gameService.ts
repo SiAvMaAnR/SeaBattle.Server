@@ -1,161 +1,157 @@
-import IGameService from "./interfaces/IGameService";
-import PlayersResponse from "../business/game/types/PlayersResponse";
-import RoomResponse from "../business/game/types/RoomResponse";
-import IGame from "../business/game/interfaces/IGame";
-import { IStatisticRes } from "../business/game/data/statistic";
-import { Coordinate } from "../business/game/fields/field";
-import BaseService, { IJwtUser } from "./baseService";
-import Player from "../business/game/data/player";
+import IGameService from './interfaces/IGameService';
+import PlayersResponse from '../business/game/types/PlayersResponse';
+import RoomResponse from '../business/game/types/RoomResponse';
+import IGame from '../business/game/interfaces/IGame';
+import { IStatisticRes } from '../business/game/data/statistic';
+import { Coordinate } from '../business/game/fields/field';
+import BaseService, { IJwtUser } from './baseService';
+import Player from '../business/game/data/player';
 
 class GameService extends BaseService implements IGameService {
+  private socketId: string;
+  private game: IGame;
 
-    private socketId: string;
-    private game: IGame;
+  constructor(socketId: string, game: IGame) {
+    super();
+    this.socketId = socketId;
+    this.game = game;
+  }
 
-
-    constructor(socketId: string, game: IGame) {
-        super();
-        this.socketId = socketId;
-        this.game = game;
+  public joinRoom(roomId: string, login: string): boolean {
+    if (!this.game.isExistsRoom(roomId)) {
+      this.game.createRoom(roomId);
     }
 
-    public joinRoom(roomId: string, login: string): boolean {
-        if (!this.game.isExistsRoom(roomId)) {
-            this.game.createRoom(roomId);
-        }
+    return this.game.joinRoom(roomId, login, this.socketId);
+  }
 
-        return this.game.joinRoom(roomId, login, this.socketId);
+  public leaveRoom(): void {
+    this.game.leaveRoom(this.socketId);
+    this.game.removeEmptyRooms();
+  }
+
+  public getRooms(): RoomResponse[] {
+    return this.game.getRooms().map((room, index) => {
+      return {
+        index: index,
+        id: room.id,
+        count: room.count
+      };
+    });
+  }
+
+  public getRoomById(roomId: string): RoomResponse {
+    const room = this.game.getRoomById(roomId);
+
+    if (!room) {
+      return null;
     }
 
-    public leaveRoom(): void {
-        this.game.leaveRoom(this.socketId);
-        this.game.removeEmptyRooms();
+    return {
+      id: room.id,
+      count: room.count
+    };
+  }
+
+  public getRoomByPlayer(): RoomResponse {
+    const room = this.game.getRoomByPlayer(this.socketId);
+
+    if (!room) {
+      return null;
     }
 
-    public getRooms(): RoomResponse[] {
-        return this.game.getRooms().map((room, index) => {
-            return {
-                index: index,
-                id: room.id,
-                count: room.count
-            }
-        });
-    }
+    return {
+      id: room.id,
+      count: room.count
+    };
+  }
 
-    public getRoomById(roomId: string): RoomResponse {
-        const room = this.game.getRoomById(roomId);
+  public getPlayers(): PlayersResponse {
+    const players = this.game.getPlayers(this.socketId);
+    return {
+      my: {
+        socket: players?.my?.socketId,
+        init: players?.my?.isInit,
+        ready: players?.my?.isReady
+      },
+      enemy: {
+        socket: players?.enemy?.socketId,
+        init: players?.enemy?.isInit,
+        ready: players?.enemy?.isReady
+      }
+    };
+  }
 
-        if (!room) {
-            return null;
-        }
+  public isFullRoom(): boolean {
+    return this.game.isFullRoom(this.socketId);
+  }
 
-        return {
-            id: room.id,
-            count: room.count
-        }
-    }
+  public getMyField(): number[][] {
+    return this.game.getMyField(this.socketId)?.getArr();
+  }
 
-    public getRoomByPlayer(): RoomResponse {
-        const room = this.game.getRoomByPlayer(this.socketId);
+  public getEnemyField(): number[][] {
+    return this.game.getEnemyField(this.socketId)?.getArr();
+  }
 
-        if (!room) {
-            return null;
-        }
+  public initMyField(field: number[][]): number[][] {
+    return this.game.getMyField(this.socketId)?.setField(field);
+  }
 
-        return {
-            id: room.id,
-            count: room.count
-        }
-    }
+  public getIsMove(): boolean {
+    return this.game.getIsMove(this.socketId);
+  }
 
-    public getPlayers(): PlayersResponse {
-        const players = this.game.getPlayers(this.socketId);
-        return {
-            my: {
-                socket: players?.my?.socketId,
-                init: players?.my?.isInit,
-                ready: players?.my?.isReady
-            },
-            enemy: {
-                socket: players?.enemy?.socketId,
-                init: players?.enemy?.isInit,
-                ready: players?.enemy?.isReady
-            }
-        }
-    }
+  public moveGen(condition: boolean): boolean {
+    const players = this.game.getPlayers(this.socketId);
+    const myMove = players?.my?.setIsMove(condition);
+    const enemyMove = players?.enemy?.setIsMove(!condition);
+    return myMove != enemyMove;
+  }
 
-    public isFullRoom(): boolean {
-        return this.game.isFullRoom(this.socketId);
-    }
+  public checkWin(): boolean {
+    return this.game.checkWin(this.socketId);
+  }
 
-    public getMyField(): number[][] {
-        return this.game.getMyField(this.socketId)?.getArr();
-    }
+  public shoot(coordinate: Coordinate): boolean {
+    return this.game.shoot(this.socketId, coordinate);
+  }
 
-    public getEnemyField(): number[][] {
-        return this.game.getEnemyField(this.socketId)?.getArr();
-    }
+  public setIsStart(isStart: boolean): void {
+    return this.game.getRoomByPlayer(this.socketId).states.setIsStart(isStart);
+  }
 
-    public initMyField(field: number[][]): number[][] {
-        return this.game.getMyField(this.socketId)?.setField(field);
-    }
+  public isEnd(): boolean {
+    return this.game.getRoomByPlayer(this.socketId)?.states.isEnd;
+  }
 
-    public getIsMove(): boolean {
-        return this.game.getIsMove(this.socketId);
-    }
+  public setIsEnd(isEnd: boolean): void {
+    this.game.getRoomByPlayer(this.socketId).states.setIsEnd(isEnd);
+  }
 
-    public moveGen(condition: boolean): boolean {
-        const players = this.game.getPlayers(this.socketId);
-        const myMove = players?.my?.setIsMove(condition);
-        const enemyMove = players?.enemy?.setIsMove(!condition);
-        return myMove != enemyMove;
-    }
+  public setIsReady(ready: boolean): void {
+    this.game.setIsReady(this.socketId, ready);
+  }
 
-    public checkWin(): boolean {
-        return this.game.checkWin(this.socketId);
-    }
+  public setIsInit(init: boolean): void {
+    this.game.setIsInit(this.socketId, init);
+  }
 
-    public shoot(coordinate: Coordinate): boolean {
-        return this.game.shoot(this.socketId, coordinate);
-    }
+  public setIsAccess(access: boolean): void {
+    this.game.setIsAccess(this.socketId, access);
+  }
 
-    public setIsStart(isStart: boolean): void {
-        return this.game.getRoomByPlayer(this.socketId).states.setIsStart(isStart);
-    }
+  public getEnemy(): Player {
+    return this.game.getPlayers(this.socketId).enemy;
+  }
 
-    public isEnd(): boolean {
-        return this.game.getRoomByPlayer(this.socketId)?.states.isEnd;
-    }
+  public getStatistic(): IStatisticRes {
+    return this.game.getStatistic(this.socketId);
+  }
 
-    public setIsEnd(isEnd: boolean): void {
-        this.game.getRoomByPlayer(this.socketId).states.setIsEnd(isEnd);
-    }
-
-    public setIsReady(ready: boolean): void {
-        this.game.setIsReady(this.socketId, ready);
-    }
-
-    public setIsInit(init: boolean): void {
-        this.game.setIsInit(this.socketId, init);
-    }
-
-    public setIsAccess(access: boolean): void {
-        this.game.setIsAccess(this.socketId, access);
-    }
-
-    public getEnemy(): Player {
-        return this.game.getPlayers(this.socketId).enemy;
-    }
-
-    public getStatistic(): IStatisticRes {
-        return this.game.getStatistic(this.socketId);
-    }
-
-    public saveResult(isWon: boolean): void {
-        this.game.saveResult(this.socketId, isWon);
-    }
-
+  public saveResult(isWon: boolean): void {
+    this.game.saveResult(this.socketId, isWon);
+  }
 }
-
 
 export default GameService;

@@ -1,9 +1,8 @@
-import Player from "../data/player";
+import Player from '../data/player';
 
 type PairPlayers = {
-    my: Player,
-    enemy: Player
-}
-
+  my: Player;
+  enemy: Player;
+};
 
 export default PairPlayers;

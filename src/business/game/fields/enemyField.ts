@@ -1,11 +1,9 @@
-import Field from "./field";
+import Field from './field';
 
 class EnemyField extends Field {
-
-    constructor() {
-        super();
-    }
-
+  constructor() {
+    super();
+  }
 }
 
 export default EnemyField;

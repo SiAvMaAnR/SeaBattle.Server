@@ -1,7 +1,5 @@
-import { Repository } from "sequelize-typescript";
+import { Repository } from 'sequelize-typescript';
 
-
-interface IRepository<TEntity> {
-}
+interface IRepository<TEntity> {}
 
 export default IRepository;
