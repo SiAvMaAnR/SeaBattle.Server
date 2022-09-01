@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import indexRouter from "./routes/index";
 import sequelize, { openConnection, sync } from "./database/sequelize";
@@ -6,11 +7,11 @@ import onConnection from "./socket_io/onConnection";
 import corsConfig from "./config/cors";
 import cors from "cors";
 import ioInit from "./socket_io/socket";
-import "dotenv/config";
+import config from 'config';
 
 const app = express();
 const server = createServer(app);
-const port: number = parseInt(process.env.PORT, 10) || 3000;
+const port: number = parseInt(config.get("server.port"), 10) || 3000;
 
 const io = ioInit(server);
 

@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import { Dialect } from "sequelize/types";
 import { Statistic, User } from "../models/index";
-import "dotenv/config";
+import config from 'config';
 
 // const migration = async (sequelize: Sequelize) => {
 //     await generateMigration(sequelize, {
@@ -11,19 +11,19 @@ import "dotenv/config";
 //     });
 // }
 
-
 const sequelize = new Sequelize({
-    database: process.env.DB_TYPE,
-    dialect: process.env.DB_DIALECT as Dialect,
-    username: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
-    repositoryMode: process.env.REPOSITORY_MODE == "true"
+    database: config.get("db.type"),
+    dialect: config.get("db.dialect"),
+    username: config.get("db.name"),
+    password: config.get("db.password"),
+    host: config.get("db.host"),
+    repositoryMode: config.get("sequelize.repositoryMode")
 })
 
 sequelize.addModels([User, Statistic]);
 
 export const sync = async (sequelize: Sequelize): Promise<Sequelize> => {
+    
     return await sequelize.sync({ force: false });
 }
 

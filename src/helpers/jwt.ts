@@ -1,14 +1,13 @@
 import jwt from "jsonwebtoken";
-import { NextFunction } from "express";
-import { Request, Response } from "express";
-import "dotenv/config";
+import { Request, Response, NextFunction } from "express";
 import { IJwtUser } from "../services/baseService";
+import config from "config";
 
 class JWT {
     public static generateToken({ id, login }: IJwtUser): string {
         return jwt.sign({
             data: { id, login }
-        }, process.env.TOKEN_SECRET_JWT, { expiresIn: process.env.LIFETIME_JWT });
+        }, config.get("token.secret"), { expiresIn: config.get("token.lifetime") });
     }
 
     public static authenticateToken(req: Request, res: Response, next: NextFunction) {
@@ -19,7 +18,7 @@ class JWT {
             return res.sendStatus(401);
         }
 
-        jwt.verify(token, process.env.TOKEN_SECRET_JWT as string, (err, user) => {
+        jwt.verify(token, config.get("token.secret") as string, (err, user) => {
             if (err) {
                 return res.sendStatus(403);
             }
