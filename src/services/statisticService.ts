@@ -33,7 +33,7 @@ class StatisticService extends BaseService implements IStatisticService {
         });
     }
 
-    public async getGames(userId: number, findField?: string, page?: number, size?: number): Promise<GameStat[]> {
+    public async getGames(userId: number, findField?: string, page?: number, size?: number): Promise<IGamesRes> {
 
         const field = findField ?? "";
         const limit = size ?? 1000;
@@ -42,22 +42,29 @@ class StatisticService extends BaseService implements IStatisticService {
         console.log("limit", limit);
         console.log("offset", offset);
 
+        const search = ([
+            {
+                enemy: {
+                    [Op.iLike]: `%${field}%`
+                }
+            },
+            sequelize.where(sequelize.cast(sequelize.col('GameStat.countMyMoves'), 'varchar'), { [Op.iLike]: `%${field}%` }),
+            sequelize.where(sequelize.cast(sequelize.col('GameStat.countHits'), 'varchar'), { [Op.iLike]: `%${field}%` }),
+            sequelize.where(sequelize.cast(sequelize.col('GameStat.countMisses'), 'varchar'), { [Op.iLike]: `%${field}%` }),
+        ]);
 
-        return await this.repository.get({
+        const count = await this.repository.count({
             where: {
-                [Op.or]: [
-                    {
-                        enemy: {
-                            [Op.iLike]: `%${field}%`
-                        }
-                    },
-                    sequelize.where(sequelize.cast(sequelize.col('GameStat.countMyMoves'), 'varchar'), { [Op.iLike]: `%${field}%` }),
-                    sequelize.where(sequelize.cast(sequelize.col('GameStat.countHits'), 'varchar'), { [Op.iLike]: `%${field}%` }),
-                    sequelize.where(sequelize.cast(sequelize.col('GameStat.countMisses'), 'varchar'), { [Op.iLike]: `%${field}%` }),
-                    // sequelize.where(sequelize.literal('to_char(("GameStat"."datetime"::timestamptz") , \'DD.MM.YYYY, HH24:MI:SS\')'), { [Op.like]: `%${field}%` },)
-                    // sequelize.where(sequelize.cast(sequelize.col('GameStat.datetime'), 'varchar'), { [Op.iLike]: `%${field}%` }),
-                ],
+                [Op.or]: search,
+                userId: userId
+            },
+        });
 
+        const pages = Math.ceil(count / limit);
+
+        const games = await this.repository.get({
+            where: {
+                [Op.or]: search,
                 userId: userId
             },
             order: [
@@ -66,6 +73,8 @@ class StatisticService extends BaseService implements IStatisticService {
             offset: offset,
             limit: limit
         });
+
+        return { pages, games }
     }
 
     public async getCommonStat(userId: number, field?: string): Promise<ICommonStat> {
@@ -126,5 +135,10 @@ interface ICommonStat {
     sumHits: number
 }
 
-export { ICommonStat };
+interface IGamesRes {
+    pages: number,
+    games: GameStat[]
+}
+
+export { ICommonStat, IGamesRes };
 export default StatisticService;
