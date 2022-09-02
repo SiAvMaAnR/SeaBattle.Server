@@ -66,19 +66,22 @@ class StatisticService extends BaseService implements IStatisticService {
             userId: userId
         };
 
+        const [countResult, gamesResult] = await Promise.allSettled([
+            this.repository.count({
+                where: where
+            }),
+            this.repository.get({
+                where: where,
+                order: [['datetime', 'DESC']],
+                offset: offset,
+                limit: limit
+            })
+        ]) as [PromiseFulfilledResult<number>, PromiseFulfilledResult<GameStat[]>];
 
-        const count = await this.repository.count({
-            where: where
-        });
+        const count = countResult.value;
+        const games = gamesResult.value;
 
         const pages = Math.ceil(count / limit);
-
-        const games = await this.repository.get({
-            where: where,
-            order: [['datetime', 'DESC']],
-            offset: offset,
-            limit: limit
-        });
 
         return { pages, games };
     }
@@ -108,35 +111,36 @@ class StatisticService extends BaseService implements IStatisticService {
                 { [Op.iLike]: `%${field}%` }
             )
         ];
-        // Promise.all/allSettled
-        const sumMoves = await this.repository.sum('countMyMoves', {
-            where: {
-                [Op.or]: search,
-                userId: userId
-            }
-        });
 
-        const countWins = await this.repository.count({
-            where: {
-                [Op.or]: search,
-                userId: userId,
-                isWin: true
-            }
-        });
+        const results = await Promise.allSettled([
+            this.repository.sum('countMyMoves', {
+                where: {
+                    [Op.or]: search,
+                    userId: userId
+                }
+            }),
+            this.repository.count({
+                where: {
+                    [Op.or]: search,
+                    userId: userId,
+                    isWin: true
+                }
+            }),
+            this.repository.count({
+                where: {
+                    [Op.or]: search,
+                    userId: userId
+                }
+            }),
+            this.repository.sum('countHits', {
+                where: {
+                    [Op.or]: search,
+                    userId: userId
+                }
+            })
+        ]) as PromiseFulfilledResult<number>[];
 
-        const countGames = await this.repository.count({
-            where: {
-                [Op.or]: search,
-                userId: userId
-            }
-        });
-
-        const sumHits = await this.repository.sum('countHits', {
-            where: {
-                [Op.or]: search,
-                userId: userId
-            }
-        });
+        const [sumMoves, countWins, countGames, sumHits] = results.map(result => result.value);
 
         return {
             sumMoves: sumMoves,
