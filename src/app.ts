@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import indexRouter from './routes/index';
 import sequelize, { openConnection, sync } from './database/sequelize';
 import { createServer } from 'http';
@@ -8,6 +8,9 @@ import corsConfig from './config/cors';
 import cors from 'cors';
 import ioInit from './socket_io/socket';
 import config from 'config';
+import Status from './controllers/enums/status';
+import { nextTick } from 'process';
+import errorHandler from './middlewares/errorHandler';
 
 const run = async () => {
   const app = express();
@@ -23,7 +26,7 @@ const run = async () => {
 
   app.use('/api', indexRouter);
 
-  // error handler
+  app.use(errorHandler)
 
   openConnection()
     .then(async () => console.log('open connection!'))

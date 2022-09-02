@@ -1,5 +1,5 @@
 import BaseController from './baseController';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import IStatisticService from '../services/interfaces/IStatisticService';
 import StatisticService from '../services/statisticService';
 import { IStatisticRes } from '../business/game/data/statistic';
@@ -8,7 +8,7 @@ import Status from './enums/status';
 class StatisticController extends BaseController {
   private statisticService: IStatisticService = new StatisticService();
 
-  public async getGames(req: Request, res: Response) {
+  public async getGames(req: Request, res: Response, next: NextFunction) {
     try {
       const userId: number = req['user']?.data?.id;
 
@@ -33,13 +33,11 @@ class StatisticController extends BaseController {
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || Status.BadRequest).json({
-        message: err.message
-      });
+      next(err);
     }
   }
 
-  public async getGameById(req: Request, res: Response) {
+  public async getGameById(req: Request, res: Response, next: NextFunction) {
     try {
       const userId: number = req['user']?.data?.id;
 
@@ -66,13 +64,11 @@ class StatisticController extends BaseController {
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || Status.BadRequest).json({
-        message: err.message
-      });
+      next(err);
     }
   }
 
-  public async getCommonStat(req: Request, res: Response) {
+  public async getCommonStat(req: Request, res: Response, next: NextFunction) {
     try {
       const userId: number = req['user']?.data?.id;
 
@@ -90,13 +86,11 @@ class StatisticController extends BaseController {
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || Status.BadRequest).json({
-        message: err.message
-      });
+      next(err);
     }
   }
 
-  public async addGame(req: Request, res: Response) {
+  public async addGame(req: Request, res: Response, next: NextFunction) {
     try {
       const userId: number = req['user']?.data?.id;
 
@@ -122,9 +116,7 @@ class StatisticController extends BaseController {
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || Status.BadRequest).json({
-        message: err.message
-      });
+      next(err);
     }
   }
 }

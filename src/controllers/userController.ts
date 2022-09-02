@@ -1,6 +1,6 @@
 import BaseController from './baseController';
 import UserService from '../services/userService';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import IUserService from '../services/interfaces/IUserService';
 import Status from './enums/status';
 
@@ -11,7 +11,7 @@ class UserController extends BaseController {
     super();
   }
 
-  public async getUsers(req: Request, res: Response) {
+  public async getUsers(req: Request, res: Response, next: NextFunction) {
     try {
       const users = await this.userService.getUsersAll();
 
@@ -24,14 +24,12 @@ class UserController extends BaseController {
 
       return res.status(Status.Ok).json({ data: users, message: 'Success!' });
     } catch (err) {
-      return res.status(err.status || Status.BadRequest).json({
-        message: err.message
-      });
+      next(err);
     }
 
   }
 
-  public async getUser(req: Request, res: Response) {
+  public async getUser(req: Request, res: Response, next: NextFunction) {
     try {
       const id = Number(req.params.id);
 
@@ -53,13 +51,11 @@ class UserController extends BaseController {
 
       return res.status(Status.Ok).json({ data: user, message: 'Success!' });
     } catch (err) {
-      return res.status(err.status || Status.BadRequest).json({
-        message: err.message
-      });
+      next(err);
     }
   }
 
-  public async addUser(req: Request, res: Response) {
+  public async addUser(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await this.userService.addUser({
         login: req.body.login,
@@ -75,13 +71,11 @@ class UserController extends BaseController {
 
       res.status(Status.Ok).json({ data: user, message: 'Success!' });
     } catch (err) {
-      return res.status(err.status || Status.BadRequest).json({
-        message: err.message
-      });
+      next(err);
     }
   }
 
-  public async deleteUser(req: Request, res: Response) {
+  public async deleteUser(req: Request, res: Response, next: NextFunction) {
     try {
       const id = Number(req.params.id);
 
@@ -103,9 +97,7 @@ class UserController extends BaseController {
 
       res.status(Status.Ok).json({ message: 'Success!' });
     } catch (err) {
-      return res.status(err.status || Status.BadRequest).json({
-        message: err.message
-      });
+      next(err);
     }
   }
 }
