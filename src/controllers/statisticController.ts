@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import IStatisticService from '../services/interfaces/IStatisticService';
 import StatisticService from '../services/statisticService';
 import { IStatisticRes } from '../business/game/data/statistic';
+import Status from './enums/status';
 
 class StatisticController extends BaseController {
   private statisticService: IStatisticService = new StatisticService();
@@ -13,7 +14,7 @@ class StatisticController extends BaseController {
 
       if (!userId) {
         throw {
-          status: 401,
+          status: Status.NotFound,
           message: 'User not found!'
         };
       }
@@ -22,7 +23,7 @@ class StatisticController extends BaseController {
       const page = req.query.page && parseInt(req.query.page.toString());
       const size = req.query.size && parseInt(req.query.size.toString());
 
-      return res.status(200).json({
+      return res.status(Status.Ok).json({
         data: await this.statisticService.getGames(
           userId,
           findField,
@@ -32,7 +33,7 @@ class StatisticController extends BaseController {
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }
@@ -44,7 +45,7 @@ class StatisticController extends BaseController {
 
       if (!userId) {
         throw {
-          status: 401,
+          status: Status.NotFound,
           message: 'User not found!'
         };
       }
@@ -53,19 +54,19 @@ class StatisticController extends BaseController {
 
       if (!gameId) {
         throw {
-          status: 400,
+          status: Status.NotFound,
           message: 'Game not found!'
         };
       }
 
       const game = await this.statisticService.getGameById(userId, gameId);
 
-      return res.status(200).json({
+      return res.status(Status.Ok).json({
         data: game,
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }
@@ -77,19 +78,19 @@ class StatisticController extends BaseController {
 
       if (!userId) {
         throw {
-          status: 401,
+          status: Status.NotFound,
           message: 'User not found!'
         };
       }
 
       const findField = req.query.find?.toString();
 
-      return res.status(200).json({
+      return res.status(Status.Ok).json({
         data: await this.statisticService.getCommonStat(userId, findField),
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }
@@ -101,7 +102,7 @@ class StatisticController extends BaseController {
 
       if (!userId) {
         throw {
-          status: 401,
+          status: Status.NotFound,
           message: 'User not found!'
         };
       }
@@ -116,12 +117,12 @@ class StatisticController extends BaseController {
 
       const game = await this.statisticService.addGame(userId, _game);
 
-      return res.status(200).json({
+      return res.status(Status.Ok).json({
         data: game,
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }

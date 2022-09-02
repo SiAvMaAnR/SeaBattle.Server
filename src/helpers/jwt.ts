@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { IJwtUser } from '../services/baseService';
 import config from 'config';
+import Status from '../controllers/enums/status';
 
 class JWT {
   public static generateToken(user: IJwtUser): string {
@@ -24,12 +25,12 @@ class JWT {
     const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) {
-      return res.sendStatus(401);
+      return res.sendStatus(Status.Unauthorized);
     }
 
     jwt.verify(token, config.get('token.secret') as string, (err, user) => {
       if (err) {
-        return res.sendStatus(403);
+        return res.sendStatus(Status.Forbidden);
       }
 
       req['user'] = user;

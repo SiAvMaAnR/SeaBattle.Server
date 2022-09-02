@@ -1,5 +1,3 @@
-import IController from './interfaces/IController';
-
-abstract class BaseController implements IController {}
+abstract class BaseController{}
 
 export default BaseController;

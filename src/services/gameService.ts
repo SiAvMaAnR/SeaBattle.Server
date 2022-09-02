@@ -31,6 +31,7 @@ class GameService extends BaseService implements IGameService {
   }
 
   public getRooms(): RoomResponse[] {
+    // dataAdapter
     return this.game.getRooms().map((room, index) => {
       return {
         index: index,

@@ -23,6 +23,8 @@ const run = async () => {
 
   app.use('/api', indexRouter);
 
+  // error handler
+
   openConnection()
     .then(async () => console.log('open connection!'))
     .catch((err: Error) => console.error(err.message));

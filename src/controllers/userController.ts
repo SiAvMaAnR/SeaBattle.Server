@@ -2,6 +2,7 @@ import BaseController from './baseController';
 import UserService from '../services/userService';
 import { Request, Response } from 'express';
 import IUserService from '../services/interfaces/IUserService';
+import Status from './enums/status';
 
 class UserController extends BaseController {
   private userService: IUserService = new UserService();
@@ -14,19 +15,20 @@ class UserController extends BaseController {
     try {
       const users = await this.userService.getUsersAll();
 
-      if (!users) {
+      if (users.length === 0) {
         throw {
-          status: 401,
+          status: Status.NotFound,
           message: 'Users is not found!'
         };
       }
 
-      res.status(200).json({ data: users, message: 'Success!' });
+      return res.status(Status.Ok).json({ data: users, message: 'Success!' });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }
+
   }
 
   public async getUser(req: Request, res: Response) {
@@ -35,7 +37,7 @@ class UserController extends BaseController {
 
       if (!id) {
         throw {
-          status: 400,
+          status: Status.BadRequest,
           message: 'Id incorrect!'
         };
       }
@@ -44,14 +46,14 @@ class UserController extends BaseController {
 
       if (!user) {
         throw {
-          status: 400,
+          status: Status.NotFound,
           message: 'User is not found!'
         };
       }
 
-      res.status(200).json({ data: user, message: 'Success!' });
+      return res.status(Status.Ok).json({ data: user, message: 'Success!' });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }
@@ -66,14 +68,14 @@ class UserController extends BaseController {
 
       if (!user) {
         throw {
-          status: 400,
+          status: Status.BadRequest,
           message: 'User not added!'
         };
       }
 
-      res.status(200).json({ data: user, message: 'Success!' });
+      res.status(Status.Ok).json({ data: user, message: 'Success!' });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }
@@ -85,7 +87,7 @@ class UserController extends BaseController {
 
       if (!id) {
         throw {
-          status: 400,
+          status: Status.BadRequest,
           message: 'Id incorrect!'
         };
       }
@@ -94,14 +96,14 @@ class UserController extends BaseController {
 
       if (!isDeleted) {
         throw {
-          status: 400,
+          status: Status.BadRequest,
           message: 'User not deleted!'
         };
       }
 
-      res.status(200).json({ message: 'Success!' });
+      res.status(Status.Ok).json({ message: 'Success!' });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }

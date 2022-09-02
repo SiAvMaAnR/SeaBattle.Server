@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import JWT from '../helpers/jwt';
 import AccountService from '../services/accountService';
 import IAccountService from '../services/interfaces/IAccountService';
+import Status from './enums/status';
 
 class AccountController extends BaseController {
   private accountService: IAccountService = new AccountService();
@@ -16,19 +17,19 @@ class AccountController extends BaseController {
 
       if (!user) {
         throw {
-          status: 401,
+          status: Status.NotFound,
           message: 'User not found!'
         };
       }
 
       if (user?.password !== password) {
         throw {
-          status: 400,
+          status: Status.BadRequest,
           message: 'Invalid password!'
         };
       }
 
-      return res.status(200).json({
+      return res.status(Status.Ok).json({
         type: 'Bearer',
         token: JWT.generateToken({
           id: user.id,
@@ -36,7 +37,7 @@ class AccountController extends BaseController {
         })
       });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }
@@ -47,13 +48,13 @@ class AccountController extends BaseController {
       const login = req.body.login;
       const password = req.body.password;
 
-      const user = await this.accountService.getUserByLogin(login);
-
       if (!login || !password) {
         throw {
           message: 'Incorrect login or password!'
         };
       }
+
+      const user = await this.accountService.getUserByLogin(login);
 
       if (user) {
         throw {
@@ -78,12 +79,12 @@ class AccountController extends BaseController {
         password
       });
 
-      return res.status(200).json({
+      return res.status(Status.Ok).json({
         data: newUser,
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }
@@ -91,12 +92,12 @@ class AccountController extends BaseController {
 
   public async info(req: Request, res: Response) {
     try {
-      return res.status(200).json({
+      return res.status(Status.Ok).json({
         data: req['user'],
         message: 'Success!'
       });
     } catch (err) {
-      return res.status(err.status || 400).json({
+      return res.status(err.status || Status.BadRequest).json({
         message: err.message
       });
     }

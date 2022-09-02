@@ -5,8 +5,10 @@ import JWT from '../helpers/jwt';
 const router = express.Router();
 const accountController = new AccountController();
 
-router.post('/login', accountController.login);
-router.post('/register', accountController.register);
-router.get('/info', JWT.verifyToken, accountController.info);
+router.post('/login', (req, res) => accountController.login(req, res));
+router.post('/register', (req, res) => accountController.register(req, res));
+router.get('/info', JWT.verifyToken, (req, res) =>
+  accountController.info(req, res)
+);
 
 export default router;
