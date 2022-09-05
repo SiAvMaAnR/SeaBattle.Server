@@ -46,6 +46,7 @@ const cors_2 = __importDefault(require("cors"));
 const socket_1 = __importDefault(require("./socket_io/socket"));
 const config_1 = __importDefault(require("config"));
 const errorHandler_1 = __importDefault(require("./middlewares/errorHandler"));
+const express_validator_1 = __importDefault(require("express-validator"));
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = (0, express_1.default)();
     const server = (0, http_1.createServer)(app);
@@ -55,6 +56,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.static(`${__dirname}/assets`));
     app.use(express_1.default.urlencoded({ extended: true }));
     app.use(express_1.default.json());
+    app.use((0, express_validator_1.default)());
     app.use('/api', index_1.default);
     app.use(errorHandler_1.default);
     (0, sequelize_1.openConnection)()

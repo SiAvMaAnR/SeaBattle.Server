@@ -11,7 +11,6 @@ class Adapter {
     };
   }
 
-
   public static playersResponse(players: PairPlayers): IPlayersResponse {
     return {
       my: {

@@ -9,6 +9,7 @@ import cors from 'cors';
 import ioInit from './socket_io/socket';
 import config from 'config';
 import errorHandler from './middlewares/errorHandler';
+import expressValidator from 'express-validator';
 
 const run = async () => {
   const app = express();
@@ -21,6 +22,7 @@ const run = async () => {
   app.use(express.static(`${__dirname}/assets`));
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  app.use(expressValidator());
 
   app.use('/api', indexRouter);
 
