@@ -8,10 +8,10 @@ const accountController = new AccountController();
 
 router.post(
   '/login',
-  // body('login').isLength({ min: 6, max: 20 }).withMessage('Incorrect login!'),
-  // body('password')
-  //   .isLength({ min: 6, max: 20 })
-  //   .withMessage('Incorrect password!'),
+  body('login').isLength({ min: 6, max: 20 }).withMessage('Incorrect login!'),
+  body('password')
+    .isLength({ min: 6, max: 20 })
+    .withMessage('Incorrect password!'),
   (req, res, next) => accountController.login(req, res, next)
 );
 
