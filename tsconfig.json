@@ -13,7 +13,8 @@
     "emitDecoratorMetadata": true,
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "allowJs": true
   },
   "lib": ["es2020"]
 }

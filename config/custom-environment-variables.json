@@ -1,0 +1,22 @@
+{
+  "server": {
+    "host": "HOST",
+    "port": "PORT"
+  },
+  "db": {
+    "host": "DB_HOST",
+    "port": "DB_PORT",
+    "name": "DB_NAME",
+    "password": "DB_PASSWORD",
+    "type": "DB_TYPE",
+    "dialect": "DB_DIALECT",
+    "max": "DB_MAX",
+    "min": "DB_MIN",
+    "acquire": "DB_ACQUIRE",
+    "idle": "DB_IDLE"
+  },
+  "token": {
+    "secret": "TOKEN_SECRET_JWT",
+    "lifetime": "LIFETIME_JWT"
+  }
+}
