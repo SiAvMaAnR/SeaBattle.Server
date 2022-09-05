@@ -13,8 +13,7 @@ import errorHandler from './middlewares/errorHandler';
 const run = async () => {
   const app = express();
   const server = createServer(app);
-  const port: number =
-    config.get('server.port') || config.get('server.defaultPort');
+  const port = config.get('server.port') || config.get('server.defaultPort');
 
   const io = ioInit(server);
 

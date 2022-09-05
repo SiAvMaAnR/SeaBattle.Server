@@ -14,6 +14,7 @@ router.post(
   //   .withMessage('Incorrect password!'),
   (req, res, next) => accountController.login(req, res, next)
 );
+
 router.post(
   '/register',
   body('login').isLength({ min: 6, max: 20 }).withMessage('Incorrect login!'),
@@ -22,6 +23,7 @@ router.post(
     .withMessage('Incorrect password!'),
   (req, res, next) => accountController.register(req, res, next)
 );
+
 router.get('/info', JWT.verifyToken, (req, res, next) =>
   accountController.info(req, res, next)
 );

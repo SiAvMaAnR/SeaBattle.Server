@@ -1,4 +1,4 @@
-type PlayersResponse = {
+interface IPlayersResponse {
   my: {
     socket: string;
     init: boolean;
@@ -9,6 +9,6 @@ type PlayersResponse = {
     init: boolean;
     ready: boolean;
   };
-};
+}
 
-export default PlayersResponse;
+export default IPlayersResponse;

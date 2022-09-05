@@ -1,5 +1,4 @@
 import IGameService from './interfaces/IGameService';
-import PlayersResponse from '../business/game/types/PlayersResponse';
 import RoomResponse from '../business/game/interfaces/IRoomResponse';
 import IGame from '../business/game/interfaces/IGame';
 import { IStatisticRes } from '../business/game/data/statistic';
@@ -8,6 +7,7 @@ import BaseService, { IJwtUser } from './baseService';
 import Player from '../business/game/data/player';
 import Adapter from '../adapters/adapter';
 import IRoomResponse from '../business/game/interfaces/IRoomResponse';
+import IPlayersResponse from '@/business/game/interfaces/IPlayersResponse';
 
 class GameService extends BaseService implements IGameService {
   private socketId: string;
@@ -61,7 +61,7 @@ class GameService extends BaseService implements IGameService {
     return Adapter.roomResponse(room);
   }
 
-  public getPlayers(): PlayersResponse {
+  public getPlayers(): IPlayersResponse {
     const players = this.game.getPlayers(this.socketId);
     return Adapter.playersResponse(players);
   }
