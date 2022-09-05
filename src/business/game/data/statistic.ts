@@ -1,8 +1,8 @@
 class Statistic {
-  private _countMyMoves: number = 0;
-  private _countHits: number = 0;
-  private _countMisses: number = 0;
-  private _isWin: boolean = false;
+  private _countMyMoves = 0;
+  private _countHits = 0;
+  private _countMisses = 0;
+  private _isWin = false;
 
   constructor() {}
 

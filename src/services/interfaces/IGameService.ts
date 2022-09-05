@@ -2,7 +2,7 @@ import Player from '../../business/game/data/player';
 import { IStatisticRes } from '../../business/game/data/statistic';
 import { Coordinate } from '../../business/game/fields/field';
 import PlayersResponse from '../../business/game/types/PlayersResponse';
-import RoomResponse from '../../business/game/types/RoomResponse';
+import RoomResponse from '../../business/game/interfaces/IRoomResponse';
 import { IJwtUser } from '../baseService';
 
 interface IGameService {

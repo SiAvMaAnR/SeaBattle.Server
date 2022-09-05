@@ -26,7 +26,6 @@ class UserController extends BaseController {
     } catch (err) {
       next(err);
     }
-
   }
 
   public async getUser(req: Request, res: Response, next: NextFunction) {

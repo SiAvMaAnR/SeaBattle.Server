@@ -1,7 +1,7 @@
 class States {
-  private _isStart: boolean = false;
-  private _isEnd: boolean = false;
-  private _isAccess: boolean = false;
+  private _isStart = false;
+  private _isEnd = false;
+  private _isAccess = false;
 
   constructor() {}
 

@@ -1,4 +1,3 @@
-import { IJwtUser } from '@/services/baseService';
 import { Server, Socket } from 'socket.io';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import core from '../business/game/data/core';

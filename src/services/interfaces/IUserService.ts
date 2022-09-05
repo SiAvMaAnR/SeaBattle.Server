@@ -6,7 +6,7 @@ import IUser from '../../models/interfaces/IUser';
 interface IUserService {
   addUser(user: Optional<IUser, NullishPropertiesOf<IUser>>): Promise<User>;
   getUserById(id: number): Promise<User>;
-  getUsers(fn?: Function): Promise<User[]>;
+  getUsers(fn?: Record<string, any>): Promise<User[]>;
   getUsersAll(): Promise<User[]>;
   deleteUserById(id: number): Promise<boolean>;
   deleteUser(entity: User): Promise<boolean>;

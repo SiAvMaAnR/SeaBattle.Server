@@ -18,7 +18,7 @@ class UserService extends BaseService implements IUserService {
   public async getUserById(id: number): Promise<User> {
     return await this.repository.getOneByPk(id);
   }
-  public async getUsers(fn: Function): Promise<User[]> {
+  public async getUsers(fn: Record<string, any>): Promise<User[]> {
     return await this.repository.get(fn);
   }
   public async getUsersAll(): Promise<User[]> {

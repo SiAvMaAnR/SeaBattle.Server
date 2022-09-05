@@ -16,11 +16,7 @@ class JWT {
     );
   }
 
-  public static verifyToken(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
+  public static verifyToken(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 

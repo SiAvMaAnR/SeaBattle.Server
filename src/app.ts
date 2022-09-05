@@ -8,14 +8,13 @@ import corsConfig from './config/cors';
 import cors from 'cors';
 import ioInit from './socket_io/socket';
 import config from 'config';
-import Status from './controllers/enums/status';
-import { nextTick } from 'process';
 import errorHandler from './middlewares/errorHandler';
 
 const run = async () => {
   const app = express();
   const server = createServer(app);
-  const port: number = config.get('server.port') || 3000;
+  const port: number =
+    config.get('server.port') || config.get('server.defaultPort');
 
   const io = ioInit(server);
 
@@ -26,7 +25,7 @@ const run = async () => {
 
   app.use('/api', indexRouter);
 
-  app.use(errorHandler)
+  app.use(errorHandler);
 
   openConnection()
     .then(async () => console.log('open connection!'))
@@ -43,6 +42,6 @@ const run = async () => {
     .catch((err: Error) => {
       console.error(err.message);
     });
-}
+};
 
 run();

@@ -22,13 +22,20 @@ class StatisticController extends BaseController {
       const findField = req.query.find?.toString();
       const page = req.query.page && parseInt(req.query.page.toString());
       const size = req.query.size && parseInt(req.query.size.toString());
+      const sort =
+        req.query.sort === 'asc' || req.query.sort === 'desc'
+          ? req.query.sort
+          : null;
 
       return res.status(Status.Ok).json({
         data: await this.statisticService.getGames(
           userId,
+          {
+            page,
+            size
+          },
           findField,
-          page,
-          size
+          sort
         ),
         message: 'Success!'
       });

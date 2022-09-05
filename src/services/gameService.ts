@@ -1,11 +1,13 @@
 import IGameService from './interfaces/IGameService';
 import PlayersResponse from '../business/game/types/PlayersResponse';
-import RoomResponse from '../business/game/types/RoomResponse';
+import RoomResponse from '../business/game/interfaces/IRoomResponse';
 import IGame from '../business/game/interfaces/IGame';
 import { IStatisticRes } from '../business/game/data/statistic';
 import { Coordinate } from '../business/game/fields/field';
 import BaseService, { IJwtUser } from './baseService';
 import Player from '../business/game/data/player';
+import Adapter from '../adapters/adapter';
+import IRoomResponse from '../business/game/interfaces/IRoomResponse';
 
 class GameService extends BaseService implements IGameService {
   private socketId: string;
@@ -30,13 +32,11 @@ class GameService extends BaseService implements IGameService {
     this.game.removeEmptyRooms();
   }
 
-  public getRooms(): RoomResponse[] {
-    // dataAdapter
+  public getRooms(): IRoomResponse[] {
     return this.game.getRooms().map((room, index) => {
       return {
         index: index,
-        id: room.id,
-        count: room.count
+        ...Adapter.roomResponse(room)
       };
     });
   }
@@ -48,10 +48,7 @@ class GameService extends BaseService implements IGameService {
       return null;
     }
 
-    return {
-      id: room.id,
-      count: room.count
-    };
+    return Adapter.roomResponse(room);
   }
 
   public getRoomByPlayer(): RoomResponse {
@@ -61,26 +58,12 @@ class GameService extends BaseService implements IGameService {
       return null;
     }
 
-    return {
-      id: room.id,
-      count: room.count
-    };
+    return Adapter.roomResponse(room);
   }
 
   public getPlayers(): PlayersResponse {
     const players = this.game.getPlayers(this.socketId);
-    return {
-      my: {
-        socket: players?.my?.socketId,
-        init: players?.my?.isInit,
-        ready: players?.my?.isReady
-      },
-      enemy: {
-        socket: players?.enemy?.socketId,
-        init: players?.enemy?.isInit,
-        ready: players?.enemy?.isReady
-      }
-    };
+    return Adapter.playersResponse(players);
   }
 
   public isFullRoom(): boolean {

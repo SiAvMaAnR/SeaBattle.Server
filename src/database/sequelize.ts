@@ -27,4 +27,3 @@ export const closeConnection = async (): Promise<void> => {
 };
 
 export default sequelize;
-

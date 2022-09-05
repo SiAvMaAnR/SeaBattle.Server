@@ -5,10 +5,10 @@ import Statistic from './statistic';
 class Player {
   private _socketId: string;
   private _login: string;
-  private _isMove: boolean = false;
-  private _isInit: boolean = false;
-  private _isReady: boolean = false;
-  private _isWin: boolean = false;
+  private _isMove = false;
+  private _isInit = false;
+  private _isReady = false;
+  private _isWin = false;
   private _myField: MyField = new MyField();
   private _enemyField: EnemyField = new EnemyField();
   private _statistic: Statistic = new Statistic();
