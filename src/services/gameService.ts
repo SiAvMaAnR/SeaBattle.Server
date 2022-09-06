@@ -3,7 +3,7 @@ import RoomResponse from '../business/game/interfaces/IRoomResponse';
 import IGame from '../business/game/interfaces/IGame';
 import { IStatisticRes } from '../business/game/data/statistic';
 import { Coordinate } from '../business/game/fields/field';
-import BaseService, { IJwtUser } from './baseService';
+import BaseService from './baseService';
 import Player from '../business/game/data/player';
 import Adapter from '../adapters/adapter';
 import IRoomResponse from '../business/game/interfaces/IRoomResponse';

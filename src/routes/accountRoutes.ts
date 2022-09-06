@@ -1,7 +1,7 @@
 import express from 'express';
 import AccountController from '../controllers/accountController';
 import JWT from '../helpers/jwt';
-import AccountValidator from './validators/accountValidator';
+import AccountValidator from '../middlewares/validators/accountValidator';
 
 const router = express.Router();
 const accountController = new AccountController();
@@ -10,7 +10,7 @@ router.post('/login', AccountValidator.login, (req, res, next) =>
   accountController.login(req, res, next)
 );
 
-router.post('/register', AccountValidator.login, (req, res, next) =>
+router.post('/register', AccountValidator.register, (req, res, next) =>
   accountController.register(req, res, next)
 );
 

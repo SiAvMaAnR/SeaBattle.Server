@@ -5,13 +5,10 @@ import {
   AutoIncrement,
   PrimaryKey,
   NotEmpty,
-  HasOne,
   ForeignKey,
   BelongsTo,
   AllowNull,
-  Default,
-  DefaultScope,
-  DataType
+  Default
 } from 'sequelize-typescript';
 import IGameStat from './interfaces/IGameStat';
 import User from './user';

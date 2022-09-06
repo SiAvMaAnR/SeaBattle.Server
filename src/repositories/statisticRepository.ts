@@ -1,5 +1,5 @@
 import BaseRepository from './baseRepository';
-import { Statistic, User } from '../models';
+import { Statistic } from '../models';
 import { Sequelize } from 'sequelize-typescript';
 import IGameStat from '../models/interfaces/IGameStat';
 

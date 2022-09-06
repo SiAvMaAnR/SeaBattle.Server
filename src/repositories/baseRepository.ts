@@ -3,7 +3,6 @@ import IRead from './interfaces/IRead';
 import IEntity from '../models/interfaces/IEntity';
 import { MakeNullishOptional } from 'sequelize/types/utils';
 import IWrite from './interfaces/IWrite';
-import { Attributes, NonNullFindOptions } from 'sequelize/types';
 
 abstract class BaseRepository<TEntity extends Model<IEntity>>
   implements IWrite<TEntity>, IRead<TEntity>

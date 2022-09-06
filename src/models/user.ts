@@ -3,18 +3,13 @@ import {
   AutoIncrement,
   PrimaryKey,
   NotEmpty,
-  ForeignKey,
-  BelongsTo,
   Model,
-  NotNull,
-  BelongsToMany,
   HasMany,
   AllowNull,
   Unique,
   Table
 } from 'sequelize-typescript';
 import GameStat from './gameStatistic';
-import { Statistic } from './index';
 import IUser from './interfaces/IUser';
 
 @Table({

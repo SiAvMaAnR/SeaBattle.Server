@@ -1,7 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Statistic, User } from '../models/index';
 import config from 'config';
-import path from 'path';
 
 const sequelize: Sequelize = new Sequelize({
   database: config.get('db.type'),
