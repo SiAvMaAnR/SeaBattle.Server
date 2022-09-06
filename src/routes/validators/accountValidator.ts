@@ -14,7 +14,9 @@ class AccountValidator {
 
     const errors = req.validationErrors();
     if (errors) {
-      return res.status(Status.BadRequest).json({ errors: errors });
+      return res.status(Status.BadRequest).json({
+        errors: errors
+      });
     }
 
     next();
@@ -32,7 +34,9 @@ class AccountValidator {
 
     const errors = req.validationErrors();
     if (errors) {
-      return res.status(Status.BadRequest).json({ errors: errors });
+      return res.status(Status.BadRequest).json({
+        errors: errors
+      });
     }
 
     next();
