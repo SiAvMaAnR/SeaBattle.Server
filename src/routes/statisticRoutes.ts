@@ -3,11 +3,19 @@ import StatisticController from '../controllers/statisticController';
 import JWT from '../helpers/jwt';
 
 const router = express.Router();
-const statisticController = new StatisticController()
+const statisticController = new StatisticController();
 
-router.get('/games', JWT.authenticateToken, (req, res) => statisticController.getGames(req, res));
-router.get('/game/:id', JWT.authenticateToken, (req, res) => statisticController.getGameById(req, res));
-router.get('/common', JWT.authenticateToken, (req, res) => statisticController.getCommonStat(req, res));
-
+router.post('/games', JWT.verifyToken, (req, res, next) =>
+  statisticController.addGame(req, res, next)
+);
+router.get('/games', JWT.verifyToken, (req, res, next) =>
+  statisticController.getGames(req, res, next)
+);
+router.get('/game/:id', JWT.verifyToken, (req, res, next) =>
+  statisticController.getGameById(req, res, next)
+);
+router.get('/common', JWT.verifyToken, (req, res, next) =>
+  statisticController.getCommonStat(req, res, next)
+);
 
 export default router;

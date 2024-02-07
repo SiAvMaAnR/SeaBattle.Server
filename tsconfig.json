@@ -4,10 +4,17 @@
     "esModuleInterop": true,
     "target": "es6",
     "moduleResolution": "node",
+    // "strict": true,
     "sourceMap": true,
     "outDir": "dist",
+    "baseUrl": "./src",
+    "rootDir": "./src",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "allowJs": true
   },
-  "lib": ["es2015"]
+  "lib": ["es2020"]
 }

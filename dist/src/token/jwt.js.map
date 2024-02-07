@@ -1,1 +1,0 @@
-{"version":3,"file":"jwt.js","sourceRoot":"","sources":["../../../src/token/jwt.ts"],"names":[],"mappings":";;;;;AAAA,gEAA+B;AAC/B,yBAAuB;AAGvB,MAAM,GAAG;IACE,mBAAmB,CAAC,QAAQ;QAC/B,OAAO,sBAAG,CAAC,IAAI,CAAC,QAAQ,EAAE,OAAO,CAAC,GAAG,CAAC,gBAAgB,EAAE,EAAE,SAAS,EAAE,OAAO,CAAC,GAAG,CAAC,YAAY,EAAE,CAAC,CAAC;IACrG,CAAC;CACJ;AAED,kBAAe,IAAI,GAAG,EAAE,CAAC"}

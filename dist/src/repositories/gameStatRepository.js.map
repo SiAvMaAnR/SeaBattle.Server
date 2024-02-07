@@ -1,1 +1,0 @@
-{"version":3,"file":"gameStatRepository.js","sourceRoot":"","sources":["../../../src/repositories/gameStatRepository.ts"],"names":[],"mappings":";;;;;AAAA,sEAA8C;AAC9C,sCAAsC;AAItC,MAAM,kBAAmB,SAAQ,wBAAyB;IAEtD,YAAmB,SAAoB;QACnC,KAAK,CAAC,SAAS,CAAC,aAAa,CAAC,kBAAS,CAAC,CAAC,CAAC;IAC9C,CAAC;CACJ;AAED,kBAAe,kBAAkB,CAAC"}

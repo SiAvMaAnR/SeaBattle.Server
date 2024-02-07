@@ -1,0 +1,8 @@
+{
+  "sequelize": {
+    "repositoryMode": true
+  },
+  "server": {
+    "defaultPort": 3000
+  }
+}

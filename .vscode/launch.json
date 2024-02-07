@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ts-node-dev",
+      "type": "node",
+      "request": "launch",
+      "protocol": "inspector",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node-dev",
+      "runtimeArgs": ["-r", "tsconfig-paths/register"],
+      "args": ["--inspect", "--respawn", "${workspaceRoot}/src/app.ts"],
+      "restart": true,
+      "env": {
+        "NODE_OPTIONS": "--tls-min-v1.0"
+      }
+    }
+  ]
+}
